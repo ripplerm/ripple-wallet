@@ -1,0 +1,34 @@
+<div class="modal-header">
+    <h3 class="modal-title">Cancel Offer</h3>
+</div>
+<div class="modal-body">
+  <form name="offerCancelForm" nonvalidate>
+    <h5> 
+        <table class="table table-striped">
+            <tr>
+                <td>Offer Seq: </td>
+                <td>{{options.offer_sequence}}</td>
+            </tr>             
+            <tr>
+                <td>Type:</td>
+                <td><span style="color: {{options.type=='sell' ? 'red' : 'green'}}">{{options.type == 'sell' ? 'SELL' : 'BUY'}}</span></td>
+            </tr>
+            <tr>
+                <td>Quantity:</td>
+                <td>{{options.qty}} {{options.baseCurrency}}</td>
+            </tr>
+            <tr>
+                <td>at Price: </td>
+                <td>{{options.price}}  ({{options.tradeCurrency}})</td>
+            </tr>                        
+        </table>      
+    </h5>
+    <hr>
+    <h4>Delete this Offer?</h4>          
+  </form>
+</div>
+
+<div class="modal-footer">
+    <button class="btn btn-primary" type="button" ng-click="ok()">Confirm</button>
+    <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
+</div>

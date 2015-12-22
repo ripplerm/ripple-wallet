@@ -1,0 +1,38 @@
+<div class="modal-header">
+    <h3 class="modal-title">Create Offer</h3>
+</div>
+<div class="modal-body">
+  <form name="offerCreateForm" nonvalidate>
+    <h4> 
+        <table class="table table-striped">
+            <tr>
+                <td>Type:</td>
+                <td><span style="color: {{options.type=='sell' ? 'red' : 'green'}}">{{options.type == 'sell' ? 'SELL' : 'BUY'}}</span></td>
+            </tr>
+            <tr>
+                <td>Quantity:</td>
+                <td>{{options.qty}} {{options.baseCurrency}}</td>
+            </tr>
+            <tr>
+                <td>at Price: </td>
+                <td>{{options.price}}</td>
+            </tr>                        
+        </table>
+        <span style="color:red;" ng-show="priceAlert(options);"> ALERT: <br>Input price is >20% apart from market!!!</span>
+    </h4>
+    <hr>
+
+    <table class="table">
+        <thead><b>Advance Setting:</b></thead>            
+        <tr>
+            <td>Expired after:</td>
+            <td><input type="text" size="5" name="expiration" ng-model="options.expiration" placeholder="hour" positive-number> hour.</td>
+        </tr>
+    </table>                  
+  </form>
+</div>
+
+<div class="modal-footer">
+    <button class="btn btn-primary" type="button" ng-disabled="offerCreateForm.$invalid" ng-click="ok()">Confirm</button>
+    <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
+</div>

@@ -1,0 +1,28 @@
+                    <div class="modal-header">
+                        <h3 class="modal-title">Add Memo</h3>
+                    </div>
+                    <div class="modal-body">
+                      <form name="addMemoForm" novalidate>
+                        <table class="table">
+                          <tr>
+                            <td>MemoType: </td>
+                            <td> <input type="text" name="memoType" autofocus ng-model="memo.memoType" size=50 placeholder="e.g. message" ripple-valid-memo> 
+                              <span style="color:red" ng-show="addMemoForm.memoType.$error.rippleValidMemo">Invalid Character!</span> </td>
+                          </tr>
+                          <tr>
+                            <td>MemoFormat: </td>
+                            <td> <input type="text" name="memoFormat" ng-model="memo.memoFormat" size=50 placeholder="e.g. text/json" ripple-valid-memo>
+                              <span style="color:red" ng-show="addMemoForm.memoFormat.$error.rippleValidMemo">Invalid Character!</span>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td>MemoData: </td>
+                            <td> <textarea form="addMemoForm" name="memoData" ng-model="memo.memoData" cols=60 rows=5> </textarea></td>
+                          </tr>                                                    
+                        </table>
+                      </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-primary" type="button" ng-disabled="!(memo.memoType || memo.memoFormat || memo.memoData) || addMemoForm.$invalid" ng-click="ok()">Submit</button>
+                        <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
+                    </div>
