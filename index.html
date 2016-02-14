@@ -104,9 +104,9 @@
   })
 </script>
 <script>  
-  window.page = window.location.hash || "#tabInfo";
+  window.page = window.location.hash || "#Info";
   $(document).ready(function () {
-    if (window.page != "#tabInfo") {
+    if (window.page != "#Info") {
       $(".menu").find("a[data-target=" + window.page + "]").trigger("click");
     }
   });
