@@ -76,15 +76,16 @@
       <a class="navbar-brand">Ripple Wallet</a>
     </header>
     <ul class="list-group">
-      <a class="list-group-item" data-target="#tabInfo"><i class="material-icons" role="presentation">info</i>Info</a>
-      <a class="list-group-item" data-target="#tabTrustlines"><i class="material-icons" role="presentation">playlist_add_check</i>Trustlines</a>
-      <a class="list-group-item" data-target="#tabPayment"><i class="material-icons" role="presentation">monetization_on</i>Payment</a>
-      <a class="list-group-item" data-target="#tabTrading"><i class="material-icons" role="presentation">show_chart</i>Trading</a>
-      <a class="list-group-item" data-target="#tabOffers"><i class="material-icons" role="presentation">repeat</i>Offers</a>
+      <a class="list-group-item" data-target="#Info"><i class="material-icons" role="presentation">info</i>Info</a>
+      <a class="list-group-item" data-target="#Trustlines"><i class="material-icons" role="presentation">playlist_add_check</i>Trustlines</a>
+      <a class="list-group-item" data-target="#Payment"><i class="material-icons" role="presentation">monetization_on</i>Payment</a>
+      <a class="list-group-item" data-target="#Trading"><i class="material-icons" role="presentation">show_chart</i>Trading</a>
+      <a class="list-group-item" data-target="#Offers"><i class="material-icons" role="presentation">repeat</i>Offers</a>
       
     </ul>
   </div>
   <main class="mdb-layout-content">
+  	<div class="container page" ng-repeat="tab in tabs" id="{{tab.title}}"><div ng-include="tab.templete"></div></div>
   <div class="container page" id="tabInfo">
             <span style="font-weight:bold; font-size:20pt; padding-right:1em;">Account Info: </span>
             <button  class="btn btn-warning" ng-click="accountInfo()" ng-disabled="!activeAccount"><span class="glyphicon glyphicon-refresh"></span> Refresh </button> {{accountInfoStatus}} 
