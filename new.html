@@ -87,7 +87,7 @@
   </div>
   <main class="mdb-layout-content">
   	
-  <div class="container collapse" ng-repeat="tab in tabs" id="{{tab.title}}"><div ng-include="tab.templete"></div></div>
+  <div class="container collapse" role="tabpanel" ng-repeat="tab in tabs" id="{{tab.title}}"><div ng-include="tab.templete"></div></div>
   
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
   <script src="https://cdn.rawgit.com/HubSpot/tether/v1.1.1/dist/js/tether.min.js"></script>
