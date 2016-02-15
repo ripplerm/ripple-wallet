@@ -6,7 +6,7 @@
             <img src="{{accountData.urlgravatar}}" style="margin-right: 5px; margin-bottom: 5px; display: {{accountData.EmailHash ? 'block': 'none'}}">
             <table class="table table-hover">
               <tr>
-                <th style="width:30%">XRP Balance</th>
+                <th style="width:20%">XRP Balance</th>
                 <td style="width:70%">
                   {{accountBalances.XRP ? accountBalances.XRP : '-'}}
                   <span style="padding-left:2em;"> {{accountBalances.XRP ? '(reserved: ' + accountBalances.reserved + ')' : ''}} </span>
@@ -34,13 +34,8 @@
               <tr>
                 <th>Message Key</th><td colspan="3">{{accountData.MessageKey ? accountData.MessageKey : '-'}}</td>
               </tr>
-              <tr>
-                <th>
-                  <span style="padding-right:1em;" ng-repeat="(key, value) in accountData['settings']">{{key}}:<font color="{{value ? 'green' : 'red'}}">{{value ? "&#10004" : "&#10008"}} </font></span>     
-                </th>      
-              </tr>
             </table>
-
+            <span style="padding-right:1em;" ng-repeat="(key, value) in accountData['settings']">{{key}}:<font color="{{value ? 'green' : 'red'}}">{{value ? "&#10004" : "&#10008"}} </font></span>     
             <div class="panel panel-info" ng-show="accountSetLog.status">
               <div class="panel-body {{accountSetLog.status == 'FINAL' ? (accountSetLog.status_code.slice(0,3) == 'tes' ? 'bg-success' : 'bg-danger') : 'bg-warning'}}">
                 <b>Tx Status:</b>[{{accountSetLog.status}}{{accountSetLog.status_code ? ', ' +  accountSetLog.status_code : ''}}], <b>Result:</b> {{accountSetLog.result}} {{accountSetLog.tx_hash ? ', tx_hash: ' + accountSetLog.tx_hash : ''}}
