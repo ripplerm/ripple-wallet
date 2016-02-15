@@ -1,13 +1,3 @@
-* {
-    word-wrap: break-word; 
-    word-break: normal; 
-    overflow:auto;
-}
-div {
-    word-wrap: break-word; 
-    word-break: normal; 
-    overflow:auto;
-}
 
 .header-panel h1 {
     color: #FFF;
