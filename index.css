@@ -1,9 +1,10 @@
 * {
-    box-sizing: border-box;
+    word-wrap: break-word; 
+    word-break: normal; 
 }
 div {
-word-wrap: break-word; 
-word-break: normal; 
+    word-wrap: break-word; 
+    word-break: normal; 
 }
 
 .header-panel h1 {
