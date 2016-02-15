@@ -1,13 +1,11 @@
         <div id="tabInfo">
             <h1>Account Info: </h1>
             <button  class="btn btn-warning" ng-click="accountInfo()" ng-disabled="!activeAccount"><span class="glyphicon glyphicon-refresh"></span> Refresh </button> {{accountInfoStatus}} 
-            <br><br>
+            <br>
+            <h2>Account:{{activeAccount ? activeAccount : "-"}}</h2>
+            <br>
+            <img src="{{accountData.urlgravatar}}" style="margin-right: 5px; margin-bottom: 5px; display: {{accountData.EmailHash ? 'block': 'none'}}">
             <table class="table table-hover">
-              <tr>
-                <th>Account</th>
-                <td>{{activeAccount ? activeAccount : "-"}}</td>
-                <td><img src="{{accountData.urlgravatar}}" style="margin-right: 5px; margin-bottom: 5px; display: {{accountData.EmailHash ? 'block': 'none'}}"></td>
-              </tr>
               <tr>
                 <th>XRP Balance</th>
                 <td>
@@ -38,7 +36,7 @@
                 <th>Message Key</th><td colspan="3">{{accountData.MessageKey ? accountData.MessageKey : '-'}}</td>
               </tr>
               <tr>
-                <th colspan="4" word-wrap="break-word">
+                <th>
                   <span style="padding-right:1em;" ng-repeat="(key, value) in accountData['settings']">{{key}}:<font color="{{value ? 'green' : 'red'}}">{{value ? "&#10004" : "&#10008"}} </font></span>     
                 </th>      
               </tr>
