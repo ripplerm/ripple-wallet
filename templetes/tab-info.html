@@ -1,13 +1,12 @@
         <div id="tabInfo">
-            <h1>Account Info: </h1>
+            <h1>Account Info: {{activeAccount ? activeAccount : "-"}}</h1>
             <button  class="btn btn-warning" ng-click="accountInfo()" ng-disabled="!activeAccount"><span class="glyphicon glyphicon-refresh"></span> Refresh </button> {{accountInfoStatus}} 
             <br>
-            <h2>Account:{{activeAccount ? activeAccount : "-"}}</h2>
             <br>
             <img src="{{accountData.urlgravatar}}" style="margin-right: 5px; margin-bottom: 5px; display: {{accountData.EmailHash ? 'block': 'none'}}">
             <table class="table table-hover">
               <tr>
-                <th>XRP Balance</th>
+                <th style="width:30%">XRP Balance</th>
                 <td>
                   {{accountBalances.XRP ? accountBalances.XRP : '-'}}
                   <span style="padding-left:2em;"> {{accountBalances.XRP ? '(reserved: ' + accountBalances.reserved + ')' : ''}} </span>
