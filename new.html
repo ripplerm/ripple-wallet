@@ -86,9 +86,9 @@
     </ul>
   </div>
   <main class="mdb-layout-content">
-  
-  <div class="container" role="tab" ng-repeat="tab in tabs" id="{{tab.title}}"><div class="collapse" role="tabpanel" aria-labelledby="{{tab.title}}" ng-include="tab.templete"></div></div>
-  
+  <div id="accordion" role="tablist" aria-multiselectable="true">
+  <div class="container panel-collapse collapse" role="tabpanel" ng-repeat="tab in tabs" id="{{tab.title}}"><div ng-include="tab.templete"></div></div>
+  </div>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
   <script src="https://cdn.rawgit.com/HubSpot/tether/v1.1.1/dist/js/tether.min.js"></script>
   <script src="https://cdn.rawgit.com/twbs/bootstrap/v4-dev/dist/js/bootstrap.min.js"></script>
