@@ -77,17 +77,17 @@
       <a class="navbar-brand">Ripple Wallet</a>
     </header>
     <ul class="list-group">
-      <a class="list-group-item" data-toggle="collapse" href="#Info"><i class="material-icons" role="presentation">info_outline</i>Info</a>
-      <a class="list-group-item" data-toggle="collapse" href="#Trustlines"><i class="material-icons" role="presentation">playlist_add_check</i>Trustlines</a>
-      <a class="list-group-item" data-toggle="collapse" href="#Payment"><i class="material-icons" role="presentation">low_priority</i>Payment</a>
-      <a class="list-group-item" data-toggle="collapse" href="#Trading"><i class="material-icons" role="presentation">trending_up</i>Trading</a>
-      <a class="list-group-item" data-toggle="collapse" href="#Offers"><i class="material-icons" role="presentation">repeat</i>Offers</a>
+      <a class="list-group-item" data-toggle="collapse" href="#Info" aria-controls="Info"><i class="material-icons" role="presentation">info_outline</i>Info</a>
+      <a class="list-group-item" data-toggle="collapse" href="#Trustlines" aria-controls="Trustlines"><i class="material-icons" role="presentation">playlist_add_check</i>Trustlines</a>
+      <a class="list-group-item" data-toggle="collapse" href="#Payment" aria-controls="Payment"><i class="material-icons" role="presentation">low_priority</i>Payment</a>
+      <a class="list-group-item" data-toggle="collapse" href="#Trading" aria-controls="Trading"><i class="material-icons" role="presentation">trending_up</i>Trading</a>
+      <a class="list-group-item" data-toggle="collapse" href="#Offers" aria-controls="Offers"><i class="material-icons" role="presentation">repeat</i>Offers</a>
       
     </ul>
   </div>
   <main class="mdb-layout-content">
   
-  <div class="container" role="tab" ng-repeat="tab in tabs" id="{{tab.title}}"><div class="collapse" role="tabpanel" aria-labelledby="headingOne" ng-include="tab.templete"></div></div>
+  <div class="container" role="tab" ng-repeat="tab in tabs" id="{{tab.title}}"><div class="collapse" role="tabpanel" aria-labelledby="{{tab.title}}" ng-include="tab.templete"></div></div>
   
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
   <script src="https://cdn.rawgit.com/HubSpot/tether/v1.1.1/dist/js/tether.min.js"></script>
