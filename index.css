@@ -1,17 +1,9 @@
 * {
     box-sizing: border-box;
 }
-
-.header-panel {
-    background-color: #009587;
-    height: 144px;
-    position: relative;
-    z-index: 3;
-}
-
-.header-panel div {
-    position: relative;
-    height: 100%;
+div {
+word-wrap: break-word; 
+word-break: normal; 
 }
 
 .header-panel h1 {
