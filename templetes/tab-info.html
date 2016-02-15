@@ -4,36 +4,43 @@
             <br><br>
             <table class="table">
               <tr>
+                <th>Wallet Account</th>
+                <td>{{activeAccount ? activeAccount : "-"}}</td>
+                <td><img src="{{accountData.urlgravatar}}" style="margin-right: 5px; margin-bottom: 5px; display: {{accountData.EmailHash ? 'block': 'none'}}"></td>
+              </tr>
+              <tr>
                 <th>XRP Balance</th>
-                <th>
+                <td>
                   {{accountBalances.XRP ? accountBalances.XRP : '-'}}
                   <span style="padding-left:2em;"> {{accountBalances.XRP ? '(reserved: ' + accountBalances.reserved + ')' : ''}} </span>
 
-                </th>
-                <th><img src="{{accountData.urlgravatar}}" style="margin-right: 5px; margin-bottom: 5px; display: {{accountData.EmailHash ? 'block': 'none'}}"></th>
+                </td>
               </tr>
               <tr>
-                <td>Domain</td><td>{{accountData.domain ? accountData.domain : '-'}}</td>
+                <th>Domain</th><td>{{accountData.domain ? accountData.domain : '-'}}</td>
               </tr>
               <tr>
-                <td>EmailHash</td><td>{{accountData.EmailHash ? accountData.EmailHash : '-'}}</td>
+                <th>EmailHash</th><td>{{accountData.EmailHash ? accountData.EmailHash : '-'}}</td>
               </tr>
               <tr>
-                <td>Transfer Rate</td><td>{{accountData.TransferRate ? ((accountData.TransferRate / 1000000000 - 1) * 100).toFixed(7) + ' %' : '-' }} </td>
-                <td width="90">Owner Count</td><td width="40" align="center">{{accountData.OwnerCount}}</td>              
-              </tr>
-
-              <tr>
-                <td>Regular Key</td><td>{{accountData.RegularKey ? accountData.RegularKey : '-'}}</td>
-                <td width="90">Next Sequence</td><td width="40" align="center">{{accountData.Sequence}}</td>
+                <th>Transfer Rate</th><td>{{accountData.TransferRate ? ((accountData.TransferRate / 1000000000 - 1) * 100).toFixed(7) + ' %' : '-' }} </td>
               </tr>
               <tr>
-                <td>Message Key</td><td colspan="3">{{accountData.MessageKey ? accountData.MessageKey : '-'}}</td>
+                <th>Owner Count</th><td>{{accountData.OwnerCount}}</td>              
               </tr>
               <tr>
-                <td colspan="4" word-wrap="break-word">
+                <th>Regular Key</th><td>{{accountData.RegularKey ? accountData.RegularKey : '-'}}</td>
+              </tr>
+              <tr>
+                <th>Next Sequence</th><td>{{accountData.Sequence}}</td>
+              </tr>
+              <tr>
+                <th>Message Key</th><td colspan="3">{{accountData.MessageKey ? accountData.MessageKey : '-'}}</td>
+              </tr>
+              <tr>
+                <th colspan="4" word-wrap="break-word">
                   <span style="padding-right:1em;" ng-repeat="(key, value) in accountData['settings']">{{key}}:<font color="{{value ? 'green' : 'red'}}">{{value ? "&#10004" : "&#10008"}} </font></span>     
-                </td>      
+                </th>      
               </tr>
             </table>
 
