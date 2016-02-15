@@ -1,12 +1,12 @@
 * {
     word-wrap: break-word; 
     word-break: normal; 
-    overflow:scroll;
+    overflow:auto;
 }
 div {
     word-wrap: break-word; 
     word-break: normal; 
-    overflow:scroll;
+    overflow:auto;
 }
 
 .header-panel h1 {
