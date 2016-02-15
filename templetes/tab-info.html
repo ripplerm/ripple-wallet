@@ -1,16 +1,16 @@
         <div id="tabInfo">
-            <span style="font-weight:bold; font-size:20pt; padding-right:1em;">Account Info: </span>
+            <h1>Account Info: </h1>
             <button  class="btn btn-warning" ng-click="accountInfo()" ng-disabled="!activeAccount"><span class="glyphicon glyphicon-refresh"></span> Refresh </button> {{accountInfoStatus}} 
             <br><br>
-            <table border="1" cellpadding="5" cellspacing="0" style="cellpadding:5px; width:750px; table-layout:fixed" class="table table-bordered">
+            <table class="table">
               <tr>
-                <td style="width:120px">XRP Balance</td>
-                <td width="380">
+                <th>XRP Balance</th>
+                <th>
                   {{accountBalances.XRP ? accountBalances.XRP : '-'}}
                   <span style="padding-left:2em;"> {{accountBalances.XRP ? '(reserved: ' + accountBalances.reserved + ')' : ''}} </span>
 
-                </td>
-                <td width="250" rowspan="3" colspan="2" align="center"><img src="{{accountData.urlgravatar}}" style="margin-right: 5px; margin-bottom: 5px; display: {{accountData.EmailHash ? 'block': 'none'}}"></td>
+                </th>
+                <th><img src="{{accountData.urlgravatar}}" style="margin-right: 5px; margin-bottom: 5px; display: {{accountData.EmailHash ? 'block': 'none'}}"></th>
               </tr>
               <tr>
                 <td>Domain</td><td>{{accountData.domain ? accountData.domain : '-'}}</td>
