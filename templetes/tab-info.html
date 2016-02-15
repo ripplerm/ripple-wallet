@@ -35,7 +35,7 @@
                 <th>Message Key</th><td colspan="3">{{accountData.MessageKey ? accountData.MessageKey : '-'}}</td>
               </tr>
             </table>
-            <div style="padding-right:1em;" ng-repeat="(key, value) in accountData['settings']">{{key}}:<font color="{{value ? 'green' : 'red'}}">{{value ? "&#10004" : "&#10008"}} </font></div>     
+            <div><span style="padding-right:1em;" ng-repeat="(key, value) in accountData['settings']">{{key}}:<font color="{{value ? 'green' : 'red'}}">{{value ? "&#10004" : "&#10008"}} </font></span></div>     
             <div class="panel panel-info" ng-show="accountSetLog.status">
               <div class="panel-body {{accountSetLog.status == 'FINAL' ? (accountSetLog.status_code.slice(0,3) == 'tes' ? 'bg-success' : 'bg-danger') : 'bg-warning'}}">
                 <b>Tx Status:</b>[{{accountSetLog.status}}{{accountSetLog.status_code ? ', ' +  accountSetLog.status_code : ''}}], <b>Result:</b> {{accountSetLog.result}} {{accountSetLog.tx_hash ? ', tx_hash: ' + accountSetLog.tx_hash : ''}}
