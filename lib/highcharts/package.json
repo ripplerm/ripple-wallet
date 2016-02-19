@@ -1,0 +1,68 @@
+{
+  "name": "highcharts",
+  "version": "4.1.10",
+  "description": "JavaScript charting framework",
+  "main": "lib/highcharts",
+  "author": {
+    "name": "Highsoft AS",
+    "email": "support@highcharts.com",
+    "url": "http://www.highcharts.com/about"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/highcharts/highcharts.git"
+  },
+  "bugs": {
+    "url": "https://github.com/highcharts/highcharts/issues"
+  },
+  "homepage": "http://www.highcharts.com",
+  "keywords": [
+    "charts",
+    "graphs",
+    "visualization",
+    "data",
+    "browserify",
+    "webpack"
+  ],
+  "files": [
+    "errors",
+    "gfx",
+    "js",
+    "lib"
+  ],
+  "devDependencies": {
+    "browserify": "^12.0.1",
+    "colors": "~1.1.2",
+    "grunt": "^0.4.5",
+    "grunt-jslint": "^1.1.12",
+    "gulp-eslint": "^1.0.0",
+    "gzip-size": "^3.0.0",
+    "request": "^2.65.0",
+    "vinyl-ftp": "^0.4.5",
+    "xml2js": "^0.4.13"
+  },
+  "license": "https://www.highcharts.com/license",
+  "gitHead": "54ae464900016c5c39c7ab72652fc24ae16c995a",
+  "_id": "highcharts@4.1.10",
+  "scripts": {},
+  "_shasum": "e93802888a7be911d123ed953be0aaa9397fd1ec",
+  "_from": "highcharts@*",
+  "_npmVersion": "3.4.0",
+  "_nodeVersion": "4.1.1",
+  "_npmUser": {
+    "name": "highsoft",
+    "email": "torstein@highsoft.com"
+  },
+  "dist": {
+    "shasum": "e93802888a7be911d123ed953be0aaa9397fd1ec",
+    "tarball": "http://registry.npmjs.org/highcharts/-/highcharts-4.1.10.tgz"
+  },
+  "maintainers": [
+    {
+      "name": "highsoft",
+      "email": "torstein@highsoft.com"
+    }
+  ],
+  "directories": {},
+  "_resolved": "https://registry.npmjs.org/highcharts/-/highcharts-4.1.10.tgz"
+}

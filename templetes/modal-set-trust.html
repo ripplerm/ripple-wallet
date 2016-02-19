@@ -1,0 +1,60 @@
+                   <div class="modal-header">
+                        <h3 class="modal-title">{{options.edit ? 'Edit' : 'Add'}} Trustline</h3>
+                    </div>
+                    <div class="modal-body">
+                      <form name="editTrustlineForm">
+                        <table class="table table-condensed">
+                          <tr>
+                            <td>Currency:</td>
+                            <td><input type="text" name="currency" ng-model="options.currency" size="50" required ng-disabled="options.edit"></td>
+                          </tr>
+                          <tr>
+                            <td>Issuer: </td>
+                            <td>
+                              <div uib-dropdown uib-keyboard-nav>
+                                <input type="text" name="issuer" ng-model="options.account" size="50" ripple-valid-address required ng-disabled="options.edit">
+                                <button type="button" uib-dropdown-toggle ng-disabled="options.edit"><span class="caret"></span></button>
+                                <ul class="uib-dropdown-menu">
+                                  <li ng-repeat="gateway in gateways | filter: {currencies: options.currency} | orderBy:'name'"><a href="#" ng-click="options.account=gateway.address;">{{gateway.name}}</a></li>
+                                </ul>                                 
+                                <span style="color:red" ng-show="editTrustlineForm.issuer.$dirty && editTrustlineForm.issuer.$error.rippleValidAddress">Invalid Address!</span> 
+                              </div>
+                            </td>
+                          </tr>                         
+                          <tr>
+                            <td>Limit:</td>
+                            <td><input type="text" name="limit" ng-model="options.limit" size="50" required></td>
+                          </tr>
+                          <tr>
+                            <td>Input Quality:</td>
+                            <td><input type="text" name="quality_in" ng-model="options.quality_in_human" size="50">(1 = 100%)</td>
+                          </tr>
+                          <tr>
+                            <td>Output Quality:</td>
+                            <td><input type="text" name="quality_out" ng-model="options.quality_out_human" size="50">(1 = 100%)</td>
+                          </tr>
+                          <tr>
+                            <td>Others:</td>
+                            <td>
+                              <table class="table">
+                                <tr>
+                                  <td><input type="radio" ng-model="options.no_ripple" value="false" ng-checked="!options.no_ripple">Allow Rippling</td>
+                                  <td><input type="radio" ng-model="options.no_ripple" value="true" ng-checked="!!options.no_ripple">Disallow Rippling</td>
+                                </tr>
+                                <tr>
+                                  <td><input type="radio" ng-model="options.freeze" value="true" ng-checked="!!options.freeze">Freeze</td>
+                                  <td><input type="radio" ng-model="options.freeze" value="false" ng-checked="!options.freeze">No Freeze</td>
+                                </tr>
+                                <tr>
+                                  <td colspan="2"><input type="checkbox" ng-model="options.setAuth" ng-value="true" ng-checked="options.authorized">Set Authorized (Note: this cannot be unset.)</td>
+                                </tr>
+                              </table>
+                            </td>
+                          </tr>                          
+                        </table>
+                      </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-primary" type="button" ng-disabled="editTrustlineForm.$invalid" ng-click="ok()">Submit</button>
+                        <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
+                    </div>

@@ -1,0 +1,18 @@
+                    <div class="modal-header">
+                        <h3 class="modal-title">Set/Change RegularKey</h3>
+                    </div>
+                    <div class="modal-body">
+                      <form name="setRegularKeyForm">
+                        New Regularkey: <br>
+                        <input type="text" name="regularkey" ng-model="options.regularKey" size=50 ripple-valid-address autofocus placeholder="address">
+                        <span style="color:red" ng-show="setRegularKeyForm.regularkey.$dirty && setRegularKeyForm.regularkey.$error.rippleValidAddress">Invalid Address!</span> 
+                        <br>
+                        NOTE: submitting an empty value will delete existing RegularKey<br>
+                      </form>
+                      
+                    </div>
+
+                    <div class="modal-footer">
+                        <button class="btn btn-primary" type="button" ng-disabled="setRegularKeyForm.$invalid" ng-click="ok()">Submit</button>
+                        <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
+                    </div>

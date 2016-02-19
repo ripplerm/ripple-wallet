@@ -1,0 +1,76 @@
+        <div id="tabTrustlines">
+          <span style="font-weight:bold; font-size:20pt; padding-right:1em;">Trustlines: </span>
+          <button class="btn btn-warning" ng-click="accountLines(); search.currency='';" ng-disabled="!activeAccount"><span class="glyphicon glyphicon-refresh"></span>  Refresh </button> {{accountLinesStatus}}
+          <br><br>
+          <b>Total Trustlines = {{trustlinesStats ? totalTrustlines : ""}}</b>
+          <br><br>
+          <b>Balance Statistics: </b>
+          <span style="padding-left:3em"> <input type="checkbox" ng-model="trustlineStatsIgnoreZero"> Hide zero-balances</span> 
+          <table style="width:500px;" class="table table-bordered">
+            <tr>
+              <th>Currency</th><th>Number of Trustlines</th><th>Balances</th>
+            </tr>
+            <tr ng-repeat="(key, value) in trustlinesStats" ng-hide="trustlineStatsIgnoreZero? value.balance == '0' : false">
+              <td>{{currencyName(key)}}</td> <td align="center">{{value.lineNumber}}</td><td>{{value.balance}}</td>
+            </tr>
+          </table>
+
+          <div class="panel panel-info" ng-show="trustSetLog.status">
+            <div class="panel-body {{trustSetLog.status == 'FINAL' ? (trustSetLog.status_code.slice(0,3) == 'tes' ? 'bg-success' : 'bg-danger') : 'bg-warning'}}">
+              <b>Tx Status:</b>[{{trustSetLog.status}}{{trustSetLog.status_code ? ', ' +  trustSetLog.status_code : ''}}], <b>Result:</b> {{trustSetLog.result}} {{trustSetLog.tx_hash ? ', tx_hash: ' + trustSetLog.tx_hash : ''}}
+            </div>
+          </div>            
+        
+          <b>List of Trustlines: </b>
+          <span style="padding-left:1em;"> Currency Filter: </span> 
+          <select ng-model="search.currency">
+            <option value="">- ALL -</option>
+            <option ng-repeat="(key, value) in trustlinesStats" value="{{key}}">{{currencyName(key)}}</option>
+          </select>
+          <span style="padding-left:1em"> <input type="checkbox" ng-model="trustlineDescending"> Descending.</span>           
+          <span style="padding-left:1em"> <input type="checkbox" ng-model="trustlineIgnoreZero"> Hide Zero-Balances.</span> 
+          <span style="padding-left:1em"> <input type="checkbox" ng-model="trustlineShowFull"> Show Advance Detail.</span>
+
+          <span style="float:right">
+            <button class="btn btn-info" ng-click="addTrustline()">Add New Trustline</button> 
+          </span>
+          <br>  
+
+          <table border="1" cellpadding="5" cellspacing="0" class="table table-bordered table-striped" style="text-align: center">
+            <tr style="text-align: center">
+              <th style="text-align: center">Currency</th>
+              <th style="text-align: center">Counter Party</th>
+              <th style="text-align: center">Balance</th>
+              <th style="text-align: center" ng-show="trustlineShowFull">Peer's Rippling / Freeze / Auth</th>
+              <th style="text-align: center" ng-show="trustlineShowFull">Peer's Limit</th>
+              <th style="text-align: center">Self Limit</th>
+              <th style="text-align: center" ng-show="trustlineShowFull">Self Rippling / Freeze / Auth</th>
+              <th style="text-align: center" ng-show="trustlineShowFull">Quality-In</th>
+              <th style="text-align: center" ng-show="trustlineShowFull">Quality-Out</th>
+              <th style="text-align: center">Modify</th>
+            </tr>
+            <tr ng-repeat="line in trustlines | filter:search | orderBy:'balance':trustlineDescending" ng-hide="trustlineIgnoreZero? line.balance == 0 : false">
+              <td>{{currencyName(line.currency)}}</td>
+              <td style="text-align:left">{{gatewayName(line.account)}}</td>
+              <td style="text-align:right">{{amountDisplay({currency: line.currency, value: line.balance, }, {value: true})}}</td>
+              <td style="text-align:center" ng-show="trustlineShowFull">
+                <font color="{{line.no_ripple_peer ? 'green' : 'red'}}">{{line.no_ripple_peer ? "&#10008" : "&#10004"}} </font> / 
+                <font color="{{line.freeze_peer ? 'red' : 'green'}}">{{line.freeze_peer ? "&#10004" : "&#10008"}} </font> / 
+                <font color="{{line.peer_authorized ? 'green' : 'blue'}}">{{line.peer_authorized ? "&#10004" : "&#10008"}}</font></td>
+              <td style="text-align:right" ng-show="trustlineShowFull"> {{line.limit_peer}}</td>
+              <td style="text-align:right"> {{line.limit}}</td>
+              <td style="text-align:center" ng-show="trustlineShowFull">
+                <font color="{{line.no_ripple ? 'green' : 'red'}}">{{line.no_ripple ? '&#10008' : '&#10004'}} </font> / 
+                <font color="{{line.freeze ? 'red' : 'green'}}"> {{line.freeze ? '&#10004' : '&#10008' }} </font> / 
+                <font color="{{line.authorized ? 'green' : 'blue'}}"> {{line.authorized ? '&#10004': '&#10008'}} </font> 
+              </td>
+              <td style="text-align:right" ng-show="trustlineShowFull">{{line.quality_in ? line.quality_in / 1e9 : 1}}</td>
+              <td style="text-align:right" ng-show="trustlineShowFull">{{line.quality_out ? line.quality_out / 1e9 : 1}}</td>
+              <td style="text-align:center">
+              <button class="btn btn-link" ng-click="editTrustline(line)">edit <span class="glyphicon glyphicon-edit"></span></button>
+              </td>
+            </tr>
+          </table>
+          <br>        
+
+        </div>

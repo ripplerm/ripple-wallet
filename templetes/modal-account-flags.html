@@ -1,0 +1,30 @@
+                    <div class="modal-header">
+                        <h3 class="modal-title">Edit Account Flags</h3>
+                    </div>
+                    <div class="modal-body">
+                      <form name="accountSettingsForm">
+                        <table class="table">
+                          <tr>
+                            <th>Select a Flag</th>
+                            <th>Action</th>
+                          </tr>
+                          <tr>
+                            <td>
+                              <span ng-repeat="(key, value) in options.set_clear_flags"> <input type="radio" name="flag" ng-model="options.flagSetClear" value="{{key}}"> {{key.slice(3)}} <br></span>      
+                            </td>
+                            <td>
+                              <input type="radio" name='toggle' ng-model="options.actionSetClear" value="set"> Turn ON. <br><br>
+                              <input type="radio" name='toggle' ng-model="options.actionSetClear" value="clear"> Turn OFF.
+                            </td>
+                          </tr>
+                        </table>
+                      </form>
+                      NOTE: <br>
+                      'NoFreeze' flags can NOT be un-set once turned-on. <br>
+                      'RequireAuth' flag can only be set when owner-count is zero.
+
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-primary" type="button" ng-disabled="!(options.actionSetClear && options.flagSetClear)" ng-click="ok()">Submit</button>
+                        <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
+                    </div>

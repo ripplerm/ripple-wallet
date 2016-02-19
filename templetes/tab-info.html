@@ -1,0 +1,51 @@
+        <div id="tabInfo">
+            <h4 class="card-title">Account Info: {{activeAccount ? activeAccount : "-"}}</h4>
+            <button  class="btn btn-warning" ng-click="accountInfo()" ng-disabled="!activeAccount"><span class="glyphicon glyphicon-refresh"></span> Refresh </button> {{accountInfoStatus}} 
+            <br>
+            <br>
+            <img src="{{accountData.urlgravatar}}" style="margin-right: 5px; margin-bottom: 5px; display: {{accountData.EmailHash ? 'block': 'none'}}">
+            <table class="table table-hover">
+              <tr>
+                <th style="width:20%">XRP Balance</th>
+                <td style="width:70%">
+                  {{accountBalances.XRP ? accountBalances.XRP : '-'}}
+                  <span style="padding-left:1em;"> {{accountBalances.XRP ? '(reserved: ' + accountBalances.reserved + ')' : ''}} </span>
+
+                </td>
+              </tr>
+              <tr>
+                <th>Domain</th><td>{{accountData.domain ? accountData.domain : '-'}}</td>
+              </tr>
+              <tr>
+                <th>EmailHash</th><td>{{accountData.EmailHash ? accountData.EmailHash : '-'}}</td>
+              </tr>
+              <tr>
+                <th>Transfer Rate</th><td>{{accountData.TransferRate ? ((accountData.TransferRate / 1000000000 - 1) * 100).toFixed(7) + ' %' : '-' }} </td>
+              </tr>
+              <tr>
+                <th>Owner Count</th><td>{{accountData.OwnerCount}}</td>              
+              </tr>
+              <tr>
+                <th>Regular Key</th><td>{{accountData.RegularKey ? accountData.RegularKey : '-'}}</td>
+              </tr>
+              <tr>
+                <th>Next Sequence</th><td>{{accountData.Sequence}}</td>
+              </tr>
+              <tr>
+                <th>Message Key</th><td colspan="3">{{accountData.MessageKey ? accountData.MessageKey : '-'}}</td>
+              </tr>
+            </table>
+            <br>
+            <br>
+            <div><span style="padding-right:1em;" ng-repeat="(key, value) in accountData['settings']">{{key}}:<font color="{{value ? 'green' : 'red'}}">{{value ? "&#10004" : "&#10008"}} </font></span></div>     
+            <div class="panel panel-info" ng-show="accountSetLog.status">
+              <div class="panel-body {{accountSetLog.status == 'FINAL' ? (accountSetLog.status_code.slice(0,3) == 'tes' ? 'bg-success' : 'bg-danger') : 'bg-warning'}}">
+                <b>Tx Status:</b>[{{accountSetLog.status}}{{accountSetLog.status_code ? ', ' +  accountSetLog.status_code : ''}}], <b>Result:</b> {{accountSetLog.result}} {{accountSetLog.tx_hash ? ', tx_hash: ' + accountSetLog.tx_hash : ''}}
+              </div>
+            </div>   
+                        
+            <button type="button" class="btn btn-info" ng-click="prepareSetRegularKey()">Set RegularKey</button> 
+            <button type="button" class="btn btn-info" ng-click="prepareAccountSet({modal: 'info'})">Edit Account Info</button>
+            <button type="button" class="btn btn-info" ng-click="prepareAccountSet({modal: 'flags'})">Edit Account Flags</button>
+            <br>
+        </div>

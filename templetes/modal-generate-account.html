@@ -1,0 +1,21 @@
+
+        <div class="modal-header">
+            <h3 class="modal-title">Generate Account</h3>
+        </div>
+        
+        <div class="modal-body">
+          <form name="generateAccountForm" nonvalidate>
+            <table>
+              <tr>
+                <td>Secret:</td>
+                <td><input type="text" name="secret" ng-model="options.secret" size=50 ripple-valid-secret required autofocus> <span style="color:red" ng-show="generateAccountForm.secret.$dirty && generateAccountForm.secret.$error.rippleValidSecret">Invalid Secret!</span>  </td>
+              </tr>              
+            </table>
+          </form><br>
+          <button type="button" ng-click="options.secret = generateNewSecret(); options.index = 0;">New Random Secret</button>
+        </div>
+
+        <div class="modal-footer">
+            <button class="btn btn-primary" type="button" ng-disabled="generateAccountForm.$invalid" ng-click="ok()">Submit</button>
+            <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
+        </div>

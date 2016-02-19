@@ -1,0 +1,33 @@
+<div class="modal-header">
+    <h3 class="modal-title">Modify Offer</h3>
+</div>
+<div class="modal-body">
+  <form name="offerEditForm" nonvalidate>
+    <h4> 
+        <span style="color: {{options.type=='sell' ? 'red' : 'green'}}">
+            <b>{{options.type == 'sell' ? 'SELL' : 'BUY'}}: </b>
+        </span>
+    </h4>
+    <h5>
+        <table class="table">
+            <tr>
+                <td>Quantity:</td>
+                <td><input type="text" size="10" name="qty" ng-model="options.qty" placeholder="amount" positive-number> {{options.baseCurrency}}</td>
+            </tr>
+            <tr>
+                <td>at Price:</td>
+                <td><input type="text" size="10" name="price" ng-model="options.price" placeholder="price" positive-number> ({{options.tradeCurrency}})</td>
+            </tr>
+            <tr>
+                <td>Expire after:</td>
+                <td><input type="text" size="10" name="expiration" ng-model="options.expiration" placeholder="hour" positive-number> Hour.</td>
+            </tr>
+        </table>                  
+    </h5>       
+  </form>
+</div>
+
+<div class="modal-footer">
+    <button class="btn btn-primary" type="button" ng-disabled="offerEditForm.$invalid" ng-click="ok()">Submit</button>
+    <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
+</div>

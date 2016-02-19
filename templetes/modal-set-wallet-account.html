@@ -1,0 +1,34 @@
+        <div class="modal-header">
+            <h3 class="modal-title">Set Wallet Account</h3>
+        </div>
+        <div class="modal-body">
+          <form name="setWalletAccountForm" nonvalidate>
+            <table>
+                <tr>
+                    <td>Address:</td>
+                    <td>
+                        <div uib-dropdown uib-keyboard-nav>
+                            <input type="text" name="address" ng-model="options.address" size=50 ripple-valid-address autofocus dropdown-append-to-body>
+
+                            <button type="button" uib-dropdown-toggle ><span class="caret"></span></button>
+                            <ul class="uib-dropdown-menu">
+                                <li ng-repeat="account in accountHistory"><a href="#" ng-click="options.address=account;">{{account}}</a></li>
+                            </ul>
+                            <span style="color:red" ng-show="setWalletAccountForm.address.$dirty && setWalletAccountForm.address.$error.rippleValidAddress">Invalid Address!</span>
+                            <br>
+                        </div>                        
+                    </td>                    
+                </tr>
+                <tr ng-show="options.secret">
+                    <td>secret:</td>
+                    <td>{{options.secret}}</td>
+                </tr>
+            </table>
+            <br>
+            <div align="right"><button type="button" ng-click="prepareGenerateAccount(options)">use secretkey</button></div>            
+          </form>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-primary" type="button" ng-disabled="setWalletAccountForm.$invalid" ng-click="ok()">Submit</button>
+            <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
+        </div>
