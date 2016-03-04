@@ -95,58 +95,16 @@
   <div class="card page" ng-repeat="tab in tabs" id="{{tab.title}}" style="margin: 1em;padding:2em;word-wrap: break-word; word-break: normal; overflow:auto;"><div ng-include="tab.templete"></div></div>
   </main>
 </div>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
-  <script src="https://cdn.rawgit.com/HubSpot/tether/v1.1.1/dist/js/tether.min.js"></script>
-  <script src="https://cdn.rawgit.com/twbs/bootstrap/v4-dev/dist/js/bootstrap.min.js"></script>
+  <script src="lib/jquery-2.2.1.min.js"></script>
+  <script src="lib/tether/js/tether.min.js"></script>
+  <script src="lib/bootstrap/js/bootstrap.min.js"></script>
   <script src="lib/bootstrap-material-design/js/bootstrap-material-design.iife.min.js"></script>
 
 
 <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-<script src="https://cdn.rawgit.com/rosskevin/bootstrap-material-design/gh-pages/assets/js/ie10-viewport-bug-workaround.js"></script>
-<script src="https://cdn.rawgit.com/rosskevin/bootstrap-material-design/gh-pages/assets/js/ie-emulation-modes-warning.js"></script>
-
-<script>
-  $(function() {
-    $('body').bootstrapMaterialDesign()
-  })
-</script>
-<script>
-  window.page = window.location.hash || "#Info";
-  $(document).ready(function () {
-    if (window.page != "#Info") {
-      $(".menu").find("a[data-target=" + window.page + "]").trigger("click");
-    }
-  });
-  $(window).on("resize", function () {
-    $("html, body").height($(window).height());
-    $(".main, .menu").height($(window).height() - $(".header-panel").outerHeight());
-    $(".pages").height($(window).height());
-  }).trigger("resize");
-  $(".menu a").click(function () {
-    // Menu
-    if (!$(this).data("target")) return;
-    if ($(this).is(".active")) return;
-    $(".menu a").not($(this)).removeClass("active");
-    $(".page").not(page).removeClass("active").hide();
-    window.page = $(this).data("target");
-    var page = $(window.page);
-    window.location.hash = window.page;
-    $(this).addClass("active");
-    page.show();
-    var totop = setInterval(function () {
-      $(".pages").animate({scrollTop: 0}, 0);
-    }, 1);
-    setTimeout(function () {
-      page.addClass("active");
-      setTimeout(function () {
-        clearInterval(totop);
-      }, 1000);
-    }, 100);
-  });
-
-</script>
-
-
+<script src="lib/bootstrap-material-design/js/ie10-viewport-bug-workaround.js"></script>
+<script src="lib/bootstrap-material-design/js/ie-emulation-modes-warning.js"></script>
+<script src="js/load.js"></script>
 
 
   </body>
