@@ -34,3 +34,14 @@ $(function() {
       }, 1000);
     }, 100);
   });
+  
+  function getLang(){
+	if(window.localStorage) {
+		if(localStorage["language"]) return localStorage["language"];
+	}
+	return 0;
+}
+function saveLang(l){
+	if(window.localStorage) localStorage["language"]=l;
+}
+

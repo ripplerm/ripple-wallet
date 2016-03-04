@@ -218,6 +218,12 @@ var TRADE_PAIRS = [
 
 
 walletApp.controller('walletCtrl', ['$scope', '$http', '$uibModal', function($scope, $http, $uibModal) {
+  $scope.lang=getLang();
+  $scope.setlang=function(l){
+		$scope.lang=l;
+		saveLang(l);
+	};
+  
   $scope.gateways = GATEWAYS;
   $scope.tradepairs = TRADE_PAIRS;
 

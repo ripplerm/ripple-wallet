@@ -45,7 +45,7 @@
         <i class="material-icons">menu</i>
       </button>
       <ul class="nav navbar-nav">
-        <li class="nav-item">Network: <font color="{{(state == 'online') ? 'green' : 'red'}}">{{state}}</font></li>
+        <li class="nav-item">{{lang==0?'Network:':'网络:'}} <font color="{{(state == 'online') ? 'green' : 'red'}}">{{state? "&#10004" : "&#10008"}}</font></li>
         <li class="nav-item">Secret set: <font color="{{remote.secrets[activeAccount] ? 'green' : 'red' }}">{{remote.secrets[activeAccount] ? "&#10004" : "&#10008"}}</font>
     </li>
       </ul>
@@ -66,6 +66,8 @@
               <button class="dropdown-item" type="button">Wallet Account: <b>{{activeAccount ? activeAccount : "-"}} </b></button>
               <button class="dropdown-item" type="button">Server: {{server}}</button>
               <button class="dropdown-item" type="button">Last-Closed-Ledger: <font color="blue"> {{ledgerIndex}} </font></button>
+              <button class="dropdown-item" type="button" ng-click="setlang(0)">English</button>
+              <button class="dropdown-item" type="button" ng-click="setlang(1)">中文</button>
             </div>
           </div>
         </li>
