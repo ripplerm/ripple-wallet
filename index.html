@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="Material Design Ripple Wallet">
 <meta name="keywords" content="Material Design Ripple Wallet">
 <meta name="author" content="Federico Zivolo, Kevin Ross, and Bootstrap Material Design contributors,ripplerm,yxxyun">
@@ -16,13 +16,13 @@
 </title>
 
 
-<!-- Material Design fonts -->
-<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:300,400,500,700">
-<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+<!-- Material Design fonts http://fonts.googleapis.com/css?family=Roboto:300,400,500,700 https://fonts.googleapis.com/icon?family=Material+Icons-->
+<link rel="stylesheet" href="lib/Roboto/Roboto.css"> 
+<link rel="stylesheet" href="lib/Roboto/MaterialIcons.css">
 
 <!-- Material Design for Bootstrap generic -->
 
-<link href="https://cdn.rawgit.com/fezvrasta/bootstrap-material-design/v4-dist/css/bootstrap-material-design.css" rel="stylesheet">
+<link href="lib/bootstrap-material-design/css/bootstrap-material-design.css" rel="stylesheet">
 
   <script src="lib/ripple-0.12.9.1-min.js"></script>
   <script src="lib/angular-1.4.4.min.js"></script> 
@@ -31,9 +31,10 @@
   <script src="lib/highcharts/lib/highstock.js"></script>
   <script src="lib/md5.js"></script>
 <!-- Page style -->
-  <link href="index.css" rel="stylesheet">
+  <link href="css/index.css" rel="stylesheet">
 
   <script src="js/mywallet.js"></script>
+  
   </head>
   <body>
     <div ng-controller="walletCtrl" class="mdb-layout-container mdb-drawer-f-l mdb-drawer-overlay-md-down mdb-drawer-in-lg-up">
@@ -86,13 +87,18 @@
     </ul>
   </div>
   <main class="mdb-layout-content">
-  	
+  <div class="card page active" style="margin: 1em;padding:2em;word-wrap: break-word; word-break: normal; overflow:auto;">
+      <!-- main content -->
+      <h2>Responsive drawer template</h2>
+      <p class="lead">This template provides a push style drawer for large screens, but an overlay style drawer for smaller screens.  For example, try viewing on an iPad in portrait vs. landscape.</p>
+  </div>	
   <div class="card page" ng-repeat="tab in tabs" id="{{tab.title}}" style="margin: 1em;padding:2em;word-wrap: break-word; word-break: normal; overflow:auto;"><div ng-include="tab.templete"></div></div>
-  
+  </main>
+</div>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
   <script src="https://cdn.rawgit.com/HubSpot/tether/v1.1.1/dist/js/tether.min.js"></script>
   <script src="https://cdn.rawgit.com/twbs/bootstrap/v4-dev/dist/js/bootstrap.min.js"></script>
-  <script src="https://cdn.rawgit.com/fezvrasta/bootstrap-material-design/v4-dist/js/bootstrap-material-design.iife.min.js"></script>
+  <script src="lib/bootstrap-material-design/js/bootstrap-material-design.iife.min.js"></script>
 
 
 <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
@@ -104,7 +110,7 @@
     $('body').bootstrapMaterialDesign()
   })
 </script>
-<script>  
+<script>
   window.page = window.location.hash || "#Info";
   $(document).ready(function () {
     if (window.page != "#Info") {
@@ -137,29 +143,7 @@
       }, 1000);
     }, 100);
   });
-  function cleanSource(html) {
-    var lines = html.split(/\n/);
-    lines.shift();
-    lines.splice(-1, 1);
-    var indentSize = lines[0].length - lines[0].trim().length,
-        re = new RegExp(" {" + indentSize + "}");
-    lines = lines.map(function (line) {
-      if (line.match(re)) {
-        line = line.substring(indentSize);
-      }
-      return line;
-    });
-    lines = lines.join("\n");
-    return lines;
-  }
-  $("#opensource").click(function () {
-    $.get(window.location.href, function (data) {
-      var html = $(data).find(window.page).html();
-      html = cleanSource(html);
-      $("#source-modal pre").text(html);
-      $("#source-modal").modal();
-    });
-  });
+
 </script>
 
 
