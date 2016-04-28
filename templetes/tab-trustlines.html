@@ -20,7 +20,7 @@
   </table>
 
   <div class="panel panel-info" ng-show="trustSetLog.status">
-    <div class="panel-body {{trustSetLog.status == 'FINAL' ? (trustSetLog.status_code.slice(0,3) == 'tes' ? 'bg-success' : 'bg-danger') : 'bg-warning'}}">
+    <div class="alert {{trustSetLog.status == 'FINAL' ? (trustSetLog.status_code.slice(0,3) == 'tes' ? 'alert-success' : 'alert-danger') : 'alert-warning'}}" role="alert">
       <b>Tx Status:</b>[{{trustSetLog.status}}{{trustSetLog.status_code ? ', ' + trustSetLog.status_code : ''}}], <b>Result:</b>      {{trustSetLog.result}} {{trustSetLog.tx_hash ? ', tx_hash: ' + trustSetLog.tx_hash : ''}}
     </div>
   </div>
