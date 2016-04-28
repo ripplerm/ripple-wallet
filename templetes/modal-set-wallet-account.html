@@ -6,19 +6,21 @@
         <table>
             <tr>
 
-                <td>
-                    <div class="form-group">
+                
+                    <div class="dropdown">
                         <label for="idinput">Address:</label>
-                        <input id="idinput" type="text" placeholder="enter address or click use secret key" class="form-control" size=50 ng-model="options.address" ripple-valid-address autofocus dropdown-append-to-body>
-                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" <span class="caret"></span></button>
+                        <input id="idinput" name="address" type="text" placeholder="enter address or click use secret key" class="form-control" size=50 ng-model="options.address" ripple-valid-address autofocus dropdown-append-to-body>
+                       
+                        <button class="btn dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="caret"></span></button>
 
-                        <div class="dropdown-menu">
-                            <a ng-repeat="account in accountHistory" href="#" ng-click="options.address=account;">{{account}}</a>
-                        </div>
+                        <ul class="dropdown-menu">
+                            <li ng-repeat="account in accountHistory"><a href="#" ng-click="options.address=account;">{{account}}</a></li>
+                        </ul>
+                         
                         <span style="color:red" ng-show="setWalletAccountForm.address.$dirty && setWalletAccountForm.address.$error.rippleValidAddress">Invalid Address!</span>
                         <br>
                     </div>
-                </td>
+               
             </tr>
             <tr ng-show="options.secret">
                 <td>secret:</td>

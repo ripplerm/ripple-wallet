@@ -6,18 +6,18 @@
         <table class="table">
             <tr>
                 <td>Base Currency:</td>
-                <td><input type="text" name="baseCurrency" ng-model="options.baseCurrency" size=50 autofocus ng-change="options.baseIssuer = (options.baseCurrency == 'XRP') ? null : options.baseIssuer;"></td>
+                <td><input type="text" class="form-control" name="baseCurrency" ng-model="options.baseCurrency" size=50 autofocus ng-change="options.baseIssuer = (options.baseCurrency == 'XRP') ? null : options.baseIssuer;"></td>
             </tr>
             <tr>
                 <td>
                     Issuer:
                 </td>
                 <td>
-                    <div uib-dropdown uib-keyboard-nav>
-                        <input type="text" name="baseIssuer" ng-model="options.baseIssuer" size=50 ripple-valid-address ng-required="options.baseCurrency != 'XRP'"
+                    <div class="dropdown">
+                        <input type="text" class="form-control" name="baseIssuer" ng-model="options.baseIssuer" size=50 ripple-valid-address ng-required="options.baseCurrency != 'XRP'"
                             ng-disabled="options.baseCurrency === 'XRP'">
-                        <button type="button" uib-dropdown-toggle>Gateway<span class="caret"></span></button>
-                        <ul class="uib-dropdown-menu">
+                        <button type="button" class="btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Gateway<span class="caret"></span></button>
+                        <ul class="dropdown-menu">
                             <li ng-repeat="gateway in gateways | filter: {currencies: options.baseCurrency} | orderBy:'name'"><a href="#" ng-click="options.baseIssuer=gateway.address;">{{gateway.name}}</a></li>
                         </ul>
 
@@ -32,17 +32,17 @@
         <table class="table">
             <tr>
                 <td>Trade Currency:</td>
-                <td><input type="text" name="tradeCurrency" ng-model="options.tradeCurrency" size=50 ng-change="options.tradeIssuer = (options.tradeCurrency == 'XRP') ? null : options.tradeIssuer;"></td>
+                <td><input type="text" class="form-control" name="tradeCurrency" ng-model="options.tradeCurrency" size=50 ng-change="options.tradeIssuer = (options.tradeCurrency == 'XRP') ? null : options.tradeIssuer;"></td>
             </tr>
             <tr>
 
                 <td>Issuer:</td>
                 <td>
-                    <div uib-dropdown uib-keyboard-nav>
-                        <input type="text" name="tradeIssuer" ng-model="options.tradeIssuer" size=50 ripple-valid-address ng-required="options.tradeCurrency != 'XRP'"
+                    <div class="dropdown">
+                        <input type="text" class="form-control" name="tradeIssuer" ng-model="options.tradeIssuer" size=50 ripple-valid-address ng-required="options.tradeCurrency != 'XRP'"
                             ng-disabled="options.tradeCurrency === 'XRP'">
-                        <button type="button" uib-dropdown-toggle>Gateway<span class="caret"></span></button>
-                        <ul class="uib-dropdown-menu">
+                        <button type="button" class="btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Gateway<span class="caret"></span></button>
+                        <ul class="dropdown-menu">
                             <li ng-repeat="gateway in gateways | filter: {currencies: options.tradeCurrency} | orderBy:'name' "><a href="#" ng-click="options.tradeIssuer=gateway.address;">{{gateway.name}}</a></li>
                             <li class="divider"></li>
                         </ul>

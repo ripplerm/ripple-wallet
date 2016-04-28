@@ -59,11 +59,11 @@
                     <tr>
                         <td>Issuer:</td>
                         <td>
-                            <div uib-dropdown uib-keyboard-nav>
+                            <div class="dropdown">
                                 <input type="text" class="form-control" placeholder="address" name="amountIssuer" ng-model="Payment.amountIssuer" size="50" ng-required="Payment.amountCurrency != 'XRP'" ng-disabled="Payment.amountCurrency == 'XRP' || Payment.federation.quoteRequired" ng-change="pathFindAutoStart()"
                                     ripple-valid-address>
-                                <button type="button" uib-dropdown-toggle><span class="caret"></span></button>
-                                <ul class="uib-dropdown-menu">
+                                <button type="button" class="btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="caret"></span></button>
+                                <ul class="dropdown-menu">
                                     <li ng-repeat="gateway in gateways | filter: {currencies: Payment.amountCurrency} | orderBy:'name'"><a href="#" ng-click="Payment.amountIssuer=gateway.address; pathFindAutoStart()">{{gateway.name}}</a></li>
                                 </ul>
                                 <span style="padding-left:1em; color:red" ng-show="paymentForm.amountIssuer.$dirty && paymentForm.amountIssuer.$error.rippleValidAddress">Invalid Address!</span>
@@ -75,8 +75,8 @@
         </tr>
         <tr>
             <td>
-                <button ng-click="pathFindStart()" ng-disabled="(paymentForm.destination.$invalid || paymentForm.amountValue.$invalid || paymentForm.amountCurrency.$invalid || paymentForm.amountIssuer.$invalid)">Paths Search</button>
-                <button ng-click="pathFindClose()" ng-disabled="!pathFind">stop</button>
+                <button class="btn btn-info" ng-click="pathFindStart()" ng-disabled="(paymentForm.destination.$invalid || paymentForm.amountValue.$invalid || paymentForm.amountCurrency.$invalid || paymentForm.amountIssuer.$invalid)">Paths Search</button>
+                <button class="btn btn-info" ng-click="pathFindClose()" ng-disabled="!pathFind">stop</button>
             </td>
             <td style="word-wrap:break-word">
                 <input type="checkbox" ng-model="Payment.pathFindSeparateIssuer" ng-click="pathFindAutoStart()"> Separate Issuers.<br> <br> {{Payment.pathFindStatus}} <br><br>
@@ -96,7 +96,7 @@
             <td><input type="number" class="form-control" min="0" ng-model="paymentSlipage" size="5"> (%)</td>
         </tr>
         <tr>
-            <td>Send Max: <br><button ng-click="setSendmax({value:Payment.amountValue, currency:Payment.amountCurrency, issuer:Payment.amountIssuer}); setPaths(null); pathFindClose();" ng-disabled="paymentForm.amountValue.$invalid || paymentForm.amountCurrency.$invalid || paymentForm.amountIssuer.$invalid">Direct Pay</button>
+            <td>Send Max: <br><button class="btn btn-info" ng-click="setSendmax({value:Payment.amountValue, currency:Payment.amountCurrency, issuer:Payment.amountIssuer}); setPaths(null); pathFindClose();" ng-disabled="paymentForm.amountValue.$invalid || paymentForm.amountCurrency.$invalid || paymentForm.amountIssuer.$invalid">Direct Pay</button>
             </td>
             <td>
                 <table>
@@ -114,10 +114,10 @@
                     <tr>
                         <td>Issuer:</td>
                         <td>
-                            <div uib-dropdown uib-keyboard-nav>
+                            <div class="dropdown">
                                 <input type="text" class="form-control" placeholder="address" name="sendmaxIssuer" ng-model="Payment.sendmaxIssuer" size="50" ng-required="Payment.sendmaxCurrency && Payment.sendmaxCurrency != 'XRP'" ng-disabled="Payment.sendmaxCurrency == 'XRP'" ripple-valid-address>
-                                <button type="button" uib-dropdown-toggle><span class="caret"></span></button>
-                                <ul class="uib-dropdown-menu">
+                                <button type="button" class="btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="caret"></span></button>
+                                <ul class="dropdown-menu">
                                     <li ng-repeat="gateway in gateways | filter: {currencies: Payment.sendmaxCurrency} | orderBy:'name'"><a href="#" ng-click="Payment.sendmaxIssuer=gateway.address;">{{gateway.name}}</a></li>
                                 </ul>
                                 <span style="padding-left:1em; color:red" ng-show="paymentForm.sendmaxIssuer.$dirty && paymentForm.sendmaxIssuer.$error.rippleValidAddress">Invalid Address!</span>
@@ -175,8 +175,8 @@
         <tr>
             <td width="120">Memos:</td>
             <td style="word-wrap:break-word">
-                <button type="button" ng-click="prepareMemo(Payment)">Add New</button>
-                <button type="button" ng-click="clearMemos(Payment)">Clear All</button>
+                <button type="button" class="btn btn-info" ng-click="prepareMemo(Payment)">Add New</button>
+                <button type="button" class="btn btn-info" ng-click="clearMemos(Payment)">Clear All</button>
                 <br>
                 <table class="table" ng-show="Payment.memos && Payment.memos.length > 0">
                     <tr>
@@ -197,7 +197,7 @@
     </table>
 
     <div class="panel panel-info" ng-show="paymentLog.status">
-        <div class="panel-body {{paymentLog.status == 'FINAL' ? (paymentLog.status_code.slice(0,3) == 'tes' ? 'bg-success' : 'bg-danger') : 'bg-warning'}}">
+        <div class="alert {{paymentLog.status == 'FINAL' ? (paymentLog.status_code.slice(0,3) == 'tes' ? 'alert-success' : 'alert-danger') : 'alert-warning'}}" role="alert">
             <b>Status:</b>[{{paymentLog.status}}{{paymentLog.status_code ? ', ' + paymentLog.status_code : ''}}], <b>Result:</b> {{paymentLog.result}} {{paymentLog.tx_hash ? ', tx_hash: ' + paymentLog.tx_hash : ''}}
         </div>
     </div>

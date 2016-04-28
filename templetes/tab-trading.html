@@ -10,16 +10,16 @@
         </div>
     </div>
     <div class="col-sm-4">
-        <div uib-dropdown uib-keyboard-nav>
+        <div class="dropdown">
             <span style="font-weight:bold; font-size:14pt; color:green">
 				{{pairName(trading.pair)}}</span>
             </span>
-            <button type="button" uib-dropdown-toggle><span class="caret"></span></button>
-            <ul class="uib-dropdown-menu">
+            <button type="button" class="btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="caret"></span></button>
+            <ul class="dropdown-menu">
                 <li><a href="#" ng-click="prepareTradePair()"> -- Add New -- </a></li>
                 <li ng-repeat="pair in tradepairs"><a href="#" ng-click="setTradePair(pair)">{{pairName(pair)}}</a></li>
             </ul>
-            <button ng-click="flipTradePair()"><span class="glyphicon glyphicon-transfer"></span> Flip</button>
+            <button class="btn btn-info" ng-click="flipTradePair()"><span class="glyphicon glyphicon-transfer"></span> Flip</button>
         </div>
         <hr>
         <h4>Outstanding Orders: 
@@ -66,7 +66,7 @@
 </div>
 
 <div class="panel panel-info" ng-show="tradingLog.status">
-    <div class="panel-body {{tradingLog.status == 'FINAL' ? (tradingLog.status_code.slice(0,3) == 'tes' ? 'bg-success' : 'bg-danger') : 'bg-warning'}}">
+    <div class="alert {{tradingLog.status == 'FINAL' ? (tradingLog.status_code.slice(0,3) == 'tes' ? 'alert-success' : 'alert-danger') : 'alert-warning'}}" role="alert">
         <b>Tx Status:</b>[{{tradingLog.status}}{{tradingLog.status_code ? ', ' + tradingLog.status_code : ''}}], <b>Result:</b> {{tradingLog.result}} {{tradingLog.tx_hash ? ', tx_hash: ' + tradingLog.tx_hash : ''}}
     </div>
 </div>
@@ -74,14 +74,14 @@
 <h3> Place Order: </h3>
 <div class="row">
     <div class="col-sm-6">
-        <div class='panel panel-success'>
-            <div class="panel-body bg-success">
+        <div class="panel panel-success">
+            <div class="panel-body">
 
                 Buy:
-                <input type="text" size="15" name="buyQuantity" ng-model="trading.buyQuantity" placeholder="amount" positive-number> {{trading.baseCurrency}}, at:
-                <input type="text" size="15" name="buyPrice" ng-model="trading.buyPrice" placeholder="price in {{trading.tradeCurrency}}" positive-number>
+                <input type="number" class="form-control" size="15" name="buyQuantity" ng-model="trading.buyQuantity" placeholder="amount" positive-number> {{trading.baseCurrency}}, at:
+                <input type="number" class="form-control" size="15" name="buyPrice" ng-model="trading.buyPrice" placeholder="price in {{trading.tradeCurrency}}" positive-number>
                 <br><br>
-                <div align='right'>
+                <div align="right">
                     <button class="btn btn-primary" type="button" ng-click="prepareOfferCreate({type: 'buy'})" ng-disabled="!trading.buyQuantity || !trading.buyPrice">Buy</button>
                     <button class="btn btn-warning" type="button" ng-click="buyReset()">Reset</button>
                 </div>
@@ -90,14 +90,14 @@
         </div>
     </div>
     <div class="col-sm-6">
-        <div class='panel panel-danger'>
-            <div class="panel-body bg-danger">
+        <div class="panel panel-danger">
+            <div class="panel-body">
                 Sell:
-                <input type="text" size="15" name="sellQuantity" ng-model="trading.sellQuantity" placeholder="amount" positive-number> {{trading.baseCurrency}}, at:
-                <input type="text" size="15" name="sellPrice" ng-model="trading.sellPrice" placeholder="price in {{trading.tradeCurrency}}" positive-number>
+                <input type="number" class="form-control" size="15" name="sellQuantity" ng-model="trading.sellQuantity" placeholder="amount" positive-number> {{trading.baseCurrency}}, at:
+                <input type="number" class="form-control" size="15" name="sellPrice" ng-model="trading.sellPrice" placeholder="price in {{trading.tradeCurrency}}" positive-number>
                 <br>
                 <br>
-                <div align='right'>
+                <div align="right">
                     <button class="btn btn-danger" type="button" ng-click="prepareOfferCreate({type: 'sell'})" ng-disabled="!trading.sellQuantity || !trading.sellPrice">Sell</button>
                     <button class="btn btn-warning" type="button" ng-click="sellReset()">Reset</button>
                 </div>

@@ -9,7 +9,7 @@
                 <td>
                     <div class="form-group">
                         <label for="keyinput">Secret:</label>
-                        <input id="keyinput" type="password" placeholder="enter secret" class="form-control" size=50 ng-model="options.secret" ripple-valid-secret required autofocus> <span style="color:red" ng-show="generateAccountForm.secret.$dirty && generateAccountForm.secret.$error.rippleValidSecret">Invalid Secret!</span>
+                        <input id="keyinput" type="password" name="secret" placeholder="enter secret" class="form-control" size=50 ng-model="options.secret" ripple-valid-secret required autofocus> <span style="color:red" ng-show="generateAccountForm.secret.$dirty && generateAccountForm.secret.$error.rippleValidSecret">Invalid Secret!</span>
                     </div>
                 </td>
             </tr>

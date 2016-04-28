@@ -6,18 +6,18 @@
         <table class="table">
             <tr>
                 <td>MemoType: </td>
-                <td> <input type="text" name="memoType" autofocus ng-model="memo.memoType" size=50 placeholder="e.g. message" ripple-valid-memo>
+                <td> <input type="text" class="form-control" name="memoType" autofocus ng-model="memo.memoType" size=50 placeholder="e.g. message" ripple-valid-memo>
                     <span style="color:red" ng-show="addMemoForm.memoType.$error.rippleValidMemo">Invalid Character!</span> </td>
             </tr>
             <tr>
                 <td>MemoFormat: </td>
-                <td> <input type="text" name="memoFormat" ng-model="memo.memoFormat" size=50 placeholder="e.g. text/json" ripple-valid-memo>
+                <td> <input type="text" class="form-control" name="memoFormat" ng-model="memo.memoFormat" size=50 placeholder="e.g. text/json" ripple-valid-memo>
                     <span style="color:red" ng-show="addMemoForm.memoFormat.$error.rippleValidMemo">Invalid Character!</span>
                 </td>
             </tr>
             <tr>
                 <td>MemoData: </td>
-                <td> <textarea form="addMemoForm" name="memoData" ng-model="memo.memoData" cols=60 rows=5> </textarea></td>
+                <td> <textarea class="form-control" form="addMemoForm" name="memoData" ng-model="memo.memoData" cols=60 rows=5> </textarea></td>
             </tr>
         </table>
     </form>

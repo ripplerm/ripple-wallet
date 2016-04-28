@@ -27,7 +27,7 @@
 
   <b>List of Trustlines: </b>
   <span style="padding-left:1em;"> Currency Filter: </span>
-  <select ng-model="search.currency">
+  <select class="form-control" ng-model="search.currency">
             <option value="">- ALL -</option>
             <option ng-repeat="(key, value) in trustlinesStats" value="{{key}}">{{currencyName(key)}}</option>
           </select>
