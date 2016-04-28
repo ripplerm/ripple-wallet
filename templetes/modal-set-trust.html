@@ -56,6 +56,6 @@
   </form>
 </div>
 <div class="modal-footer">
-  <button class="btn btn-primary" type="button" ng-disabled="editTrustlineForm.$invalid" ng-click="ok()">Submit</button>
-  <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
+  <button class="btn btn-primary" type="button" ng-disabled="editTrustlineForm.$invalid" ng-click="ok()">{{lang==0?'Submit':'提交'}}</button>
+  <button class="btn btn-warning" type="button" ng-click="cancel()">{{lang==0?'Cancel':'取消'}}</button>
 </div>

@@ -45,8 +45,8 @@
         <i class="material-icons">menu</i>
       </button>
       <ul class="nav navbar-nav">
-        <li class="nav-item">{{lang==0?'Network:':'网络:'}} <font color="{{(state == 'online') ? 'green' : 'red'}}">{{state? "&#10004" : "&#10008"}}</font></li>
-        <li class="nav-item">Secret set: <font color="{{remote.secrets[activeAccount] ? 'green' : 'red' }}">{{remote.secrets[activeAccount] ? "&#10004" : "&#10008"}}</font>
+        <li class="nav-item">{{lang==0?'Network:':'网络连接:'}} <font color="{{(state == 'online') ? 'green' : 'red'}}">{{state? "&#10004" : "&#10008"}}</font></li>
+        <li class="nav-item">{{lang==0?'Secret set:':'密钥登陆:'}} <font color="{{remote.secrets[activeAccount] ? 'green' : 'red' }}">{{remote.secrets[activeAccount] ? "&#10004" : "&#10008"}}</font>
     </li>
       </ul>
       <ul class="nav navbar-nav pull-xs-right">
@@ -63,8 +63,8 @@
               <i class="material-icons">more_vert</i>
             </button>
             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="more-menu-1">
-              <button class="dropdown-item" type="button">Wallet Account: <b>{{activeAccount ? activeAccount : "-"}} </b></button>
-              <button class="dropdown-item" type="button">Server: {{server}}</button>
+              <button class="dropdown-item" type="button">{{lang==0?'Wallet Account:':'钱包地址:'}} <b>{{activeAccount ? activeAccount : "-"}} </b></button>
+              <button class="dropdown-item" type="button">{{lang==0?'Server:':'服务器:'}} {{server}}</button>
               <button class="dropdown-item" type="button">Last-Closed-Ledger: <font color="blue"> {{ledgerIndex}} </font></button>
               <button class="dropdown-item" type="button" ng-click="setlang(0)">English</button>
               <button class="dropdown-item" type="button" ng-click="setlang(1)">中文</button>
@@ -77,28 +77,28 @@
 
   <div id="dw-1" class="mdb-layout-drawer bg-faded menu">
     <header>
-      <a class="navbar-brand">Ripple Wallet</a>
+      <a class="navbar-brand">{{lang==0?'Ripple Wallet':'Ripple钱包'}}</a>
     </header>
     <ul class="list-group">
-      <a class="list-group-item" data-target="#Info"><i class="material-icons" role="presentation">info_outline</i>Info</a>
-      <a class="list-group-item" data-target="#Trustlines"><i class="material-icons" role="presentation">playlist_add_check</i>Trustlines</a>
-      <a class="list-group-item" data-target="#Payment"><i class="material-icons" role="presentation">low_priority</i>Payment</a>
-      <a class="list-group-item" data-target="#Trading"><i class="material-icons" role="presentation">trending_up</i>Trading</a>
-      <a class="list-group-item" data-target="#Offers"><i class="material-icons" role="presentation">repeat</i>Offers</a>
+      <a class="list-group-item" data-target="#Info"><i class="material-icons" role="presentation">info_outline</i>{{lang==0?'Info':'账户信息'}}</a>
+      <a class="list-group-item" data-target="#Trustlines"><i class="material-icons" role="presentation">playlist_add_check</i>{{lang==0?'Trustlines':'信任线'}}</a>
+      <a class="list-group-item" data-target="#Payment"><i class="material-icons" role="presentation">low_priority</i>{{lang==0?'Payment':'支付'}}</a>
+      <a class="list-group-item" data-target="#Trading"><i class="material-icons" role="presentation">trending_up</i>{{lang==0?'Trading':'交易'}}</a>
+      <a class="list-group-item" data-target="#Offers"><i class="material-icons" role="presentation">repeat</i>{{lang==0?'Offers':'挂单'}}</a>
       
     </ul>
   </div>
   <main class="mdb-layout-content">
   <div class="card page active" style="margin: 1em;padding:2em;word-wrap: break-word; word-break: normal; overflow:auto;">
       <!-- main content -->
-      <h4 class="card-title">Ripple Wallet</h4>
+      <h4 class="card-title">{{lang==0?'Ripple Wallet':'Ripple钱包'}}</h4>
       <p>The Ripple Wallet is an open-source GUI for the Ripple network that facilitates the peer-to-peer exchange of any store of value.</p>
   </div>	
   <div class="card page" ng-repeat="tab in tabs" id="{{tab.title}}" ng-init="tab.select()" style="margin: 1em;padding:2em;word-wrap: break-word; word-break: normal; overflow:auto;"><div ng-include="tab.templete"></div></div>
   <div class="card active" style="margin: 1em;padding:2em;word-wrap: break-word; word-break: normal; overflow:auto;">
       <!-- main content -->
-      <h4 class="card-title">Disclaimer</h4>
-      <p>This product is provided "as is" without warranty of any kind and is not endorsed by ripple labs inc.</p>
+      <h4 class="card-title">{{lang==0?'Disclaimer':'免责声明'}}</h4>
+      <p>This product is provided "as is" without warranty of any kind and is not endorsed by Ripple Labs inc.</p>
   </div>	
   </main>
 </div>

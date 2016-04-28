@@ -1,6 +1,6 @@
 <div id="tabTrustlines">
   <span style="font-weight:bold; font-size:20pt; padding-right:1em;">Trustlines: </span>
-  <button class="btn btn-warning" ng-click="accountLines(); search.currency='';" ng-disabled="!activeAccount"><span class="glyphicon glyphicon-refresh"></span>  Refresh </button>  {{accountLinesStatus}}
+  <button class="btn btn-warning" ng-click="accountLines(); search.currency='';" ng-disabled="!activeAccount"><span class="glyphicon glyphicon-refresh"></span>   {{lang==0?'Refresh':'刷新'}} </button>  {{accountLinesStatus}}
   <br><br>
   <b>Total Trustlines = {{trustlinesStats ? totalTrustlines : ""}}</b>
   <br><br>

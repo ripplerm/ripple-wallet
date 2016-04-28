@@ -23,7 +23,7 @@
         </div>
         <hr>
         <h4>Outstanding Orders: 
-			<button class="btn btn-warning" ng-click="getAccountOffers()"><span class="glyphicon glyphicon-refresh"></span> Refresh </button> 
+			<button class="btn btn-warning" ng-click="getAccountOffers()"><span class="glyphicon glyphicon-refresh"></span>  {{lang==0?'Refresh':'刷新'}} </button> 
 		</h4> @ ledger_index: {{accountOffers.ledger_index}}
         <div class="panel">
             <table class="table table" style="text-align:center;">
@@ -107,7 +107,7 @@
 </div>
 <h3>  
 	OrderBooks: 
-	<button class="btn btn-warning btn-sm" ng-click="loadOrderBooks()"><span class="glyphicon glyphicon-refresh"></span> Refresh </button>
+	<button class="btn btn-warning btn-sm" ng-click="loadOrderBooks()"><span class="glyphicon glyphicon-refresh"></span>  {{lang==0?'Refresh':'刷新'}} </button>
 </h3>
 <div class="row">
     <div class="col-sm-6">

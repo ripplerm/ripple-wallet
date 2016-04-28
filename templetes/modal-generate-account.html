@@ -1,5 +1,5 @@
 <div class="modal-header">
-    <h3 class="modal-title">Generate Account</h3>
+    <h3 class="modal-title"></h3>
 </div>
 
 <div class="modal-body">
@@ -8,18 +8,18 @@
             <tr>
                 <td>
                     <div class="form-group">
-                        <label for="keyinput">Secret:</label>
-                        <input id="keyinput" type="password" name="secret" placeholder="enter secret" class="form-control" size=50 ng-model="options.secret" ripple-valid-secret required autofocus> <span style="color:red" ng-show="generateAccountForm.secret.$dirty && generateAccountForm.secret.$error.rippleValidSecret">Invalid Secret!</span>
+                        <label for="keyinput">{{lang==0?'Secret:':'密钥'}}</label>
+                        <input id="keyinput" type="password" name="secret" placeholder="{{lang==0?'enter secret':'输入密钥'}}" class="form-control" size=50 ng-model="options.secret" ripple-valid-secret required autofocus> <span style="color:red" ng-show="generateAccountForm.secret.$dirty && generateAccountForm.secret.$error.rippleValidSecret">{{lang==0?'Invalid Secret!':'无效密钥!'}}</span>
                     </div>
                 </td>
             </tr>
         </table>
     </form><br>
-    <div align="right"><button type="button" class="btn btn-info" ng-click="options.secret = generateNewSecret(); options.index = 0;">New Random Secret</button>
+    <div align="right"><button type="button" class="btn btn-info" ng-click="options.secret = generateNewSecret(); options.index = 0;">{{lang==0?'New Random Secret':'随机生成密钥'}}</button>
     </div>
 </div>
 
 <div class="modal-footer">
-    <button class="btn btn-primary" type="button" ng-disabled="generateAccountForm.$invalid" ng-click="ok()">Submit</button>
-    <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
+    <button class="btn btn-primary" type="button" ng-disabled="generateAccountForm.$invalid" ng-click="ok()">{{lang==0?'Submit':'提交'}}</button>
+    <button class="btn btn-warning" type="button" ng-click="cancel()">{{lang==0?'Cancel':'取消'}}</button>
 </div>
