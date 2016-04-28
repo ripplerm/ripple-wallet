@@ -1,38 +1,45 @@
-                    <div class="modal-header">
-                        <h3 class="modal-title">Edit Account Info</h3>
-                    </div>
-                    <div class="modal-body">
-                      <form name="accountSetForm">
-                        <table class="table">
-                          <tr>
-                            <td style="width:20px;"> <input type="checkbox" ng-model='options.editDomain' ng-click="options.domain='';"> </td>
-                            <td style="width:110px;"> Domain: </td>
-                            <td> <input type="text" name="domain" ng-model="options.domain" size=50 ng-disabled="!options.editDomain" placeholder="example.com"> </td>
-                          </tr>
-                          <tr>
-                            <td> <input type="checkbox" ng-model='options.editEmail' ng-click="options.email='';"> </td>
-                            <td> Email: </td>
-                            <td> <input type="text" name="email" ng-model="options.email" size=50 ng-disabled="!options.editEmail" placeholder="e.g. abc@mydomain.com"> </td>
-                          </tr>
-                          <tr>
-                            <td> <input type="checkbox" ng-model='options.editTransferRate' ng-click="options.transferRateHumanPercentage='';"> </td>
-                            <td> Transfer Rate: </td>
-                            <td> <input type="number" name="transferRateHumanPercentage" ng-model="options.transferRateHumanPercentage" size=20 ng-disabled="!options.editTransferRate" placeholder="0-100" min=0 max=100> (%) <span style="color:red" ng-show="accountSetForm.transferRateHumanPercentage.$invalid">Invalid value!</span></td>
-                          </tr>
-                          <tr>
-                            <td> <input type="checkbox" ng-model='options.editMessageKey' ng-click="options.messageKey='';"> </td>
-                            <td> MessageKey: </td>
-                            <td> 
-                              <input type="text" name="messageKey" ng-model="options.messageKey" size=50 ng-disabled="!options.editMessageKey" placeholder="PublicKey in 33-byte Hex" ng-pattern="/^[0-9A-Fa-f]{66}$/">
-                              <br>
-                              <span style="color:red" ng-show="accountSetForm.messageKey.$invalid">Invalid Format!</span>  
-                            </td>
-                          </tr>
-                        </table>
-                        NOTE: Submitting a field with blank value will remove the existing Info.
-                      </form>
-                    </div>
-                    <div class="modal-footer">
-                        <button class="btn btn-primary" type="button" ng-disabled="accountSetForm.$invalid" ng-click="ok()">Submit</button>
-                        <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
-                    </div>
+<div class="modal-header">
+  <h3 class="modal-title">Edit Account Info</h3>
+</div>
+<div class="modal-body">
+  <form name="accountSetForm">
+    <table class="table">
+      <tr>
+        <td style="width:20px;">
+          <div class="checkbox"> <label><input type="checkbox" ng-model='options.editDomain' ng-click="options.domain='';">Domain:</label> </div>
+        </td>
+        <td style="width:110px;"> Domain: </td>
+        <td> <input type="text" name="domain" class="form-control" ng-model="options.domain" size=50 ng-disabled="!options.editDomain"
+            placeholder="example.com"> </td>
+      </tr>
+      <tr>
+        <td> <input type="checkbox" class="checkbox" ng-model='options.editEmail' ng-click="options.email='';"> </td>
+        <td> Email: </td>
+        <td> <input type="text" name="email" class="form-control" ng-model="options.email" size=50 ng-disabled="!options.editEmail"
+            placeholder="e.g. abc@mydomain.com"> </td>
+      </tr>
+      <tr>
+        <td> <input type="checkbox" class="checkbox" ng-model='options.editTransferRate' ng-click="options.transferRateHumanPercentage='';">          </td>
+        <td> Transfer Rate: </td>
+        <td> <input type="number" class="form-control" name="transferRateHumanPercentage" ng-model="options.transferRateHumanPercentage"
+            size=20 ng-disabled="!options.editTransferRate" placeholder="0-100" min=0 max=100> (%) <span style="color:red"
+            ng-show="accountSetForm.transferRateHumanPercentage.$invalid">Invalid value!</span></td>
+      </tr>
+      <tr>
+        <td> <input type="checkbox" class="checkbox" ng-model='options.editMessageKey' ng-click="options.messageKey='';"> </td>
+        <td> MessageKey: </td>
+        <td>
+          <input type="text" name="messageKey" class="form-control" ng-model="options.messageKey" size=50 ng-disabled="!options.editMessageKey"
+            placeholder="PublicKey in 33-byte Hex" ng-pattern="/^[0-9A-Fa-f]{66}$/">
+          <br>
+          <span style="color:red" ng-show="accountSetForm.messageKey.$invalid">Invalid Format!</span>
+        </td>
+      </tr>
+    </table>
+    NOTE: Submitting a field with blank value will remove the existing Info.
+  </form>
+</div>
+<div class="modal-footer">
+  <button class="btn btn-primary" type="button" ng-disabled="accountSetForm.$invalid" ng-click="ok()">Submit</button>
+  <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
+</div>

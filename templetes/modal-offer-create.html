@@ -2,8 +2,8 @@
     <h3 class="modal-title">Create Offer</h3>
 </div>
 <div class="modal-body">
-  <form name="offerCreateForm" nonvalidate>
-    <h4> 
+    <form name="offerCreateForm" nonvalidate>
+        <h4> 
         <table class="table table-striped">
             <tr>
                 <td>Type:</td>
@@ -20,16 +20,16 @@
         </table>
         <span style="color:red;" ng-show="priceAlert(options);"> ALERT: <br>Input price is >20% apart from market!!!</span>
     </h4>
-    <hr>
+        <hr>
 
-    <table class="table">
-        <thead><b>Advance Setting:</b></thead>            
-        <tr>
-            <td>Expired after:</td>
-            <td><input type="text" size="5" name="expiration" ng-model="options.expiration" placeholder="hour" positive-number> hour.</td>
-        </tr>
-    </table>                  
-  </form>
+        <table class="table">
+            <thead><b>Advance Setting:</b></thead>
+            <tr>
+                <td>Expired after:</td>
+                <td><input type="text" size="5" name="expiration" ng-model="options.expiration" placeholder="hour" positive-number> hour.</td>
+            </tr>
+        </table>
+    </form>
 </div>
 
 <div class="modal-footer">
