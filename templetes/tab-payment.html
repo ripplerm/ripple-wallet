@@ -23,7 +23,7 @@
             <tr>
                 <td width="180">Quote Amount: <span style="color:red"> *</span></td>
                 <td><input type="text" class="form-control" size="15" ng-model="Payment.federation.quoteAmount" name="amount" ng-change="federationQuoteReset(); pathFindAutoStart()">
-                    <select ng-model="Payment.federation.quoteCurrency">
+                    <select class="form-control" ng-model="Payment.federation.quoteCurrency">
                               <option ng-repeat="currency in Payment.federation.quoteCurrencies" value="{{currency.currency}}">{{currency.currency}}</option>
                             </select>
                 </td>
