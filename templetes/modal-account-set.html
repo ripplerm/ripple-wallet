@@ -13,20 +13,20 @@
             placeholder="example.com"> </td>
       </tr>
       <tr>
-        <td> <input type="checkbox" class="checkbox" ng-model='options.editEmail' ng-click="options.email='';"> </td>
+        <td> <input type="checkbox" ng-model='options.editEmail' ng-click="options.email='';"> </td>
         <td> Email: </td>
         <td> <input type="text" name="email" class="form-control" ng-model="options.email" size=50 ng-disabled="!options.editEmail"
             placeholder="e.g. abc@mydomain.com"> </td>
       </tr>
       <tr>
-        <td> <input type="checkbox" class="checkbox" ng-model='options.editTransferRate' ng-click="options.transferRateHumanPercentage='';">          </td>
+        <td> <input type="checkbox"  ng-model='options.editTransferRate' ng-click="options.transferRateHumanPercentage='';">          </td>
         <td> Transfer Rate: </td>
         <td> <input type="number" class="form-control" name="transferRateHumanPercentage" ng-model="options.transferRateHumanPercentage"
             size=20 ng-disabled="!options.editTransferRate" placeholder="0-100" min=0 max=100> (%) <span style="color:red"
             ng-show="accountSetForm.transferRateHumanPercentage.$invalid">Invalid value!</span></td>
       </tr>
       <tr>
-        <td> <input type="checkbox" class="checkbox" ng-model='options.editMessageKey' ng-click="options.messageKey='';"> </td>
+        <td> <input type="checkbox"  ng-model='options.editMessageKey' ng-click="options.messageKey='';"> </td>
         <td> MessageKey: </td>
         <td>
           <input type="text" name="messageKey" class="form-control" ng-model="options.messageKey" size=50 ng-disabled="!options.editMessageKey"
