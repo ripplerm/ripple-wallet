@@ -7,7 +7,7 @@
                 <td>
                     <input type="checkbox" name="useFederation" ng-model="Payment.useFederation" ng-click="Payment.federationAddress=''; federationReset()"> Use RippleName / Federation Address.<br>
                     <div ng-show="Payment.useFederation">
-                        <input type="text" placeholder="~myriplename / xyz@mydomain.com" ng-model="Payment.federationAddress" name="federation" size="80" ng-change="federationReset(); pathFindAutoStart()" ng-show="Payment.useFederation" ripple-valid-federation>
+                        <input type="text"  class="form-control" placeholder="~myriplename / xyz@mydomain.com" ng-model="Payment.federationAddress" name="federation" size="80" ng-change="federationReset(); pathFindAutoStart()" ng-show="Payment.useFederation" ripple-valid-federation>
                         <br>
                         <button ng-click="resolveFederation()" ng-show="Payment.useFederation" ng-disabled="!(Payment.federationAddress) || paymentForm.federation.$invalid || Payment.federation.resolving">Resolve</button>
                         <span style="color:red" ng-show="paymentForm.federation.$dirty && paymentForm.federation.$invalid">Invalid Address!</span> {{Payment.federation.status}} <br>
@@ -18,29 +18,29 @@
                           <td width="180" style="word-wrap:break-word; cellpadding:5">
                             {{field.label}}: <span style="color:red"> {{field.required ? '*' : ''}}</span>
                 </td>
-                <td><input type="text" size="60" placeholder="{{field.hint}}" ng-model="field.value" name="{{field.name}}" ng-required="field.required" ng-change="federationQuoteReset()"> </td>
+                <td><input type="text" class="form-control" size="60" placeholder="{{field.hint}}" ng-model="field.value" name="{{field.name}}" ng-required="field.required" ng-change="federationQuoteReset()"> </td>
             </tr>
             <tr>
                 <td width="180">Quote Amount: <span style="color:red"> *</span></td>
-                <td><input type="text" size="15" ng-model="Payment.federation.quoteAmount" name="amount" ng-change="federationQuoteReset(); pathFindAutoStart()">
+                <td><input type="text" class="form-control" size="15" ng-model="Payment.federation.quoteAmount" name="amount" ng-change="federationQuoteReset(); pathFindAutoStart()">
                     <select ng-model="Payment.federation.quoteCurrency">
                               <option ng-repeat="currency in Payment.federation.quoteCurrencies" value="{{currency.currency}}">{{currency.currency}}</option>
                             </select>
                 </td>
             </tr>
         </table>
-        <button type='submit' ng-click="federationQuote()" ng-disabled="quoteForm.$pristine || quoteForm.$invalid">Submit Quote</button> {{Payment.federation.quoteStatus}} <br>
+        <button type="submit" ng-click="federationQuote()" ng-disabled="quoteForm.$pristine || quoteForm.$invalid">Submit Quote</button> {{Payment.federation.quoteStatus}} <br>
         </span>
 
         <br>
         </div>
-        <input type="text" placeholder="address" ng-model="Payment.destination" name="destination" size="50" required ripple-valid-address ng-disabled="Payment.useFederation" ng-change="pathFindAutoStart()"><span style="padding-left:1em; color:red" ng-show="paymentForm.destination.$dirty && paymentForm.destination.$error.rippleValidAddress">Invalid Address!</span>
+        <input type="text" class="form-control" placeholder="address" ng-model="Payment.destination" name="destination" size="50" required ripple-valid-address ng-disabled="Payment.useFederation" ng-change="pathFindAutoStart()"><span style="padding-left:1em; color:red" ng-show="paymentForm.destination.$dirty && paymentForm.destination.$error.rippleValidAddress">Invalid Address!</span>
         </td>
         </tr>
         <tr>
             <td>Destination Tag:</td>
             <td>
-                <input type="number" placeholder="UInt32" min=0 max=4294967295 ng-model="Payment.destinationTag" size="40" ng-required="Payment.requireDestTag" ng-disabled="Payment.federation.quoteRequired">
+                <input type="number" class="form-control" placeholder="UInt32" min="0" max="4294967295" ng-model="Payment.destinationTag" size="40" ng-required="Payment.requireDestTag" ng-disabled="Payment.federation.quoteRequired">
             </td>
         </tr>
         <tr>
@@ -49,18 +49,18 @@
                 <table>
                     <tr>
                         <td>Value:</td>
-                        <td><input type="text" placeholder="Amount" name="amountValue" ng-model="Payment.amountValue" size="50" required positive-number ng-disabled="Payment.federation.quoteRequired" ng-change="pathFindAutoStart()"><span style="padding-left:1em; color:red"
+                        <td><input type="text" class="form-control" placeholder="Amount" name="amountValue" ng-model="Payment.amountValue" size="50" required positive-number ng-disabled="Payment.federation.quoteRequired" ng-change="pathFindAutoStart()"><span style="padding-left:1em; color:red"
                                 ng-show="paymentForm.amountValue.$error.number || paymentForm.amountValue.$error.positiveNumber">Invalid Value!</span></td>
                     </tr>
                     <tr>
                         <td>Currency:</td>
-                        <td><input type="text" placeholder="XRP" size="50" name="amountCurrency" required ng-model="Payment.amountCurrency" ng-change="(Payment.amountCurrency == 'XRP') ? Payment.amountIssuer = null : null; pathFindAutoStart()" ng-disabled="Payment.federation.quoteRequired"></td>
+                        <td><input type="text" class="form-control" placeholder="XRP" size="50" name="amountCurrency" required ng-model="Payment.amountCurrency" ng-change="(Payment.amountCurrency == 'XRP') ? Payment.amountIssuer = null : null; pathFindAutoStart()" ng-disabled="Payment.federation.quoteRequired"></td>
                     </tr>
                     <tr>
                         <td>Issuer:</td>
                         <td>
                             <div uib-dropdown uib-keyboard-nav>
-                                <input type="text" placeholder="address" name="amountIssuer" ng-model="Payment.amountIssuer" size="50" ng-required="Payment.amountCurrency != 'XRP'" ng-disabled="Payment.amountCurrency == 'XRP' || Payment.federation.quoteRequired" ng-change="pathFindAutoStart()"
+                                <input type="text" class="form-control" placeholder="address" name="amountIssuer" ng-model="Payment.amountIssuer" size="50" ng-required="Payment.amountCurrency != 'XRP'" ng-disabled="Payment.amountCurrency == 'XRP' || Payment.federation.quoteRequired" ng-change="pathFindAutoStart()"
                                     ripple-valid-address>
                                 <button type="button" uib-dropdown-toggle><span class="caret"></span></button>
                                 <ul class="uib-dropdown-menu">
@@ -93,7 +93,7 @@
         </tr>
         <tr>
             <td>Slipage:</td>
-            <td><input type="number" min=0 ng-model="paymentSlipage" size="5"> (%)</td>
+            <td><input type="number" class="form-control" min="0" ng-model="paymentSlipage" size="5"> (%)</td>
         </tr>
         <tr>
             <td>Send Max: <br><button ng-click="setSendmax({value:Payment.amountValue, currency:Payment.amountCurrency, issuer:Payment.amountIssuer}); setPaths(null); pathFindClose();" ng-disabled="paymentForm.amountValue.$invalid || paymentForm.amountCurrency.$invalid || paymentForm.amountIssuer.$invalid">Direct Pay</button>
@@ -103,19 +103,19 @@
                     <tr>
                         <td>Value:</td>
                         <td>
-                            <input type="text" name="sendmaxValue" placeholder="Amount" ng-model="Payment.sendmaxValue" size="50" ng-required="Payment.sendmaxCurrency || Payment.sendmaxIssuer" positive-number>
+                            <input type="text" class="form-control" name="sendmaxValue" placeholder="Amount" ng-model="Payment.sendmaxValue" size="50" ng-required="Payment.sendmaxCurrency || Payment.sendmaxIssuer" positive-number>
                             <span style="padding-left:1em; color:red" ng-show="paymentForm.sendmaxValue.$error.number || paymentForm.sendmaxValue.$error.positiveNumber">Invalid Value!</span>
                         </td>
                     </tr>
                     <tr>
                         <td>Currency:</td>
-                        <td><input type="text" placeholder="XRP" ng-model="Payment.sendmaxCurrency" ng-change="(Payment.sendmaxCurrency == 'XRP') ? Payment.sendmaxIssuer = null : null" size="50" ng-required="Payment.sendmaxValue"></td>
+                        <td><input type="text" class="form-control" placeholder="XRP" ng-model="Payment.sendmaxCurrency" ng-change="(Payment.sendmaxCurrency == 'XRP') ? Payment.sendmaxIssuer = null : null" size="50" ng-required="Payment.sendmaxValue"></td>
                     </tr>
                     <tr>
                         <td>Issuer:</td>
                         <td>
                             <div uib-dropdown uib-keyboard-nav>
-                                <input type="text" placeholder="address" name="sendmaxIssuer" ng-model="Payment.sendmaxIssuer" size="50" ng-required="Payment.sendmaxCurrency && Payment.sendmaxCurrency != 'XRP'" ng-disabled="Payment.sendmaxCurrency == 'XRP'" ripple-valid-address>
+                                <input type="text" class="form-control" placeholder="address" name="sendmaxIssuer" ng-model="Payment.sendmaxIssuer" size="50" ng-required="Payment.sendmaxCurrency && Payment.sendmaxCurrency != 'XRP'" ng-disabled="Payment.sendmaxCurrency == 'XRP'" ripple-valid-address>
                                 <button type="button" uib-dropdown-toggle><span class="caret"></span></button>
                                 <ul class="uib-dropdown-menu">
                                     <li ng-repeat="gateway in gateways | filter: {currencies: Payment.sendmaxCurrency} | orderBy:'name'"><a href="#" ng-click="Payment.sendmaxIssuer=gateway.address;">{{gateway.name}}</a></li>
@@ -135,13 +135,13 @@
                     <tr>
                         <td>Source Tag:</td>
                         <td>
-                            <input type="number" placeholder="UInt32" min=0 max=4294967295 ng-model="Payment.sourceTag" size="20">
+                            <input type="number" class="form-control" placeholder="UInt32" min=0 max=4294967295 ng-model="Payment.sourceTag" size="20">
                         </td>
                     </tr>
                     <tr>
                         <td>Invoice ID:</td>
                         <td>
-                            <input type="text" size="75" placeholder="256-bit hash" name="invoiceID" ng-model="Payment.invoiceID" ng-pattern="/^[0-9A-Fa-f]{64}$/" ng-disabled="Payment.federation.quoteRequired"><br>
+                            <input type="text" class="form-control" size="75" placeholder="256-bit hash" name="invoiceID" ng-model="Payment.invoiceID" ng-pattern="/^[0-9A-Fa-f]{64}$/" ng-disabled="Payment.federation.quoteRequired"><br>
 
                         </td>
                     </tr>
@@ -162,7 +162,7 @@
                     <tr>
                         <td>DeliverMin:</td>
                         <td>
-                            <input type="text" name="deliverMin" placeholder="minimum amount to delivered (partial payment)" min=0 ng-model="Payment.deliverMin" size="50" ng-disabled="!Payment.tfPartialPayment" positive-number> {{Payment.amountCurrency}}
+                            <input type="text" class="form-control" name="deliverMin" placeholder="minimum amount to delivered (partial payment)" min=0 ng-model="Payment.deliverMin" size="50" ng-disabled="!Payment.tfPartialPayment" positive-number> {{Payment.amountCurrency}}
                             <span style="padding-left:1em; color:red" ng-show="paymentForm.deliverMin.$error.number || paymentForm.deliverMin.$error.positiveNumber">Invalid Value!</span>
                         </td>
                     </tr>
@@ -203,7 +203,7 @@
     </div>
 
     <button class="btn btn-primary" type="submit" ng-disabled="paymentForm.$invalid" ng-click="submitPayment()"> Submit </button>
-    <button class="btn btn-warning" form='paymentForm' ng-click="paymentReset()"> Reset </button>
+    <button class="btn btn-warning" form="paymentForm" ng-click="paymentReset()"> Reset </button>
     <br>
 
 </div>
