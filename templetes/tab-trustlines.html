@@ -1,5 +1,5 @@
 <div id="tabTrustlines">
-  <span style="font-weight:bold; font-size:20pt; padding-right:1em;">Trustlines: </span>
+  <h4 class="card-title">Trustlines:</h4>
   <button class="btn btn-warning" ng-click="accountLines(); search.currency='';" ng-disabled="!activeAccount"><span class="glyphicon glyphicon-refresh"></span>   {{lang==0?'Refresh':'刷新'}} </button>   <br>{{accountLinesStatus}}
   <br><br>
   <b>Total Trustlines = {{trustlinesStats ? totalTrustlines : ""}}</b>
@@ -8,14 +8,14 @@
   <span style="padding-left:1em"> <input type="checkbox" ng-model="trustlineStatsIgnoreZero"> Hide zero-balances</span><br>
   <table class="table table-hover">
     <tr>
-      <th>Currency</th>
-      <th>Number of Trustlines</th>
-      <th>Balances</th>
+      <th style="text-align: center">Currency</th>
+      <th style="text-align: center">Number of Trustlines</th>
+      <th style="text-align: center">Balances</th>
     </tr>
     <tr ng-repeat="(key, value) in trustlinesStats" ng-hide="trustlineStatsIgnoreZero? value.balance == '0' : false">
-      <td>{{currencyName(key)}}</td>
-      <td align="center">{{value.lineNumber}}</td>
-      <td>{{value.balance}}</td>
+      <td style="text-align: center">{{currencyName(key)}}</td>
+      <td style="text-align: center">{{value.lineNumber}}</td>
+      <td style="text-align: center">{{value.balance}}</td>
     </tr>
   </table>
 

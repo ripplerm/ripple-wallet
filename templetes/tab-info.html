@@ -1,13 +1,18 @@
 <div id="tabInfo">
-    <h4 class="card-title">{{lang==0?'Account Info:':'账户信息:'}} {{activeAccount ? activeAccount : "-"}}</h4>
+    <h4 class="card-title">{{lang==0?'Account:':'账户:'}} {{activeAccount ? activeAccount : "-"}}</h4>
     <button class="btn btn-info" ng-click="prepareSetWalletSecret()"><span class="glyphicon glyphicon-pencil"></span> {{lang==0?'Set Secret':'设置密钥'}}</button>
     <button class="btn btn-warning" ng-click="accountInfo()" ng-disabled="!activeAccount"><span class="glyphicon glyphicon-refresh"></span> {{lang==0?'Refresh':'刷新'}}  </button> <br>{{accountInfoStatus}}
     <br>
     <br>
+    <b>{{lang==0?'Account Info:':'账户信息:'}}</b>
+    <span style="float:right">
+    <button type="button" class="btn btn-info" ng-click="prepareSetRegularKey()">{{lang==0?'Set RegularKey':'设置RegularKey'}}</button>
+    <button type="button" class="btn btn-info" ng-click="prepareAccountSet({modal: 'info'})">{{lang==0?'Edit Account Info':'编辑账户信息'}}</button>
+    </span>
     <img src="{{accountData.urlgravatar}}" style="margin-right: 5px; margin-bottom: 5px; display: {{accountData.EmailHash ? 'block': 'none'}}">
     <table class="table table-hover">
         <tr>
-            <th>XRP Balance</th>
+            <th>{{lang==0?'XRP Balance':'XRP余额'}}</th>
             <td>
                 {{accountBalances.XRP ? accountBalances.XRP : '-'}}
                 <span style="padding-left:1em;"> {{accountBalances.XRP ? '(reserved: ' + accountBalances.reserved + ')' : ''}} </span>
@@ -45,16 +50,17 @@
     </table>
     <br>
     <br>
+    <b>{{lang==0?'Account Flags:':'账户标签:'}}</b>
+    <span style="float:right">
+    <button type="button" class="btn btn-info" ng-click="prepareAccountSet({modal: 'flags'})">{{lang==0?'Edit Account Flags':'编辑账户标签'}}</button>
+    </span>
     <div><span style="padding-right:1em;" ng-repeat="(key, value) in accountData['settings']">{{key}}:<font color="{{value ? 'green' : 'red'}}">{{value ? "&#10004" : "&#10008"}} </font></span></div>
+    <br>
     <div class="panel panel-info" ng-show="accountSetLog.status">
         <div class="alert {{accountSetLog.status == 'FINAL' ? (accountSetLog.status_code.slice(0,3) == 'tes' ? 'alert-success' : 'alert-danger') : 'alert-warning'}}" role="alert">
             
             <b>Tx Status:</b>[{{accountSetLog.status}}{{accountSetLog.status_code ? ', ' + accountSetLog.status_code : ''}}], <b>Result:</b> {{accountSetLog.result}} {{accountSetLog.tx_hash ? ', tx_hash: ' + accountSetLog.tx_hash : ''}}
         </div>
     </div>
-
-    <button type="button" class="btn btn-info" ng-click="prepareSetRegularKey()">Set RegularKey</button>
-    <button type="button" class="btn btn-info" ng-click="prepareAccountSet({modal: 'info'})">Edit Account Info</button>
-    <button type="button" class="btn btn-info" ng-click="prepareAccountSet({modal: 'flags'})">Edit Account Flags</button>
     <br>
 </div>
