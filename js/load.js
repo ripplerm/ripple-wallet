@@ -1,7 +1,7 @@
-$(function() {
+  $(function() {
     $('body').bootstrapMaterialDesign();
   });
-
+  
   window.page = window.location.hash || "#Info";
   $(document).ready(function () {
     if (window.page != "#Info") {
