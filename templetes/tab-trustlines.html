@@ -26,7 +26,7 @@
   </div>
 
   <b>List of Trustlines: </b><br>
-  <span style="padding-left:1em;"> Currency Filter: </span>
+  <span> Currency Filter: </span>
   <select class="form-control" ng-model="search.currency">
             <option value="">- ALL -</option>
             <option ng-repeat="(key, value) in trustlinesStats" value="{{key}}">{{currencyName(key)}}</option>
@@ -55,22 +55,22 @@
     </tr>
     <tr ng-repeat="line in trustlines | filter:search | orderBy:'balance':trustlineDescending" ng-hide="trustlineIgnoreZero? line.balance == 0 : false">
       <td>{{currencyName(line.currency)}}</td>
-      <td style="text-align:left">{{gatewayName(line.account)}}</td>
-      <td style="text-align:right">{{amountDisplay({currency: line.currency, value: line.balance, }, {value: true})}}</td>
+      <td style="text-align:center">{{gatewayName(line.account)}}</td>
+      <td style="text-align:center">{{amountDisplay({currency: line.currency, value: line.balance, }, {value: true})}}</td>
       <td style="text-align:center" ng-show="trustlineShowFull">
         <font color="{{line.no_ripple_peer ? 'green' : 'red'}}">{{line.no_ripple_peer ? "&#10008" : "&#10004"}} </font> /
         <font color="{{line.freeze_peer ? 'red' : 'green'}}">{{line.freeze_peer ? "&#10004" : "&#10008"}} </font> /
         <font color="{{line.peer_authorized ? 'green' : 'blue'}}">{{line.peer_authorized ? "&#10004" : "&#10008"}}</font>
       </td>
-      <td style="text-align:right" ng-show="trustlineShowFull"> {{line.limit_peer}}</td>
-      <td style="text-align:right"> {{line.limit}}</td>
+      <td style="text-align:center" ng-show="trustlineShowFull"> {{line.limit_peer}}</td>
+      <td style="text-align:center"> {{line.limit}}</td>
       <td style="text-align:center" ng-show="trustlineShowFull">
         <font color="{{line.no_ripple ? 'green' : 'red'}}">{{line.no_ripple ? '&#10008' : '&#10004'}} </font> /
         <font color="{{line.freeze ? 'red' : 'green'}}"> {{line.freeze ? '&#10004' : '&#10008' }} </font> /
         <font color="{{line.authorized ? 'green' : 'blue'}}"> {{line.authorized ? '&#10004': '&#10008'}} </font>
       </td>
-      <td style="text-align:right" ng-show="trustlineShowFull">{{line.quality_in ? line.quality_in / 1e9 : 1}}</td>
-      <td style="text-align:right" ng-show="trustlineShowFull">{{line.quality_out ? line.quality_out / 1e9 : 1}}</td>
+      <td style="text-align:center" ng-show="trustlineShowFull">{{line.quality_in ? line.quality_in / 1e9 : 1}}</td>
+      <td style="text-align:center" ng-show="trustlineShowFull">{{line.quality_out ? line.quality_out / 1e9 : 1}}</td>
       <td style="text-align:center">
         <button class="btn btn-link" ng-click="editTrustline(line)">edit <span class="glyphicon glyphicon-edit"></span></button>
       </td>
