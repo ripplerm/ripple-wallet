@@ -1,12 +1,12 @@
 <div id="tabTrustlines">
   <span style="font-weight:bold; font-size:20pt; padding-right:1em;">Trustlines: </span>
-  <button class="btn btn-warning" ng-click="accountLines(); search.currency='';" ng-disabled="!activeAccount"><span class="glyphicon glyphicon-refresh"></span>   {{lang==0?'Refresh':'刷新'}} </button>  {{accountLinesStatus}}
+  <button class="btn btn-warning" ng-click="accountLines(); search.currency='';" ng-disabled="!activeAccount"><span class="glyphicon glyphicon-refresh"></span>   {{lang==0?'Refresh':'刷新'}} </button>   <br>{{accountLinesStatus}}
   <br><br>
   <b>Total Trustlines = {{trustlinesStats ? totalTrustlines : ""}}</b>
   <br><br>
-  <b>Balance Statistics: </b>
-  <span style="padding-left:3em"> <input type="checkbox" ng-model="trustlineStatsIgnoreZero"> Hide zero-balances</span>
-  <table style="width:500px;" class="table table-bordered">
+  <b>Balance Statistics: </b><br>
+  <span style="padding-left:1em"> <input type="checkbox" ng-model="trustlineStatsIgnoreZero"> Hide zero-balances</span><br>
+  <table class="table table-hover">
     <tr>
       <th>Currency</th>
       <th>Number of Trustlines</th>
@@ -25,7 +25,7 @@
     </div>
   </div>
 
-  <b>List of Trustlines: </b>
+  <b>List of Trustlines: </b><br>
   <span style="padding-left:1em;"> Currency Filter: </span>
   <select class="form-control" ng-model="search.currency">
             <option value="">- ALL -</option>
@@ -40,7 +40,7 @@
           </span>
   <br>
 
-  <table border="1" cellpadding="5" cellspacing="0" class="table table-bordered table-striped" style="text-align: center">
+  <table cellpadding="5" cellspacing="0" class="table table-hover" style="text-align: center">
     <tr style="text-align: center">
       <th style="text-align: center">Currency</th>
       <th style="text-align: center">Counter Party</th>

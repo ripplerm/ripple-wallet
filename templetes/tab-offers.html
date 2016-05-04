@@ -1,6 +1,6 @@
 <div id="tabOffers">
 	<span style="font-weight:bold; font-size:20pt; padding-right:1em;">Account Offers: </span>
-	<button class="btn btn-warning" ng-click="getAccountOffers();" ng-disabled="!activeAccount"><span class="glyphicon glyphicon-refresh"></span>   {{lang==0?'Refresh':'刷新'}} </button>	{{accountOffers.status}}
+	<button class="btn btn-warning" ng-click="getAccountOffers();" ng-disabled="!activeAccount"><span class="glyphicon glyphicon-refresh"></span>   {{lang==0?'Refresh':'刷新'}} </button> <br>{{accountOffers.status}}
 	<br><br>
 
 	<div class="panel panel-info" ng-show="tradingLog.status">

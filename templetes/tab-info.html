@@ -7,8 +7,8 @@
     <img src="{{accountData.urlgravatar}}" style="margin-right: 5px; margin-bottom: 5px; display: {{accountData.EmailHash ? 'block': 'none'}}">
     <table class="table table-hover">
         <tr>
-            <th style="width:20%">XRP Balance</th>
-            <td style="width:70%">
+            <th>XRP Balance</th>
+            <td>
                 {{accountBalances.XRP ? accountBalances.XRP : '-'}}
                 <span style="padding-left:1em;"> {{accountBalances.XRP ? '(reserved: ' + accountBalances.reserved + ')' : ''}} </span>
 
