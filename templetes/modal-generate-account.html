@@ -6,12 +6,14 @@
     <form name="generateAccountForm" nonvalidate>
         <table>
             <tr>
-                <td>
-                    <div class="form-group">
-                        <label for="keyinput">{{lang==0?'Secret:':'密钥'}}</label>
-                        <input id="keyinput" type="password" name="secret" placeholder="{{lang==0?'enter secret':'输入密钥'}}" class="form-control" size=50 ng-model="options.secret" ripple-valid-secret required autofocus> <span style="color:red" ng-show="generateAccountForm.secret.$dirty && generateAccountForm.secret.$error.rippleValidSecret">{{lang==0?'Invalid Secret!':'无效密钥!'}}</span>
-                    </div>
-                </td>
+                      <td>{{lang==0?'Secret:':'密钥'}}</td>
+                      <td><input id="keyinput" type="password" name="secret" placeholder="{{lang==0?'enter secret':'输入密钥'}}" class="form-control" size=50 ng-model="options.secret" ripple-valid-secret required autofocus></td>
+            </tr>
+            <br>
+            <tr>
+                      <td></td>
+                      <td><span style="color:red" ng-show="generateAccountForm.secret.$dirty && generateAccountForm.secret.$error.rippleValidSecret">{{lang==0?'Invalid Secret!':'无效密钥!'}}</span></td>
+                    
             </tr>
         </table>
     </form><br>

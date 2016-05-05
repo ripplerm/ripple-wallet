@@ -1,8 +1,8 @@
 <div id="tabInfo">
   <div class="card-block">
     <h4 class="card-title">{{lang==0?'Account:':'账户:'}} {{activeAccount ? activeAccount : "-"}}</h4>
-    <button class="btn btn-info" ng-click="prepareSetWalletSecret()"><span class="glyphicon glyphicon-pencil"></span> {{lang==0?'Set Secret':'设置密钥'}}</button>
-    <button class="btn btn-warning" ng-click="accountInfo()" ng-disabled="!activeAccount"><span class="glyphicon glyphicon-refresh"></span> {{lang==0?'Refresh':'刷新'}}  </button> <br>{{accountInfoStatus}}
+    <button class="btn btn-info" ng-click="prepareSetWalletSecret()">{{lang==0?'Set Secret':'设置密钥'}}</button>
+    <button class="btn btn-warning" ng-click="accountInfo()" ng-disabled="!activeAccount">{{lang==0?'Refresh':'刷新'}}  </button> <br>{{accountInfoStatus}}
     </div>
     <div class="card-block">
     <h5 class="card-subtitle">{{lang==0?'Account Info:':'账户信息:'}}</h5>

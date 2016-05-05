@@ -59,7 +59,7 @@
                     <tr>
                         <td>Issuer:</td>
                         <td>
-                            <div class="dropdown">
+                            <span class="dropdown">
                                 <input type="text" class="form-control" placeholder="address" name="amountIssuer" ng-model="Payment.amountIssuer" size="50" ng-required="Payment.amountCurrency != 'XRP'" ng-disabled="Payment.amountCurrency == 'XRP' || Payment.federation.quoteRequired" ng-change="pathFindAutoStart()"
                                     ripple-valid-address>
                                 <button type="button" class="btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="caret"></span></button>
@@ -67,7 +67,7 @@
                                     <li ng-repeat="gateway in gateways | filter: {currencies: Payment.amountCurrency} | orderBy:'name'"><a href="#" ng-click="Payment.amountIssuer=gateway.address; pathFindAutoStart()">{{gateway.name}}</a></li>
                                 </ul>
                                 <span style="padding-left:1em; color:red" ng-show="paymentForm.amountIssuer.$dirty && paymentForm.amountIssuer.$error.rippleValidAddress">Invalid Address!</span>
-                            </div>
+                            </span>
                         </td>
                     </tr>
                 </table>
@@ -114,14 +114,14 @@
                     <tr>
                         <td>Issuer:</td>
                         <td>
-                            <div class="dropdown">
+                            <span class="dropdown">
                                 <input type="text" class="form-control" placeholder="address" name="sendmaxIssuer" ng-model="Payment.sendmaxIssuer" size="50" ng-required="Payment.sendmaxCurrency && Payment.sendmaxCurrency != 'XRP'" ng-disabled="Payment.sendmaxCurrency == 'XRP'" ripple-valid-address>
                                 <button type="button" class="btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="caret"></span></button>
                                 <ul class="dropdown-menu">
                                     <li ng-repeat="gateway in gateways | filter: {currencies: Payment.sendmaxCurrency} | orderBy:'name'"><a href="#" ng-click="Payment.sendmaxIssuer=gateway.address;">{{gateway.name}}</a></li>
                                 </ul>
                                 <span style="padding-left:1em; color:red" ng-show="paymentForm.sendmaxIssuer.$dirty && paymentForm.sendmaxIssuer.$error.rippleValidAddress">Invalid Address!</span>
-                            </div>
+                            </span>
                         </td>
                     </tr>
                 </table>

@@ -10,17 +10,16 @@
         </div>
     </div>
     <div class="col-sm-4">
-        <div class="dropdown">
-            <span style="font-weight:bold; font-size:14pt; color:green">
-				{{pairName(trading.pair)}}</span>
-            </span>
-            <button type="button" class="btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="caret"></span></button>
-            <ul class="dropdown-menu">
+        <span class="dropdown">
+            <span style="font-weight:bold; font-size:14pt; color:green">{{pairName(trading.pair)}}</span>
+            <button type="button" class="btn btn-secondary dropdown-toggle" id="tabtradedropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
+            <ul class="dropdown-menu" aria-labelledby="tabtradedropdownMenu1">>
                 <li><a href="#" ng-click="prepareTradePair()"> -- Add New -- </a></li>
                 <li ng-repeat="pair in tradepairs"><a href="#" ng-click="setTradePair(pair)">{{pairName(pair)}}</a></li>
             </ul>
             <button class="btn btn-info" ng-click="flipTradePair()"><span class="glyphicon glyphicon-transfer"></span> Flip</button>
-        </div>
+        </span>
+        
         <hr>
         <h4>Outstanding Orders: 
 			<button class="btn btn-warning" ng-click="getAccountOffers()"><span class="glyphicon glyphicon-refresh"></span>  {{lang==0?'Refresh':'刷新'}} </button> 

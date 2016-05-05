@@ -5,26 +5,29 @@
     <form name="setWalletAccountForm" nonvalidate>
         <table>
             <tr>
-
-                
-                    <div class="dropdown">
-                        <label for="idinput">{{lang==0?'Address:':'Ripple地址'}}</label>
-                        <input id="idinput" name="address" type="text" placeholder="{{lang==0?'enter address or click use secret key':'输入Ripple地址或点击使用密钥'}}" class="form-control" size=50 ng-model="options.address" ripple-valid-address autofocus dropdown-append-to-body>
-                       
+                        <span class="dropdown">
+                        <td>{{lang==0?'Address:':'Ripple地址'}}</td>
+                        <td><input id="idinput" name="address" type="text" placeholder="{{lang==0?'enter address or click use secret key':'输入Ripple地址或点击使用密钥'}}" class="form-control" size=50 ng-model="options.address" ripple-valid-address autofocus dropdown-append-to-body></td>
+                        <td><span class="dropdown">
                         <button class="btn dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="caret"></span></button>
 
                         <ul class="dropdown-menu">
                             <li ng-repeat="account in accountHistory"><a href="#" ng-click="options.address=account;">{{account}}</a></li>
                         </ul>
-                         
-                        <span style="color:red" ng-show="setWalletAccountForm.address.$dirty && setWalletAccountForm.address.$error.rippleValidAddress">{{lang==0?'Invalid Address!':'无效地址!'}}</span>
-                        <br>
-                    </div>
-               
+                        </span></td>
+            </tr>
+            <tr>
+                        <td></td>
+                        <td><span style="color:red" ng-show="setWalletAccountForm.address.$dirty && setWalletAccountForm.address.$error.rippleValidAddress">{{lang==0?'Invalid Address!':'无效地址!'}}</span>
+                        </td>
+                        <td></td>
+                    
+                    
             </tr>
             <tr ng-show="options.secret">
                 <td>{{lang==0?'Please save secret:':'请妥善保存密钥:'}}</td>
                 <td>{{options.secret}}</td>
+                <td></td>
             </tr>
         </table>
         <br>
