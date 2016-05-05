@@ -1,11 +1,11 @@
-<div id="tabInfo">
+<divid="tabInfo">
   <div class="card-block">
     <h4 class="card-title">{{lang==0?'Account:':'账户:'}} {{activeAccount ? activeAccount : "-"}}</h4>
     <button class="btn btn-info" ng-click="prepareSetWalletSecret()"><span class="glyphicon glyphicon-pencil"></span> {{lang==0?'Set Secret':'设置密钥'}}</button>
     <button class="btn btn-warning" ng-click="accountInfo()" ng-disabled="!activeAccount"><span class="glyphicon glyphicon-refresh"></span> {{lang==0?'Refresh':'刷新'}}  </button> <br>{{accountInfoStatus}}
     </div>
     <div class="card-block">
-    <h4 class="card-title">{{lang==0?'Account Info:':'账户信息:'}}</h4>
+    <h5 class="card-subtitle">{{lang==0?'Account Info:':'账户信息:'}}</h5>
     <span style="float:right">
     <button type="button" class="btn btn-info" ng-click="prepareSetRegularKey()">{{lang==0?'Set RegularKey':'设置RegularKey'}}</button>
     <button type="button" class="btn btn-info" ng-click="prepareAccountSet({modal: 'info'})">{{lang==0?'Edit Account Info':'编辑账户信息'}}</button>
@@ -51,7 +51,7 @@
     </table>
     </div>
     <div class="card-block">
-    <h4 class="card-title">{{lang==0?'Account Flags:':'账户标签:'}}</h4>
+    <h5 class="card-subtitle">{{lang==0?'Account Flags:':'账户标签:'}}</h5>
     <span style="float:right">
     <button type="button" class="btn btn-info" ng-click="prepareAccountSet({modal: 'flags'})">{{lang==0?'Edit Account Flags':'编辑账户标签'}}</button>
     </span><br>
