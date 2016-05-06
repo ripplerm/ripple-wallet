@@ -13,18 +13,19 @@
                     Issuer:
                 </td>
                 <td>
-                    <div class="dropdown">
+                    
                         <input type="text" class="form-control" name="baseIssuer" ng-model="options.baseIssuer" size=50 ripple-valid-address ng-required="options.baseCurrency != 'XRP'"
                             ng-disabled="options.baseCurrency === 'XRP'">
-                        <button type="button" class="btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Gateway<span class="caret"></span></button>
+                        <span class="dropdown">
+                          <button type="button" class="btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Gateway<span class="caret"></span></button>
                         <ul class="dropdown-menu">
                             <li ng-repeat="gateway in gateways | filter: {currencies: options.baseCurrency} | orderBy:'name'"><a href="#" ng-click="options.baseIssuer=gateway.address;">{{gateway.name}}</a></li>
                         </ul>
-
+                        </span>
                         <br>&nbsp
                         <span style="color:green">{{gatewayName(options.baseIssuer)}}</span>
                         <span style="color:red" ng-show="setTradePairForm.baseIssuer.$dirty && setTradePairForm.baseIssuer.$error.rippleValidAddress">Invalid Address!</span>
-                    </div>
+                    
                 </td>
             </tr>
         </table>
@@ -38,18 +39,20 @@
 
                 <td>Issuer:</td>
                 <td>
-                    <div class="dropdown">
+                    
                         <input type="text" class="form-control" name="tradeIssuer" ng-model="options.tradeIssuer" size=50 ripple-valid-address ng-required="options.tradeCurrency != 'XRP'"
                             ng-disabled="options.tradeCurrency === 'XRP'">
-                        <button type="button" class="btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Gateway<span class="caret"></span></button>
+                        <span class="dropdown">
+                          <button type="button" class="btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Gateway<span class="caret"></span></button>
                         <ul class="dropdown-menu">
                             <li ng-repeat="gateway in gateways | filter: {currencies: options.tradeCurrency} | orderBy:'name' "><a href="#" ng-click="options.tradeIssuer=gateway.address;">{{gateway.name}}</a></li>
                             <li class="divider"></li>
                         </ul>
+                        </span>
                         <br>&nbsp
                         <span style="color:green">{{gatewayName(options.tradeIssuer)}}</span>
                         <span style="color:red" ng-show="setTradePairForm.tradeIssuer.$dirty && setTradePairForm.tradeIssuer.$error.rippleValidAddress">Invalid Address!</span>
-                    </div>
+                    
                 </td>
 
             </tr>
