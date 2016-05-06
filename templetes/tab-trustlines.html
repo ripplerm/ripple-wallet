@@ -4,8 +4,11 @@
   <br><br>
   <b>Total Trustlines = {{trustlinesStats ? totalTrustlines : ""}}</b>
   <br><br>
-  <b>Balance Statistics: </b><br>
-  <span style="padding-left:1em"><label class="input-toggle"><input type="checkbox" ng-model="trustlineStatsIgnoreZero"><span></span></label>Hide zero-balances</span><br>
+  <b>Balance Statistics: </b>
+  <a class="btn btn-info" data-toggle="collapse" href="#Balanceopt1" aria-expanded="false" aria-controls="Balanceopt1">
+    option
+  </a><br>
+  <div class="collapse" id="Balanceopt1"><label class="input-toggle"><input type="checkbox" ng-model="trustlineStatsIgnoreZero"><span></span></label>Hide zero-balances</div><br>
   <table class="table table-hover">
     <tr>
       <th style="text-align: center">Currency</th>
@@ -30,9 +33,9 @@
   <select class="form-control" ng-model="search.currency">
             <option value="">- ALL -</option>
             <option ng-repeat="(key, value) in trustlinesStats" value="{{key}}">{{currencyName(key)}}</option>
-          </select><br>
-  <span style="padding-left:1em"><label class="input-toggle"><input type="checkbox" ng-model="trustlineDescending"><span></span></label>Descending.</span>
-  <span style="padding-left:1em"><label class="input-toggle"><input type="checkbox" ng-model="trustlineIgnoreZero"><span></span></label>Hide Zero-Balances.</span>
+          </select>
+  <span style="padding-left:1em"><label class="input-toggle"><input type="checkbox" ng-model="trustlineDescending"><span></span></label>Descending.</span><br>
+  <span style="padding-left:1em"><label class="input-toggle"><input type="checkbox" ng-model="trustlineIgnoreZero"><span></span></label>Hide Zero-Balances.</span><br>
   <span style="padding-left:1em"><label class="input-toggle"><input type="checkbox" ng-model="trustlineShowFull"><span></span></label> Show Advance Detail.</span>
 
   <span style="float:right">
