@@ -70,3 +70,143 @@
     opacity: 1;
 }
 
+label.input-radio {
+  margin: 0;
+  display: inline-block;
+  line-height: 0;
+  font-size: 0;
+}
+label.input-radio > span {
+  display: block;
+  width: 14px;
+  height: 14px;
+  border-radius: 100%;
+  border: 2px solid #6D6D6D;
+  cursor: pointer;
+}
+label.input-radio > span:before {
+  content: "";
+  display: block;
+  width: 14px;
+  height: 14px;
+  border-radius: 100%;
+  background-color: teal;
+  -webkit-transform: scale(0, 0);
+          transform: scale(0, 0);
+  -webkit-transform-origin: center;
+          transform-origin: center;
+  opacity: 0;
+  -webkit-transition: opacity 0.1s, border-color 0.2s, -webkit-transform 0.2s;
+  transition: opacity 0.1s, border-color 0.2s, -webkit-transform 0.2s;
+  transition: transform 0.2s, opacity 0.1s, border-color 0.2s;
+  transition: transform 0.2s, opacity 0.1s, border-color 0.2s, -webkit-transform 0.2s;
+  -webkit-transition-timing-function: cubic-bezier(0, 1, 1, 1);
+          transition-timing-function: cubic-bezier(0, 1, 1, 1);
+}
+label.input-radio > input:checked + span {
+  border-color: teal;
+}
+label.input-radio > input:checked + span:before {
+  opacity: 1;
+  -webkit-transform: scale(0.7, 0.7);
+          transform: scale(0.7, 0.7);
+  -webkit-transition-timing-function: cubic-bezier(0, 1.2, 1, 1.2);
+          transition-timing-function: cubic-bezier(0, 1.2, 1, 1.2);
+}
+label.input-radio > input:disabled + span:active:before {
+  -webkit-transform: scale(0, 0);
+          transform: scale(0, 0);
+}
+label.input-radio > input:checked:disabled + span:active:before {
+  -webkit-transform: scale(0.65, 0.65);
+          transform: scale(0.65, 0.65);
+}
+label.input-radio > input:disabled + span {
+  cursor: default;
+}
+label.input-radio > input:disabled + span {
+  border-color: #B0B0B0;
+}
+label.input-radio > input:disabled + span:before {
+  background: #B0B0B0;
+}
+label.input-radio > input {
+  display: block;
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+label.input-toggle {
+  line-height: 0;
+  font-size: 0;
+  display: inline-block;
+  margin: 0;
+}
+label.input-toggle > span {
+  display: inline-block;
+  position: relative;
+  background-image: -webkit-linear-gradient(left, #848484 0%, #848484 50%, #7cbcbf 50%, #7cbcbf 100%);
+  background-image: linear-gradient(to right, #848484 0%, #848484 50%, #7cbcbf 50%, #7cbcbf 100%);
+  background-size: 64px 14px;
+  background-position: 0%;
+  border-radius: 32px;
+  width: 32px;
+  height: 14px;
+  cursor: pointer;
+  -webkit-transition: background-position 0.2s ease-in;
+  transition: background-position 0.2s ease-in;
+}
+label.input-toggle > input:checked + span {
+  background-position: -100%;
+}
+label.input-toggle > span:after {
+  content: "";
+  display: block;
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  background: #F1F1F1;
+  -webkit-align-self: center;
+      -ms-flex-item-align: center;
+          align-self: center;
+  top: 50%;
+  left: 0;
+  -webkit-transform: translateY(-50%);
+          transform: translateY(-50%);
+  border-radius: 100%;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+  -webkit-transition: left 0.2s ease-in, background-color 0.2s ease-in, -webkit-transform 0.3s ease;
+  transition: left 0.2s ease-in, background-color 0.2s ease-in, -webkit-transform 0.3s ease;
+  transition: left 0.2s ease-in, background-color 0.2s ease-in, transform 0.3s ease;
+  transition: left 0.2s ease-in, background-color 0.2s ease-in, transform 0.3s ease, -webkit-transform 0.3s ease;
+}
+label.input-toggle > input:checked + span:after {
+  left: calc(100% -  18px);
+  background-color: #1D8B90;
+}
+label.input-toggle > span:active:after {
+  -webkit-transform: translateY(-50%) scale3d(1.15, 0.85, 1);
+          transform: translateY(-50%) scale3d(1.15, 0.85, 1);
+}
+label.input-toggle > input:disabled + span:active:after {
+  -webkit-transform: translateY(-50%);
+          transform: translateY(-50%);
+}
+label.input-toggle > input:disabled + span {
+  cursor: default;
+}
+label.input-toggle > input:disabled + span {
+  background: #D5D5D5;
+}
+label.input-toggle > input:disabled + span:after {
+  background: #BDBDBD;
+}
+label.input-toggle > input {
+  display: block;
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}

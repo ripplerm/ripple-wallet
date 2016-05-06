@@ -1,11 +1,11 @@
 <div id="tabTrustlines">
   <h4 class="card-title">Trustlines:</h4>
-  <button class="btn btn-warning" ng-click="accountLines(); search.currency='';" ng-disabled="!activeAccount"><span class="glyphicon glyphicon-refresh"></span>   {{lang==0?'Refresh':'刷新'}} </button>   <br>{{accountLinesStatus}}
+  <button class="btn btn-warning" ng-click="accountLines(); search.currency='';" ng-disabled="!activeAccount">{{lang==0?'Refresh':'刷新'}} </button>   <br>{{accountLinesStatus}}
   <br><br>
   <b>Total Trustlines = {{trustlinesStats ? totalTrustlines : ""}}</b>
   <br><br>
   <b>Balance Statistics: </b><br>
-  <span style="padding-left:1em"> <input type="checkbox" ng-model="trustlineStatsIgnoreZero"> Hide zero-balances</span><br>
+  <span style="padding-left:1em"><label class="input-toggle"><input type="checkbox" ng-model="trustlineStatsIgnoreZero"><span></span></label>Hide zero-balances</span><br>
   <table class="table table-hover">
     <tr>
       <th style="text-align: center">Currency</th>
@@ -30,10 +30,10 @@
   <select class="form-control" ng-model="search.currency">
             <option value="">- ALL -</option>
             <option ng-repeat="(key, value) in trustlinesStats" value="{{key}}">{{currencyName(key)}}</option>
-          </select>
-  <span style="padding-left:1em"> <input type="checkbox" ng-model="trustlineDescending"> Descending.</span>
-  <span style="padding-left:1em"> <input type="checkbox" ng-model="trustlineIgnoreZero"> Hide Zero-Balances.</span>
-  <span style="padding-left:1em"> <input type="checkbox" ng-model="trustlineShowFull"> Show Advance Detail.</span>
+          </select><br>
+  <span style="padding-left:1em"><label class="input-toggle"><input type="checkbox" ng-model="trustlineDescending"><span></span></label>Descending.</span>
+  <span style="padding-left:1em"><label class="input-toggle"><input type="checkbox" ng-model="trustlineIgnoreZero"><span></span></label>Hide Zero-Balances.</span>
+  <span style="padding-left:1em"><label class="input-toggle"><input type="checkbox" ng-model="trustlineShowFull"><span></span></label> Show Advance Detail.</span>
 
   <span style="float:right">
             <button class="btn btn-info" ng-click="addTrustline()">Add New Trustline</button> 
