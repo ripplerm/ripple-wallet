@@ -3,40 +3,52 @@
 </div>
 <div class="modal-body">
   <form name="editTrustlineForm">
-    <table class="table table-condensed">
+    <table>
       <tr>
         <td>Currency:</td>
         <td><input type="text" class="form-control" name="currency" ng-model="options.currency" size="50" required ng-disabled="options.edit"></td>
+        <td></td>
       </tr>
       <tr>
         <td>Issuer: </td>
         <td>
-          <span class="dropdown">
+          
             <input type="text" class="form-control" name="issuer" ng-model="options.account" size="50" ripple-valid-address required ng-disabled="options.edit">
+        </td>
+        <td>
+            <span class="dropdown">
             <button type="button" class="btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" ng-disabled="options.edit"></span></button>
             <ul class="dropdown-menu">
               <li ng-repeat="gateway in gateways | filter: {currencies: options.currency} | orderBy:'name'"><a href="#" ng-click="options.account=gateway.address;">{{gateway.name}}</a></li>
             </ul>
-            <span style="color:red" ng-show="editTrustlineForm.issuer.$dirty && editTrustlineForm.issuer.$error.rippleValidAddress">Invalid Address!</span>
+            
           </span>
         </td>
       </tr>
       <tr>
+        <td></td>
+        <td><span style="color:red" ng-show="editTrustlineForm.issuer.$dirty && editTrustlineForm.issuer.$error.rippleValidAddress">Invalid Address!</span></td>
+        <td></td>
+      </tr>  
+      <tr>
         <td>Limit:</td>
         <td><input type="text" class="form-control" name="limit" ng-model="options.limit" size="50" required></td>
+        <td></td>
       </tr>
       <tr>
         <td>Input Quality:</td>
-        <td><input type="text" class="form-control" name="quality_in" ng-model="options.quality_in_human" size="50">(1 = 100%)</td>
+        <td><input type="text" class="form-control" name="quality_in" ng-model="options.quality_in_human" size="50"></td>
+        <td>(1=100%)</td>
       </tr>
       <tr>
         <td>Output Quality:</td>
-        <td><input type="text" class="form-control" name="quality_out" ng-model="options.quality_out_human" size="50">(1 = 100%)</td>
+        <td><input type="text" class="form-control" name="quality_out" ng-model="options.quality_out_human" size="50"></td>
+        <td>(1=100%)</td>
       </tr>
       <tr>
         <td>Others:</td>
         <td>
-          <table class="table">
+          <table>
             <tr>
               <td><input type="radio" ng-model="options.no_ripple" value="false" ng-checked="!options.no_ripple">Allow Rippling</td>
               <td><input type="radio" ng-model="options.no_ripple" value="true" ng-checked="!!options.no_ripple">Disallow Rippling</td>
