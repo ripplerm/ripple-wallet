@@ -1,9 +1,9 @@
 <div id="tabPayment">
     <h4 class="card-title">{{lang==0?'Construct a Payment:':'支付:'}}</h4> <br><br>
     <form name="paymentForm" id="paymentForm" novalidate>
-        <table class="table table-hover" cellpadding="5" cellspacing="0"  style="table-layout:fixed">
+        <table>
             <tr>
-                <td width="120">Receipient:</td>
+                <td>Receipient:</td>
                 <td>
                     <input type="checkbox" name="useFederation" ng-model="Payment.useFederation" ng-click="Payment.federationAddress=''; federationReset()"> Use RippleName / Federation Address.<br>
                     <div ng-show="Payment.useFederation">
@@ -21,7 +21,7 @@
                 <td><input type="text" class="form-control" size="60" placeholder="{{field.hint}}" ng-model="field.value" name="{{field.name}}" ng-required="field.required" ng-change="federationQuoteReset()"> </td>
             </tr>
             <tr>
-                <td width="180">Quote Amount: <span style="color:red"> *</span></td>
+                <td>Quote Amount: <span style="color:red"> *</span></td>
                 <td><input type="text" class="form-control" size="15" ng-model="Payment.federation.quoteAmount" name="amount" ng-change="federationQuoteReset(); pathFindAutoStart()">
                     <select class="form-control" ng-model="Payment.federation.quoteCurrency">
                               <option ng-repeat="currency in Payment.federation.quoteCurrencies" value="{{currency.currency}}">{{currency.currency}}</option>
@@ -78,7 +78,7 @@
                 <button class="btn btn-info" ng-click="pathFindStart()" ng-disabled="(paymentForm.destination.$invalid || paymentForm.amountValue.$invalid || paymentForm.amountCurrency.$invalid || paymentForm.amountIssuer.$invalid)">Paths Search</button>
                 <button class="btn btn-info" ng-click="pathFindClose()" ng-disabled="!pathFind">stop</button>
             </td>
-            <td style="word-wrap:break-word">
+            <td>
                 <input type="checkbox" ng-model="Payment.pathFindSeparateIssuer" ng-click="pathFindAutoStart()"> Separate Issuers.<br> <br> {{Payment.pathFindStatus}} <br><br>
                 <div class="row">
                     <div class="col-sm-4" ng-repeat="path in Payment.pathOpts" style="text-align:center">
@@ -171,14 +171,14 @@
         </tr>
         </table>
     </form>
-    <table class="table table-bordered" border="1" style="width:800px; table-layout:fixed">
+    <table>
         <tr>
-            <td width="120">Memos:</td>
-            <td style="word-wrap:break-word">
+            <td>Memos:</td>
+            <td>
                 <button type="button" class="btn btn-info" ng-click="prepareMemo(Payment)">Add New</button>
                 <button type="button" class="btn btn-info" ng-click="clearMemos(Payment)">Clear All</button>
                 <br>
-                <table class="table" ng-show="Payment.memos && Payment.memos.length > 0">
+                <table ng-show="Payment.memos && Payment.memos.length > 0">
                     <tr>
                         <th style="width:120; word-wrap:break-word">Memo Type</th>
                         <th style="width:120; word-wrap:break-word">Memo Format</th>
