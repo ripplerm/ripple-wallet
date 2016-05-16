@@ -45,3 +45,4 @@ function saveLang(l){
 	if(window.localStorage) localStorage["language"]=l;
 }
 
+

@@ -210,3 +210,16 @@ label.input-toggle > input {
   width: 0;
   height: 0;
 }
+
+.qrcode {
+      display: block;
+      margin: 24px auto 16px;
+      max-width: 100%;
+}
+.qrcode-link {
+      display: table;
+      margin: 24px auto 16px;
+}
+.qrcode-link .qrcode {
+      margin: 0;
+}

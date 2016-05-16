@@ -26,7 +26,9 @@
             </tr>
             <tr ng-show="options.secret">
                 <td>{{lang==0?'Please save secret:':'请妥善保存密钥:'}}</td>
-                <td>{{options.secret}}</td>
+                <td>
+                  <qrcode version="5" error-correction-level="M" size=160 data="{{options.secret}}" download></qrcode>
+                  </td>
                 <td></td>
             </tr>
         </table>
