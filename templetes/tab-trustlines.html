@@ -6,9 +6,9 @@
   <br><br>
   <b>Balance Statistics: </b>
   <a class="btn btn-info" data-toggle="collapse" href="#Balanceopt1" aria-expanded="false" aria-controls="Balanceopt1">
-    option
+    advanced
   </a><br>
-  <div class="collapse" id="Balanceopt1"><label class="input-toggle"><input type="checkbox" ng-model="trustlineStatsIgnoreZero"><span></span></label>Hide zero-balances</div><br>
+  <div class="collapse" id="Balanceopt1"><span style="padding-left:1em"><label class="input-toggle"><input type="checkbox" ng-model="trustlineStatsIgnoreZero"><span></span></label>Hide zero-balances</span></div><br>
   <table class="table table-hover">
     <tr>
       <th style="text-align: center">Currency</th>
@@ -28,7 +28,11 @@
     </div>
   </div>
 
-  <b>List of Trustlines: </b><br>
+  <b>List of Trustlines: </b>
+  <a class="btn btn-info" data-toggle="collapse" href="#Balanceopt2" aria-expanded="false" aria-controls="Balanceopt2">
+    advanced
+  </a><br>
+  <div class="collapse" id="Balanceopt2">
   <span> Currency Filter: </span>
   <select class="form-control" ng-model="search.currency">
             <option value="">- ALL -</option>
@@ -36,13 +40,13 @@
           </select>
   <span style="padding-left:1em"><label class="input-toggle"><input type="checkbox" ng-model="trustlineDescending"><span></span></label>Descending.</span><br>
   <span style="padding-left:1em"><label class="input-toggle"><input type="checkbox" ng-model="trustlineIgnoreZero"><span></span></label>Hide Zero-Balances.</span><br>
-  <span style="padding-left:1em"><label class="input-toggle"><input type="checkbox" ng-model="trustlineShowFull"><span></span></label> Show Advance Detail.</span>
+  <span style="padding-left:1em"><label class="input-toggle"><input type="checkbox" ng-model="trustlineShowFull"><span></span></label> Show Advance Detail.</span><br>
 
-  <span style="float:right">
+  <span style="padding-left:1em">
             <button class="btn btn-info" ng-click="addTrustline()">Add New Trustline</button> 
           </span>
   <br>
-
+  </div>
   <table cellpadding="5" cellspacing="0" class="table table-hover" style="text-align: center">
     <tr style="text-align: center">
       <th style="text-align: center">Currency</th>
