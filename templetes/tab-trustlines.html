@@ -49,19 +49,20 @@
   </div>
   <table cellpadding="5" cellspacing="0" class="table table-hover" style="text-align: center">
     <tr style="text-align: center">
-      <th style="text-align: center">Currency</th>
-      <th style="text-align: center">Counter Party</th>
-      <th style="text-align: center">Balance</th>
+      <th style="text-align: center">{{lang==0?'Currency':'币种'}}</th>
+      <th style="text-align: center">{{lang==0?'Counter Party':'对手盘'}}</th>
+      <th style="text-align: center">{{lang==0?'Balance':'余额'}}</th>
       <th style="text-align: center" ng-show="trustlineShowFull">Peer's Rippling / Freeze / Auth</th>
       <th style="text-align: center" ng-show="trustlineShowFull">Peer's Limit</th>
       <th style="text-align: center" ng-show="trustlineShowFull">Self Limit</th>
       <th style="text-align: center" ng-show="trustlineShowFull">Self Rippling / Freeze / Auth</th>
       <th style="text-align: center" ng-show="trustlineShowFull">Quality-In</th>
       <th style="text-align: center" ng-show="trustlineShowFull">Quality-Out</th>
-      <th style="text-align: center">Modify</th>
     </tr>
     <tr ng-repeat="line in trustlines | filter:search | orderBy:'balance':trustlineDescending" ng-hide="trustlineIgnoreZero? line.balance == 0 : false">
-      <td>{{currencyName(line.currency)}}</td>
+      <td><button class="btn bmd-btn-icon" ng-click="editTrustline(line)">
+              <i class="material-icons">edit</i>
+            </button>{{currencyName(line.currency)}}</td>
       <td style="text-align:center">{{gatewayName(line.account)}}</td>
       <td style="text-align:center">{{amountDisplay({currency: line.currency, value: line.balance, }, {value: true})}}</td>
       <td style="text-align:center" ng-show="trustlineShowFull">
@@ -78,9 +79,6 @@
       </td>
       <td style="text-align:center" ng-show="trustlineShowFull">{{line.quality_in ? line.quality_in / 1e9 : 1}}</td>
       <td style="text-align:center" ng-show="trustlineShowFull">{{line.quality_out ? line.quality_out / 1e9 : 1}}</td>
-      <td style="text-align:center">
-        <button class="btn btn-link" ng-click="editTrustline(line)">edit <span class="glyphicon glyphicon-edit"></span></button>
-      </td>
     </tr>
   </table>
 </div>
