@@ -93,7 +93,7 @@
       <h4 class="card-title">{{lang==0?'Ripple Wallet':'Ripple钱包'}}</h4>
       <p class="card-text">The Ripple Wallet is an open-source GUI for the Ripple network that facilitates the peer-to-peer exchange of any store of value.</p>
   </div>	
-  <div class="card page" ng-repeat="tab in tabs" id="{{tab.title}}" ng-init="tab.select()" style="margin: 1em;padding:2em;word-wrap: break-word; word-break: break-all; overflow:auto;"><div ng-include="tab.templete"></div></div>
+  <div class="card page" ng-repeat="tab in tabs" id="{{tab.title}}" ng-init="tab.select()" style="margin: 1em;padding:2em;word-wrap: break-word;overflow:auto;"><div ng-include="tab.templete"></div></div>
   <div class="card active" style="margin: 1em;padding:2em;word-wrap: break-word;  overflow:auto;">
       <!-- main content -->
       <h4 class="card-title">{{lang==0?'Disclaimer':'免责声明'}}</h4>

@@ -1,68 +1,139 @@
 <div id="tabInfo">
   <div class="card-block">
-    <h4 class="card-title">{{lang==0?'Account:':'账户:'}} {{activeAccount ? activeAccount : "-"}}</h4> 
+    <h4 class="card-title">{{lang==0?'Account:':'账户:'}} {{activeAccount ? activeAccount : "-"}}</h4>
     <button class="btn btn-info" ng-click="prepareSetWalletSecret()">{{lang==0?'Set Secret':'设置密钥'}}</button>
-    <button class="btn btn-warning" ng-click="accountInfo()" ng-disabled="!activeAccount">{{lang==0?'Refresh':'刷新'}}  </button> <br>{{accountInfoStatus}}
-    </div>
-    <div class="card-block">
+    <button class="btn btn-warning" ng-click="accountInfo()" ng-disabled="!activeAccount">{{lang==0?'Refresh':'刷新'}}  </button>    <br>{{accountInfoStatus}}
+  </div>
+  <div class="card-block">
     <h5 class="card-subtitle">{{lang==0?'Account Info:':'账户信息:'}}</h5>
-    <span style="float:right">
+    <a class="btn btn-info" data-toggle="collapse" href="#infoopt1" aria-expanded="false" aria-controls="infoopt1">advanced</a>
+    <div class="collapse" id="infoopt1">
+    <div style="padding-left:1em">
     <button type="button" class="btn btn-info" ng-click="prepareSetRegularKey()">{{lang==0?'Set RegularKey':'设置RegularKey'}}</button>
     <button type="button" class="btn btn-info" ng-click="prepareAccountSet({modal: 'info'})">{{lang==0?'Edit Account Info':'编辑账户信息'}}</button>
-    </span>
-    <img src="{{accountData.urlgravatar}}" style="margin-right: 5px; margin-bottom: 5px; display: {{accountData.EmailHash ? 'block': 'none'}}">
-    <table class="table table-hover">
-        <tr>
-            <th>{{lang==0?'XRP Balance':'XRP余额'}}</th>
-            <td>
-                {{accountBalances.XRP ? accountBalances.XRP : '-'}}
-                <span style="padding-left:1em;"> {{accountBalances.XRP ? '(reserved: ' + accountBalances.reserved + ')' : ''}} </span>
-
-            </td>
-        </tr>
-        <tr>
-            <th>Domain</th>
-            <td>{{accountData.domain ? accountData.domain : '-'}}</td>
-        </tr>
-        <tr>
-            <th>EmailHash</th>
-            <td>{{accountData.EmailHash ? accountData.EmailHash : '-'}}</td>
-        </tr>
-        <tr>
-            <th>Transfer Rate</th>
-            <td>{{accountData.TransferRate ? ((accountData.TransferRate / 1000000000 - 1) * 100).toFixed(7) + ' %' : '-' }} </td>
-        </tr>
-        <tr>
-            <th>Owner Count</th>
-            <td>{{accountData.OwnerCount}}</td>
-        </tr>
-        <tr>
-            <th>Regular Key</th>
-            <td>{{accountData.RegularKey ? accountData.RegularKey : '-'}}</td>
-        </tr>
-        <tr>
-            <th>Next Sequence</th>
-            <td>{{accountData.Sequence}}</td>
-        </tr>
-        <tr>
-            <th>Message Key</th>
-            <td colspan="3">{{accountData.MessageKey ? accountData.MessageKey : '-'}}</td>
-        </tr>
-    </table>
     </div>
-    <div class="card-block">
+    </div>
+    <img src="{{accountData.urlgravatar}}" style="margin-right: 5px; margin-bottom: 5px; display: {{accountData.EmailHash ? 'block': 'none'}}">
+    <br>
+       <div class="row">
+          <div class="col-sm-6" role="tab" id="info-heading1">
+            <h6>
+              <a class="collapsed" data-toggle="collapse" data-parent="#info-accordion" href="#info-collapse1" aria-expanded="false" aria-controls="info-collapse1">
+                {{lang==0?'XRP Balance':'XRP余额'}}     
+              </a>   
+            </h6>
+       </div>       
+       <div style="padding-left:1em" class="col-sm-6 collapse in" id="info-collapse1" role="tabpanel" aria-labelledby="info-heading1">
+            {{accountBalances.XRP ? accountBalances.XRP : '-'}}
+            <div> {{accountBalances.XRP ? '(reserved: ' + accountBalances.reserved + ')' : ''}} </div>
+          </div>
+        </div>
+      
+      <div class="row">
+        <div class="col-sm-6" role="tab" id="info-heading2">
+          <h6>
+        <a class="collapsed" data-toggle="collapse" data-parent="#info-accordion" href="#info-collapse2" aria-expanded="false" aria-controls="info-collapse2">
+          Domain
+        </a>
+      </h6>
+        </div>
+        <div style="padding-left:1em" id="info-collapse2" class="col-sm-6 collapse in" role="tabpanel" aria-labelledby="info-heading2">
+          {{accountData.domain ? accountData.domain : '-'}}
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-6" role="tab" id="info-heading3">
+          <h6>
+        <a class="collapsed" data-toggle="collapse" data-parent="#info-accordion" href="#info-collapse3" aria-expanded="false" aria-controls="info-collapse3">
+          EmailHash
+        </a>
+      </h6>
+        </div>
+        <div style="padding-left:1em" id="info-collapse3" class="col-sm-6 collapse in" role="tabpanel" aria-labelledby="info-heading3">
+          {{accountData.EmailHash ? accountData.EmailHash : '-'}}
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-6" role="tab" id="info-heading4">
+          <h6>
+        <a class="collapsed" data-toggle="collapse" data-parent="#info-accordion" href="#info-collapse4" aria-expanded="false" aria-controls="info-collapse4">
+          Transfer Rate
+        </a>
+      </h6>
+        </div>
+        <div style="padding-left:1em" id="info-collapse4" class="col-sm-6 collapse in" role="tabpanel" aria-labelledby="info-heading4">
+          {{accountData.TransferRate ? ((accountData.TransferRate / 1000000000 - 1) * 100).toFixed(7) + ' %' : '-' }}
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-6" role="tab" id="info-heading5">
+          <h6>
+        <a class="collapsed" data-toggle="collapse" data-parent="#info-accordion" href="#info-collapse5" aria-expanded="false" aria-controls="info-collapse5">
+          Owner Count
+        </a>
+      </h6>
+        </div>
+        <div style="padding-left:1em" id="info-collapse5" class="col-sm-6 collapse in" role="tabpanel" aria-labelledby="info-heading5">
+          {{accountData.OwnerCount}}
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-6" role="tab" id="info-heading6">
+          <h6>
+        <a class="collapsed" data-toggle="collapse" data-parent="#info-accordion" href="#info-collapse6" aria-expanded="false" aria-controls="info-collapse6">
+          Regular Key
+        </a>
+      </h6>
+        </div>
+        <div style="padding-left:1em; word-break: break-all;" id="info-collapse6" class="col-sm-6 collapse in" role="tabpanel" aria-labelledby="info-heading6">
+          {{accountData.RegularKey ? accountData.RegularKey : '-'}}
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-6" role="tab" id="info-heading7">
+          <h6>
+        <a class="collapsed" data-toggle="collapse" data-parent="#info-accordion" href="#info-collapse7" aria-expanded="false" aria-controls="info-collapse7">
+          Next Sequence
+        </a>
+      </h6>
+        </div>
+        <div style="padding-left:1em" id="info-collapse7" class="col-sm-6 collapse in" role="tabpanel" aria-labelledby="info-heading7">
+          {{accountData.Sequence}}
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-6" role="tab" id="info-heading8">
+          <h6>
+        <a class="collapsed" data-toggle="collapse" data-parent="#info-accordion" href="#info-collapse8" aria-expanded="false" aria-controls="info-collapse8">
+          Message Key
+        </a>
+      </h6>
+        </div>
+        <div style="padding-left:1em" id="info-collapse8" class="col-sm-6 collapse in" role="tabpanel" aria-labelledby="info-heading8">
+          {{accountData.MessageKey ? accountData.MessageKey : '-'}}
+        </div>
+      </div>
+    
+  </div>
+  <div class="card-block">
     <h5 class="card-subtitle">{{lang==0?'Account Flags:':'账户标签:'}}</h5>
     <span style="float:right">
     <button type="button" class="btn btn-info" ng-click="prepareAccountSet({modal: 'flags'})">{{lang==0?'Edit Account Flags':'编辑账户标签'}}</button>
     </span><br>
-    <div><span style="padding-right:1em;" ng-repeat="(key, value) in accountData['settings']">{{key}}:<font color="{{value ? 'green' : 'red'}}">{{value ? "&#10004" : "&#10008"}} </font></span></div>
+    <div>
+      <div style="padding-right:1em;" ng-repeat="(key, value) in accountData['settings']">{{key}}:
+        <font color="{{value ? 'green' : 'red'}}">{{value ? "&#10004" : "&#10008"}} </font>
+      </div>
     </div>
-    <div class="card-block">
+  </div>
+  <div class="card-block">
     <div class="panel panel-info" ng-show="accountSetLog.status">
-        <div class="alert {{accountSetLog.status == 'FINAL' ? (accountSetLog.status_code.slice(0,3) == 'tes' ? 'alert-success' : 'alert-danger') : 'alert-warning'}}" role="alert">
-            
-            <b>Tx Status:</b>[{{accountSetLog.status}}{{accountSetLog.status_code ? ', ' + accountSetLog.status_code : ''}}], <b>Result:</b> {{accountSetLog.result}} {{accountSetLog.tx_hash ? ', tx_hash: ' + accountSetLog.tx_hash : ''}}
-        </div>
+      <div class="alert {{accountSetLog.status == 'FINAL' ? (accountSetLog.status_code.slice(0,3) == 'tes' ? 'alert-success' : 'alert-danger') : 'alert-warning'}}"
+        role="alert">
+
+        <b>Tx Status:</b>[{{accountSetLog.status}}{{accountSetLog.status_code ? ', ' + accountSetLog.status_code : ''}}],
+        <b>Result:</b> {{accountSetLog.result}} {{accountSetLog.tx_hash ? ', tx_hash: ' + accountSetLog.tx_hash : ''}}
+      </div>
     </div>
-    </div>
+  </div>
 </div>
