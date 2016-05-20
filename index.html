@@ -45,8 +45,8 @@
         <i class="material-icons">menu</i>
       </button>
       <ul class="nav navbar-nav">
-        <li class="nav-item">{{lang==0?'Network:':'网络连接:'}} <font color="{{(state == 'online') ? 'green' : 'red'}}">{{state? "&#10004" : "&#10008"}}</font></li>
-        <li class="nav-item">{{lang==0?'Secret set:':'密钥登陆:'}} <font color="{{remote.secrets[activeAccount] ? 'green' : 'red' }}">{{remote.secrets[activeAccount] ? "&#10004" : "&#10008"}}</font></li>
+        <li class="nav-item">{{lang==0?'Network:':'网络:'}} <font color="{{(state == 'online') ? 'green' : 'red'}}">{{state? "&#10004" : "&#10008"}}</font></li>
+        <li class="nav-item">{{lang==0?'Secret:':'密钥:'}} <font color="{{remote.secrets[activeAccount] ? 'green' : 'red' }}">{{remote.secrets[activeAccount] ? "&#10004" : "&#10008"}}</font></li>
       </ul>
       <ul class="nav navbar-nav pull-xs-right">
         <li class="nav-item">
