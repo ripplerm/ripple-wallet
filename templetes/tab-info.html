@@ -1,6 +1,5 @@
 <div class="card" style="margin: 1em;padding:2em;word-wrap: break-word;  overflow:auto;" id="tabInfo">
     <h4 class="card-title">{{lang==0?'Account:':'账户:'}} {{activeAccount ? activeAccount : "-"}}</h4>
-    <button class="btn btn-info" ng-click="prepareSetWalletSecret()">{{lang==0?'Set Secret':'设置密钥'}}</button>
     <button class="btn btn-warning" ng-click="accountInfo()" ng-disabled="!activeAccount">{{lang==0?'Refresh':'刷新'}}  </button>    <br>{{accountInfoStatus}}
 </div>
 <div class="card" style="margin: 1em;padding:2em;word-wrap: break-word;  overflow:auto;">
