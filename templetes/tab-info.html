@@ -1,79 +1,82 @@
-<div class="card" style="margin: 1em;padding:2em;word-wrap: break-word;  overflow:auto;" id="tabInfo">
-    <h4 class="card-title">{{lang==0?'Account:':'账户:'}} {{activeAccount ? activeAccount : "-"}}</h4>
-    <button class="btn btn-warning" ng-click="accountInfo()" ng-disabled="!activeAccount">{{lang==0?'Refresh':'刷新'}}  </button>    <br>{{accountInfoStatus}}
-</div>
-<div class="card" style="margin: 1em;padding:2em;word-wrap: break-word;  overflow:auto;">
-    <h4 class="card-title">{{lang==0?'Account Info:':'账户信息:'}}</h4>
-    <a class="btn btn-info" data-toggle="collapse" href="#infoopt1" aria-expanded="false" aria-controls="infoopt1">{{lang==0?'advanced':'高级'}}</a>
-    <div class="collapse" id="infoopt1">
-        <div style="padding-left:1em">
-            <button type="button" class="btn btn-info" ng-click="prepareSetRegularKey()">{{lang==0?'Set RegularKey':'设置RegularKey'}}</button>
-            <button type="button" class="btn btn-info" ng-click="prepareAccountSet({modal: 'info'})">{{lang==0?'Edit Account Info':'编辑账户信息'}}</button>
-        </div>
+<div id="tabInfo">
+    <div class="card" style="margin: 1em;padding:2em;word-wrap: break-word;  overflow:auto;">
+        <h4 class="card-title">{{lang==0?'Account:':'账户:'}} {{activeAccount ? activeAccount : "-"}}</h4>
+        <button class="btn btn-warning" ng-click="accountInfo()" ng-disabled="!activeAccount">{{lang==0?'Refresh':'刷新'}}  </button>        <br>{{accountInfoStatus}}
     </div>
-    <img src="{{accountData.urlgravatar}}" style="margin-right: 5px; margin-bottom: 5px; display: {{accountData.EmailHash ? 'block': 'none'}}">
-    <br>
-    <table style="table-layout:fixed" class="table table-hover">
-        <tr>
-            <td>{{lang==0?'XRP Balance':'XRP余额'}}</td>
-            <td>{{accountBalances.XRP ? accountBalances.XRP : '-'}}</td>
-        </tr>
-        <tr>
-            <td>{{lang==0?'XRP Reserved':'锁定'}}</td>
-            <td>{{accountBalances.XRP ? accountBalances.reserved : '-'}}</td>
-        </tr>
-        <tr>
-            <td>Domain</td>
-            <td>{{accountData.domain ? accountData.domain : '-'}}</td>
-        </tr>
-        <tr>
-            <td>EmailHash</td>
-            <td>{{accountData.EmailHash ? accountData.EmailHash : '-'}}</td>
-        </tr>
-        <tr>
-            <td>Transfer Rate</td>
-            <td>{{accountData.TransferRate ? ((accountData.TransferRate / 1000000000 - 1) * 100).toFixed(7) + ' %' : '-' }}</td>
-        </tr>
-        <tr>
-            <td>Owner Count</td>
-            <td>{{accountData.OwnerCount}}</td>
-        </tr>
-        <tr>
-            <td>Regular Key</td>
-            <td>{{accountData.RegularKey ? accountData.RegularKey : '-'}}</td>
-        </tr>
-        <tr>
-            <td>Next Sequence</td>
-            <td>{{accountData.Sequence}}</td>
-        </tr>
-        <tr>
-            <td>Message Key</td>
-            <td>{{accountData.MessageKey ? accountData.MessageKey : '-'}}</td>
-        </tr>
-    </table>
-</div>
-<div class="card" style="margin: 1em;padding:2em;word-wrap: break-word;  overflow:auto;">
-    <h4 class="card-title">{{lang==0?'Account Flags:':'账户标签:'}}</h4>
-    <a class="btn btn-info" data-toggle="collapse" href="#infoopt2" aria-expanded="false" aria-controls="infoopt2">{{lang==0?'advanced':'高级'}}</a>
-    <div class="collapse" id="infoopt2">
-        <div style="padding-left:1em">
-            <button type="button" class="btn btn-info" ng-click="prepareAccountSet({modal: 'flags'})">{{lang==0?'Edit Account Flags':'编辑账户标签'}}</button>
+    <div class="card" style="margin: 1em;padding:2em;word-wrap: break-word;  overflow:auto;">
+        <h4 class="card-title">{{lang==0?'Account Info:':'账户信息:'}}</h4>
+        <a class="btn btn-info" data-toggle="collapse" href="#infoopt1" aria-expanded="false" aria-controls="infoopt1">{{lang==0?'advanced':'高级'}}</a>
+        <div class="collapse" id="infoopt1">
+            <div style="padding-left:1em">
+                <button type="button" class="btn btn-info" ng-click="prepareSetRegularKey()">{{lang==0?'Set RegularKey':'设置RegularKey'}}</button>
+                <button type="button" class="btn btn-info" ng-click="prepareAccountSet({modal: 'info'})">{{lang==0?'Edit Account Info':'编辑账户信息'}}</button>
+            </div>
         </div>
-    </div><br>
-    <table style="table-layout:fixed" class="table table-hover">
-        <tr ng-repeat="(key, value) in accountData['settings']">
-            <td>{{key}}:</td>
-            <td><font color="{{value ? 'green' : 'red'}}">{{value ? "&#10004" : "&#10008"}} </font></td>            
-        </tr>
-    </table>
-</div>
-<div class="card" style="margin: 1em;padding:2em;word-wrap: break-word;  overflow:auto;">
-    <div class="panel panel-info" ng-show="accountSetLog.status">
-        <div class="alert {{accountSetLog.status == 'FINAL' ? (accountSetLog.status_code.slice(0,3) == 'tes' ? 'alert-success' : 'alert-danger') : 'alert-warning'}}"
-            role="alert">
+        <img src="{{accountData.urlgravatar}}" style="margin-right: 5px; margin-bottom: 5px; display: {{accountData.EmailHash ? 'block': 'none'}}">
+        <br>
+        <table style="table-layout:fixed" class="table table-hover">
+            <tr>
+                <td>{{lang==0?'XRP Balance':'XRP余额'}}</td>
+                <td>{{accountBalances.XRP ? accountBalances.XRP : '-'}}</td>
+            </tr>
+            <tr>
+                <td>{{lang==0?'XRP Reserved':'锁定'}}</td>
+                <td>{{accountBalances.XRP ? accountBalances.reserved : '-'}}</td>
+            </tr>
+            <tr>
+                <td>Domain</td>
+                <td>{{accountData.domain ? accountData.domain : '-'}}</td>
+            </tr>
+            <tr>
+                <td>EmailHash</td>
+                <td>{{accountData.EmailHash ? accountData.EmailHash : '-'}}</td>
+            </tr>
+            <tr>
+                <td>Transfer Rate</td>
+                <td>{{accountData.TransferRate ? ((accountData.TransferRate / 1000000000 - 1) * 100).toFixed(7) + ' %' : '-'
+                    }}
+                </td>
+            </tr>
+            <tr>
+                <td>Owner Count</td>
+                <td>{{accountData.OwnerCount}}</td>
+            </tr>
+            <tr>
+                <td>Regular Key</td>
+                <td>{{accountData.RegularKey ? accountData.RegularKey : '-'}}</td>
+            </tr>
+            <tr>
+                <td>Next Sequence</td>
+                <td>{{accountData.Sequence}}</td>
+            </tr>
+            <tr>
+                <td>Message Key</td>
+                <td>{{accountData.MessageKey ? accountData.MessageKey : '-'}}</td>
+            </tr>
+        </table>
+    </div>
+    <div class="card" style="margin: 1em;padding:2em;word-wrap: break-word;  overflow:auto;">
+        <h4 class="card-title">{{lang==0?'Account Flags:':'账户标签:'}}</h4>
+        <a class="btn btn-info" data-toggle="collapse" href="#infoopt2" aria-expanded="false" aria-controls="infoopt2">{{lang==0?'advanced':'高级'}}</a>
+        <div class="collapse" id="infoopt2">
+            <div style="padding-left:1em">
+                <button type="button" class="btn btn-info" ng-click="prepareAccountSet({modal: 'flags'})">{{lang==0?'Edit Account Flags':'编辑账户标签'}}</button>
+            </div>
+        </div><br>
+        <table style="table-layout:fixed" class="table table-hover">
+            <tr ng-repeat="(key, value) in accountData['settings']">
+                <td>{{key}}:</td>
+                <td>
+                    <font color="{{value ? 'green' : 'red'}}">{{value ? "&#10004" : "&#10008"}} </font>
+                </td>
+            </tr>
+        </table>
+    </div>
 
-            <b>Tx Status:</b>[{{accountSetLog.status}}{{accountSetLog.status_code ? ', ' + accountSetLog.status_code : ''}}],
-            <b>Result:</b> {{accountSetLog.result}} {{accountSetLog.tx_hash ? ', tx_hash: ' + accountSetLog.tx_hash : ''}}
-        </div>
+    <div ng-show="accountSetLog.status" class="card {{accountSetLog.status == 'FINAL' ? (accountSetLog.status_code.slice(0,3) == 'tes' ? 'card-success' : 'card-danger') : 'card-warning'}}"
+        style="margin: 1em;padding:2em;word-wrap: break-word;  overflow:auto;">
+
+        <b>Tx Status:</b>[{{accountSetLog.status}}{{accountSetLog.status_code ? ', ' + accountSetLog.status_code : ''}}],
+        <b>Result:</b> {{accountSetLog.result}} {{accountSetLog.tx_hash ? ', tx_hash: ' + accountSetLog.tx_hash : ''}}
     </div>
 </div>
