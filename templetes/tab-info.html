@@ -60,7 +60,7 @@
             <button type="button" class="btn btn-info" ng-click="prepareAccountSet({modal: 'flags'})">{{lang==0?'Edit Account Flags':'编辑账户标签'}}</button>
         </div>
     </div><br>
-    <table class="table table-hover">
+    <table style="table-layout:fixed" class="table table-hover">
         <tr ng-repeat="(key, value) in accountData['settings']">
             <td>{{key}}:</td>
             <td><font color="{{value ? 'green' : 'red'}}">{{value ? "&#10004" : "&#10008"}} </font></td>            
