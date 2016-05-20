@@ -9,8 +9,8 @@
   <a class="btn btn-info" data-toggle="collapse" href="#Balanceopt1" aria-expanded="false" aria-controls="Balanceopt1">
     {{lang==0?'advanced':'高级'}}
   </a><br>
-  <div class="collapse" id="Balanceopt1"><span style="padding-left:1em"><label class="input-toggle"><input type="checkbox" ng-model="trustlineStatsIgnoreZero"><span></span></label>Hide
-    zero-balances
+  <div class="collapse" id="Balanceopt1"><span style="padding-left:1em"><label class="input-toggle"><input type="checkbox" ng-model="trustlineStatsIgnoreZero"><span></span></label>
+    {{lang==0?'Hide zero-balances':'隐藏余额为零的网关'}}
     </span>
   </div><br>
   <table class="table table-hover">
@@ -24,32 +24,26 @@
     </tr>
   </table>
 </div>
-<div class="panel panel-info" ng-show="trustSetLog.status">
-  <div class="alert {{trustSetLog.status == 'FINAL' ? (trustSetLog.status_code.slice(0,3) == 'tes' ? 'alert-success' : 'alert-danger') : 'alert-warning'}}"
-    role="alert">
-    <b>Tx Status:</b>[{{trustSetLog.status}}{{trustSetLog.status_code ? ', ' + trustSetLog.status_code : ''}}], <b>Result:</b>    {{trustSetLog.result}} {{trustSetLog.tx_hash ? ', tx_hash: ' + trustSetLog.tx_hash : ''}}
-  </div>
-</div>
 <div class="card" style="margin: 1em;padding:2em;word-wrap: break-word;  overflow:auto;">
-  <h4 class="card-title">{{lang==0?'List of Trustlines':'网关详情'}}</h4>
+  <h4 class="card-title">{{lang==0?'List of Trustlines':'资产明细'}}</h4>
   <a class="btn btn-info" data-toggle="collapse" href="#Balanceopt2" aria-expanded="false" aria-controls="Balanceopt2">
     {{lang==0?'advanced':'高级'}}
   </a><br>
   <div class="collapse" id="Balanceopt2">
-    <span> Currency Filter: </span>
+    <span>{{lang==0?'Currency Filter:':'筛选币种:'}} </span>
     <select class="form-control" ng-model="search.currency">
             <option value="">- ALL -</option>
             <option ng-repeat="(key, value) in trustlinesStats" value="{{key}}">{{currencyName(key)}}</option>
           </select>
-    <span style="padding-left:1em"><label class="input-toggle"><input type="checkbox" ng-model="trustlineDescending"><span></span></label>Descending.</span><br>
-    <span style="padding-left:1em"><label class="input-toggle"><input type="checkbox" ng-model="trustlineIgnoreZero"><span></span></label>Hide
-    Zero-Balances.
+    <span style="padding-left:1em"><label class="input-toggle"><input type="checkbox" ng-model="trustlineDescending"><span></span></label>{{lang==0?'Descending':'降序排列'}}</span><br>
+    <span style="padding-left:1em"><label class="input-toggle"><input type="checkbox" ng-model="trustlineIgnoreZero"><span></span></label>{{lang==0?'Hide
+    zero-balances':'隐藏余额为零的网关'}}
     </span><br>
     <span style="padding-left:1em"><label class="input-toggle"><input type="checkbox" ng-model="trustlineShowFull"><span></span></label>
-    Show Advance Detail.</span><br>
+    {{lang==0?'Show Advance Detail':'显示高级明细'}}</span><br>
 
     <span style="padding-left:1em">
-            <button class="btn btn-info" ng-click="addTrustline()">Add New Trustline</button> 
+            <button class="btn btn-info" ng-click="addTrustline()">{{lang==0?'Add New Trustline':'连接新网关'}}</button> 
           </span>
     <br>
   </div>
@@ -60,7 +54,7 @@
       <th style="text-align: center">Balance</th>
       <th style="text-align: center" ng-show="trustlineShowFull">Peer's Rippling / Freeze / Auth</th>
       <th style="text-align: center" ng-show="trustlineShowFull">Peer's Limit</th>
-      <th style="text-align: center">Self Limit</th>
+      <th style="text-align: center" ng-show="trustlineShowFull">Self Limit</th>
       <th style="text-align: center" ng-show="trustlineShowFull">Self Rippling / Freeze / Auth</th>
       <th style="text-align: center" ng-show="trustlineShowFull">Quality-In</th>
       <th style="text-align: center" ng-show="trustlineShowFull">Quality-Out</th>
@@ -76,7 +70,7 @@
         <font color="{{line.peer_authorized ? 'green' : 'blue'}}">{{line.peer_authorized ? "&#10004" : "&#10008"}}</font>
       </td>
       <td style="text-align:center" ng-show="trustlineShowFull"> {{line.limit_peer}}</td>
-      <td style="text-align:center"> {{line.limit}}</td>
+      <td style="text-align:center" ng-show="trustlineShowFull"> {{line.limit}}</td>
       <td style="text-align:center" ng-show="trustlineShowFull">
         <font color="{{line.no_ripple ? 'green' : 'red'}}">{{line.no_ripple ? '&#10008' : '&#10004'}} </font> /
         <font color="{{line.freeze ? 'red' : 'green'}}"> {{line.freeze ? '&#10004' : '&#10008' }} </font> /
@@ -89,4 +83,12 @@
       </td>
     </tr>
   </table>
+</div>
+<div class="card" style="margin: 1em;padding:2em;word-wrap: break-word;  overflow:auto;">
+  <div class="panel panel-info" ng-show="trustSetLog.status">
+    <div class="alert {{trustSetLog.status == 'FINAL' ? (trustSetLog.status_code.slice(0,3) == 'tes' ? 'alert-success' : 'alert-danger') : 'alert-warning'}}"
+      role="alert">
+      <b>Tx Status:</b>[{{trustSetLog.status}}{{trustSetLog.status_code ? ', ' + trustSetLog.status_code : ''}}], <b>Result:</b>      {{trustSetLog.result}} {{trustSetLog.tx_hash ? ', tx_hash: ' + trustSetLog.tx_hash : ''}}
+    </div>
+  </div>
 </div>
