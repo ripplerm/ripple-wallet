@@ -23,7 +23,7 @@
               </a>   
             </h6>
        </div>       
-       <div style="padding-left:1em" class="col-sm-6 collapse in" id="info-collapse1" role="tabpanel" aria-labelledby="info-heading1">
+       <div style="padding-left:1em" class="col-sm-6 collapse" id="info-collapse1" role="tabpanel" aria-labelledby="info-heading1">
             {{accountBalances.XRP ? accountBalances.XRP : '-'}}
             <div> {{accountBalances.XRP ? '(reserved: ' + accountBalances.reserved + ')' : ''}} </div>
           </div>
@@ -37,7 +37,7 @@
         </a>
       </h6>
         </div>
-        <div style="padding-left:1em" id="info-collapse2" class="col-sm-6 collapse in" role="tabpanel" aria-labelledby="info-heading2">
+        <div style="padding-left:1em" id="info-collapse2" class="col-sm-6 collapse" role="tabpanel" aria-labelledby="info-heading2">
           {{accountData.domain ? accountData.domain : '-'}}
         </div>
       </div>
@@ -49,7 +49,7 @@
         </a>
       </h6>
         </div>
-        <div style="padding-left:1em" id="info-collapse3" class="col-sm-6 collapse in" role="tabpanel" aria-labelledby="info-heading3">
+        <div style="padding-left:1em" id="info-collapse3" class="col-sm-6 collapse" role="tabpanel" aria-labelledby="info-heading3">
           {{accountData.EmailHash ? accountData.EmailHash : '-'}}
         </div>
       </div>
@@ -61,7 +61,7 @@
         </a>
       </h6>
         </div>
-        <div style="padding-left:1em" id="info-collapse4" class="col-sm-6 collapse in" role="tabpanel" aria-labelledby="info-heading4">
+        <div style="padding-left:1em" id="info-collapse4" class="col-sm-6 collapse" role="tabpanel" aria-labelledby="info-heading4">
           {{accountData.TransferRate ? ((accountData.TransferRate / 1000000000 - 1) * 100).toFixed(7) + ' %' : '-' }}
         </div>
       </div>
@@ -73,7 +73,7 @@
         </a>
       </h6>
         </div>
-        <div style="padding-left:1em" id="info-collapse5" class="col-sm-6 collapse in" role="tabpanel" aria-labelledby="info-heading5">
+        <div style="padding-left:1em" id="info-collapse5" class="col-sm-6 collapse" role="tabpanel" aria-labelledby="info-heading5">
           {{accountData.OwnerCount}}
         </div>
       </div>
@@ -85,7 +85,7 @@
         </a>
       </h6>
         </div>
-        <div style="padding-left:1em; word-break: break-all;" id="info-collapse6" class="col-sm-6 collapse in" role="tabpanel" aria-labelledby="info-heading6">
+        <div style="padding-left:1em; word-break: break-all;" id="info-collapse6" class="col-sm-6 collapse" role="tabpanel" aria-labelledby="info-heading6">
           {{accountData.RegularKey ? accountData.RegularKey : '-'}}
         </div>
       </div>
@@ -97,7 +97,7 @@
         </a>
       </h6>
         </div>
-        <div style="padding-left:1em" id="info-collapse7" class="col-sm-6 collapse in" role="tabpanel" aria-labelledby="info-heading7">
+        <div style="padding-left:1em" id="info-collapse7" class="col-sm-6 collapse" role="tabpanel" aria-labelledby="info-heading7">
           {{accountData.Sequence}}
         </div>
       </div>
@@ -109,7 +109,7 @@
         </a>
       </h6>
         </div>
-        <div style="padding-left:1em" id="info-collapse8" class="col-sm-6 collapse in" role="tabpanel" aria-labelledby="info-heading8">
+        <div style="padding-left:1em" id="info-collapse8" class="col-sm-6 collapse" role="tabpanel" aria-labelledby="info-heading8">
           {{accountData.MessageKey ? accountData.MessageKey : '-'}}
         </div>
       </div>
@@ -117,9 +117,12 @@
   </div>
   <div class="card-block">
     <h5 class="card-subtitle">{{lang==0?'Account Flags:':'账户标签:'}}</h5>
-    <span style="float:right">
+    <a class="btn btn-info" data-toggle="collapse" href="#infoopt2" aria-expanded="false" aria-controls="infoopt2">advanced</a>
+    <div class="collapse" id="infoopt2">
+    <div style="padding-left:1em">
     <button type="button" class="btn btn-info" ng-click="prepareAccountSet({modal: 'flags'})">{{lang==0?'Edit Account Flags':'编辑账户标签'}}</button>
-    </span><br>
+    </div>
+    </div><br>
     <div>
       <div style="padding-right:1em;" ng-repeat="(key, value) in accountData['settings']">{{key}}:
         <font color="{{value ? 'green' : 'red'}}">{{value ? "&#10004" : "&#10008"}} </font>
