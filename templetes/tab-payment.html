@@ -4,56 +4,57 @@
 	<form name="paymentForm" id="paymentForm" novalidate>
 	  <table>
 
-		<tr>Receipient:</tr>
+		<tr><td>Receipient:</td></tr>
 		<tr>
-		  <label class="input-toggle">
-			<input type="checkbox" name="useFederation" ng-model="Payment.useFederation" ng-click="Payment.federationAddress=''; federationReset()">
-			<span></span></label> Use RippleName / Federation Address.<br>
+		  <td><label class="input-toggle">
+			  <input type="checkbox" name="useFederation" ng-model="Payment.useFederation" ng-click="Payment.federationAddress=''; federationReset()">
+			  <span></span></label> Use RippleName / Federation Address.<br></td>
 		</tr>
-		<tr>
-		  <div ng-show="Payment.useFederation">
-			<input type="text" class="form-control" placeholder="~myriplename / xyz@mydomain.com" ng-model="Payment.federationAddress"
-			  name="federation" size="80" ng-change="federationReset(); pathFindAutoStart()" ng-show="Payment.useFederation"
-			  ripple-valid-federation>
-			<br>
-			<button ng-click="resolveFederation()" ng-show="Payment.useFederation" ng-disabled="!(Payment.federationAddress) || paymentForm.federation.$invalid || Payment.federation.resolving">Resolve</button>
-			<span style="color:red" ng-show="paymentForm.federation.$dirty && paymentForm.federation.$invalid">Invalid Address!</span>                        {{Payment.federation.status}} <br>
+		<tr><td>
+			<div ng-show="Payment.useFederation">
+			  <input type="text" class="form-control" placeholder="~myriplename / xyz@mydomain.com" ng-model="Payment.federationAddress"
+				name="federation" size="80" ng-change="federationReset(); pathFindAutoStart()" ng-show="Payment.useFederation"
+				ripple-valid-federation>
+			  <br>
+			  <button ng-click="resolveFederation()" ng-show="Payment.useFederation" ng-disabled="!(Payment.federationAddress) || paymentForm.federation.$invalid || Payment.federation.resolving">Resolve</button>
+			  <span style="color:red" ng-show="paymentForm.federation.$dirty && paymentForm.federation.$invalid">Invalid Address!</span>                        {{Payment.federation.status}} <br>
 
-			<span style="padding-left:2em;" ng-form="quoteForm" ng-show="Payment.federation.quoteRequired"> 
-			  <table style="table-layout:fixed">
-				<tr ng-repeat="field in Payment.federation.extraFields">
-				  <td width="180" style="word-wrap:break-word; cellpadding:5">
-					{{field.label}}: <span style="color:red"> {{field.required ? '*' : ''}}</span>
-				  </td>
-				  <td><input type="text" class="form-control" size="60" placeholder="{{field.hint}}" ng-model="field.value"
-					  name="{{field.name}}" ng-required="field.required" ng-change="federationQuoteReset()"> </td>
-                </tr>
-                <tr>
-				  <td>Quote Amount: <span style="color:red"> *</span></td>
-				  <td><input type="text" class="form-control" size="15" ng-model="Payment.federation.quoteAmount" name="amount"
-					  ng-change="federationQuoteReset(); pathFindAutoStart()">
-					<select class="form-control" ng-model="Payment.federation.quoteCurrency">
-					  <option ng-repeat="currency in Payment.federation.quoteCurrencies" value="{{currency.currency}}">{{currency.currency}}</option>
-					</select>
-				  </td>
-                </tr>
-			  </table>
-			  <button type="submit" ng-click="federationQuote()" ng-disabled="quoteForm.$pristine || quoteForm.$invalid">Submit Quote</button>            {{Payment.federation.quoteStatus}} <br>
-            </span>
+			  <span style="padding-left:2em;" ng-form="quoteForm" ng-show="Payment.federation.quoteRequired"> 
+				<table style="table-layout:fixed">
+				  <tr ng-repeat="field in Payment.federation.extraFields">
+					<td width="180" style="word-wrap:break-word; cellpadding:5">
+					  {{field.label}}: <span style="color:red"> {{field.required ? '*' : ''}}</span>
+					</td>
+					<td><input type="text" class="form-control" size="60" placeholder="{{field.hint}}" ng-model="field.value"
+						name="{{field.name}}" ng-required="field.required" ng-change="federationQuoteReset()"> </td>
+				  </tr>
+				  <tr>
+					<td>Quote Amount: <span style="color:red"> *</span></td>
+					<td><input type="text" class="form-control" size="15" ng-model="Payment.federation.quoteAmount" name="amount"
+						ng-change="federationQuoteReset(); pathFindAutoStart()">
+					  <select class="form-control" ng-model="Payment.federation.quoteCurrency">
+						<option ng-repeat="currency in Payment.federation.quoteCurrencies" value="{{currency.currency}}">{{currency.currency}}</option>
+					  </select>
+					</td>
+				  </tr>
+				</table>
+				<button type="submit" ng-click="federationQuote()" ng-disabled="quoteForm.$pristine || quoteForm.$invalid">Submit Quote</button>            {{Payment.federation.quoteStatus}} <br>
+			  </span>
 
-            <br>
-		  </div>
-		  <input type="text" class="form-control" placeholder="address" ng-model="Payment.destination" name="destination" size="50"
-			required ripple-valid-address ng-disabled="Payment.useFederation" ng-change="pathFindAutoStart()">
-		  <span style="padding-left:1em; color:red" ng-show="paymentForm.destination.$dirty && paymentForm.destination.$error.rippleValidAddress">Invalid Address!</span>
-
+			  <br>
+			</div>
+			<input type="text" class="form-control" placeholder="address" ng-model="Payment.destination" name="destination" size="50"
+			  required ripple-valid-address ng-disabled="Payment.useFederation" ng-change="pathFindAutoStart()">
+			<span style="padding-left:1em; color:red" ng-show="paymentForm.destination.$dirty && paymentForm.destination.$error.rippleValidAddress">Invalid Address!</span>
+		  </td>
 		</tr>
 
 
-		<tr>>Destination Tag:</tr>
-		<tr>
-		  <input type="number" class="form-control" placeholder="UInt32" min="0" max="4294967295" ng-model="Payment.destinationTag"
-			size="40" ng-required="Payment.requireDestTag" ng-disabled="Payment.federation.quoteRequired">
+		<tr><td>Destination Tag:</td></tr>
+		<tr><td>
+			<input type="number" class="form-control" placeholder="UInt32" min="0" max="4294967295" ng-model="Payment.destinationTag"
+			  size="40" ng-required="Payment.requireDestTag" ng-disabled="Payment.federation.quoteRequired">
+		  </td>
 		</tr>
 
 		<tr>
