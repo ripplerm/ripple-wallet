@@ -17,7 +17,7 @@
         </td>
         <td>
             <span class="dropdown">
-            <button type="button" class="btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" ng-disabled="options.edit"></span></button>
+            <button type="button" class="btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" ng-disabled="options.edit"></button>
             <ul class="dropdown-menu">
               <li ng-repeat="gateway in gateways | filter: {currencies: options.currency} | orderBy:'name'"><a href="#" ng-click="options.account=gateway.address;">{{gateway.name}}</a></li>
             </ul>
