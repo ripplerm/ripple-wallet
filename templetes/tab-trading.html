@@ -23,17 +23,17 @@
             </span>
 
             <hr>
-            <h5 class="card-subtitle">Outstanding Orders: 
+            <h5 class="card-subtitle">{{lang==0?'Outstanding Orders':'该交易对委托单'}} 
 			<button class="btn btn-warning" ng-click="getAccountOffers()">{{lang==0?'Refresh':'刷新'}} </button> 
 		</h5> <br>@ ledger_index: {{accountOffers.ledger_index}}
             <div class="panel">
                 <table class="table table" style="text-align:center;">
                     <thead>
                         <tr class="row bg-info">
-                            <th class="col-sm-3" style="text-align:center;">Type</th>
-                            <th class="col-sm-3" style="text-align:center;">Qty</th>
-                            <th class="col-sm-3" style="text-align:center;">Price</th>
-                            <th class="col-sm-3" style="text-align:center;">Edit</th>
+                            <th class="col-sm-3" style="text-align:center;">{{lang==0?'Type':'类型'}}</th>
+                            <th class="col-sm-3" style="text-align:center;">{{lang==0?'Qty':'数额'}}</th>
+                            <th class="col-sm-3" style="text-align:center;">{{lang==0?'Price':'单价'}}</th>
+                            <th class="col-sm-3" style="text-align:center;">{{lang==0?'Edit':'修改'}}</th>
                         </tr>
                         <thead>
                 </table>
@@ -42,7 +42,7 @@
                     <table class="table table-striped" style="text-align:center;">
                         <tbody>
                             <tr class="row" ng-repeat="offer in accountOffers.ask">
-                                <td class="col-sm-3" style="text-align:center; color:red; "> Sell </td>
+                                <td class="col-sm-3" style="text-align:center; color:red; "> {{lang==0?'Sell':'卖出'}} </td>
                                 <td class="col-sm-3" style="text-align:center;"> {{ offerGetsToHuman(offer) }} </td>
                                 <td class="col-sm-3" style="text-align:center;"> {{ offerPriceToHuman(offer, true).toPrecision(5) }} </td>
                                 <td class="col-sm-3" style="text-align:center;">
@@ -51,7 +51,7 @@
                                 </td>
                             </tr>
                             <tr class="row" ng-repeat="offer in accountOffers.bid">
-                                <td class="col-sm-3" style="text-align:center; color:green;"> Buy </td>
+                                <td class="col-sm-3" style="text-align:center; color:green;"> {{lang==0?'Buy':'买入'}} </td>
                                 <td class="col-sm-3" style="text-align:center;"> {{ offerPaysToHuman(offer) }} </td>
                                 <td class="col-sm-3" style="text-align:center;"> {{ offerPriceToHuman(offer).toPrecision(5) }} </td>
                                 <td class="col-sm-3" style="text-align:center;">
@@ -65,29 +65,27 @@
             </div>
         </div>
     </div>
-
-    <div class="panel panel-info" ng-show="tradingLog.status">
-        <div class="alert {{tradingLog.status == 'FINAL' ? (tradingLog.status_code.slice(0,3) == 'tes' ? 'alert-success' : 'alert-danger') : 'alert-warning'}}"
-            role="alert">
-            <b>Tx Status:</b>[{{tradingLog.status}}{{tradingLog.status_code ? ', ' + tradingLog.status_code : ''}}], <b>Result:</b>            {{tradingLog.result}} {{tradingLog.tx_hash ? ', tx_hash: ' + tradingLog.tx_hash : ''}}
-        </div>
-    </div>
-
-    <h3> Place Order: </h3>
+</div>
+<div ng-show="tradingLog.status" class="card {{tradingLog.status == 'FINAL' ? (tradingLog.status_code.slice(0,3) == 'tes' ? 'card-success' : 'card-danger') : 'card-warning'}}"
+    style="margin: 1em;padding:2em;word-wrap: break-word;  overflow:auto;">
+    <b>Tx Status:</b>[{{tradingLog.status}}{{tradingLog.status_code ? ', ' + tradingLog.status_code : ''}}], <b>Result:</b>    {{tradingLog.result}} {{tradingLog.tx_hash ? ', tx_hash: ' + tradingLog.tx_hash : ''}}
+</div>
+<div class="card" style="margin: 1em;padding:2em;word-wrap: break-word;  overflow:auto;">
+    <h4 class="card-title">{{lang==0?'Place Order':'下单'}}</h4>
     <div class="row">
         <div class="col-sm-6">
             <div class="panel panel-success">
                 <div class="panel-body">
 
-                    Buy:
-                    <input type="number" class="form-control" size="15" name="buyQuantity" ng-model="trading.buyQuantity" placeholder="amount"
-                        positive-number> {{trading.baseCurrency}}, at:
-                    <input type="number" class="form-control" size="15" name="buyPrice" ng-model="trading.buyPrice" placeholder="price in {{trading.tradeCurrency}}"
+                    {{lang==0?'Buy':'买入'}}
+                    <input type="number" class="form-control" size="15" name="buyQuantity" ng-model="trading.buyQuantity" placeholder="{{lang==0?'amount':'数额'}}"
+                        positive-number> {{trading.baseCurrency}}, {{lang==0?'at':'单价'}}
+                    <input type="number" class="form-control" size="15" name="buyPrice" ng-model="trading.buyPrice" placeholder="{{lang==0?'price in':'以'}} {{trading.tradeCurrency}} {{lang==0?'':'计价'}}"
                         positive-number>
                     <br><br>
                     <div align="right">
-                        <button class="btn btn-primary" type="button" ng-click="prepareOfferCreate({type: 'buy'})" ng-disabled="!trading.buyQuantity || !trading.buyPrice">Buy</button>
-                        <button class="btn btn-warning" type="button" ng-click="buyReset()">Reset</button>
+                        <button class="btn btn-primary" type="button" ng-click="prepareOfferCreate({type: 'buy'})" ng-disabled="!trading.buyQuantity || !trading.buyPrice">{{lang==0?'Buy':'买入'}}</button>
+                        <button class="btn btn-warning" type="button" ng-click="buyReset()">{{lang==0?'Reset':'重置'}}</button>
                     </div>
 
                 </div>
@@ -96,57 +94,68 @@
         <div class="col-sm-6">
             <div class="panel panel-danger">
                 <div class="panel-body">
-                    Sell:
-                    <input type="number" class="form-control" size="15" name="sellQuantity" ng-model="trading.sellQuantity" placeholder="amount"
-                        positive-number> {{trading.baseCurrency}}, at:
-                    <input type="number" class="form-control" size="15" name="sellPrice" ng-model="trading.sellPrice" placeholder="price in {{trading.tradeCurrency}}"
+                    {{lang==0?'Sell':'卖出'}}
+                    <input type="number" class="form-control" size="15" name="sellQuantity" ng-model="trading.sellQuantity" placeholder="{{lang==0?'amount':'数额'}}"
+                        positive-number> {{trading.baseCurrency}}, {{lang==0?'at':'单价'}}
+                    <input type="number" class="form-control" size="15" name="sellPrice" ng-model="trading.sellPrice" placeholder="{{lang==0?'price in':'以'}} {{trading.tradeCurrency}} {{lang==0?'':'计价'}}"
                         positive-number>
                     <br>
                     <br>
                     <div align="right">
-                        <button class="btn btn-danger" type="button" ng-click="prepareOfferCreate({type: 'sell'})" ng-disabled="!trading.sellQuantity || !trading.sellPrice">Sell</button>
-                        <button class="btn btn-warning" type="button" ng-click="sellReset()">Reset</button>
+                        <button class="btn btn-danger" type="button" ng-click="prepareOfferCreate({type: 'sell'})" ng-disabled="!trading.sellQuantity || !trading.sellPrice">{{lang==0?'Sell':'卖出'}}</button>
+                        <button class="btn btn-warning" type="button" ng-click="sellReset()">{{lang==0?'Reset':'重置'}}</button>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <h3>  
-	OrderBooks: 
-	<button class="btn btn-warning btn-sm" ng-click="loadOrderBooks()"><span class="glyphicon glyphicon-refresh"></span>  {{lang==0?'Refresh':'刷新'}} </button>
-</h3>
+</div>
+<div class="card" style="margin: 1em;padding:2em;word-wrap: break-word;  overflow:auto;">
+    <h4 class="card-title">  
+	{{lang==0?'OrderBooks':'委托盘'}}</h4>
+    <button class="btn btn-warning btn-sm" ng-click="loadOrderBooks()"><span class="glyphicon glyphicon-refresh"></span>  {{lang==0?'Refresh':'刷新'}} </button>
+
     <div class="row">
         <div class="col-sm-6">
-            BIDS: {{trading.bid_status}}
-            <table class="table table-striped" style="text-align:center;">
-                <tr>
-                    <th style="text-align:center;">Volume</th>
-                    <th style="text-align:center;">Price</th>
-                </tr>
-                <tr ng-repeat="offer in trading.bidOffers" style="color:{{offer.autobridged ? 'blue' : ''}};">
-                    <td>{{offerPaysFundedToHuman(offer).toPrecision(6)}}</td>
-                    <td>
-                        <span tooltip-animation="false" uib-tooltip="{{offer.autobridged ? 'autobridge' : offer.Account}}">{{offerPriceToHuman(offer).toPrecision(6)}} </span>
-                    </td>
-                </tr>
-            </table>
-
+            {{lang==0?'BIDS':'买入盘面'}} {{trading.bid_status}}
+            <a class="btn btn-info" data-toggle="collapse" href="#buyopt" aria-expanded="true" aria-controls="buyopt">
+    {{lang==0?'Hide':'隐藏'}}
+  </a><br>
+            <div class="collapse in" id="buyopt">
+                <table class="table table-striped" style="text-align:center;">
+                    <tr>
+                        <th style="text-align:center;">{{lang==0?'Volume':'委托量'}}</th>
+                        <th style="text-align:center;">{{lang==0?'Price':'买入价'}}</th>
+                    </tr>
+                    <tr ng-repeat="offer in trading.bidOffers" style="color:{{offer.autobridged ? 'blue' : ''}};">
+                        <td>{{offerPaysFundedToHuman(offer).toPrecision(6)}}</td>
+                        <td>
+                            <span tooltip-animation="false" uib-tooltip="{{offer.autobridged ? 'autobridge' : offer.Account}}">{{offerPriceToHuman(offer).toPrecision(6)}} </span>
+                        </td>
+                    </tr>
+                </table>
+            </div>
 
         </div>
         <div class="col-sm-6">
-            ASKS: {{trading.ask_status}}
-            <table class="table table-striped" style="text-align:center;">
-                <tr>
-                    <th style="text-align:center;">Price</th>
-                    <th style="text-align:center;">Volume</th>
-                </tr>
-                <tr ng-repeat="offer in trading.askOffers" style="color:{{offer.autobridged ? 'blue' : ''}};">
-                    <td>
-                        <span tooltip-animation="false" uib-tooltip="{{offer.autobridged ? 'autobridge' : offer.Account}}">{{offerPriceToHuman(offer, true).toPrecision(6)}}</span>
-                    </td>
-                    <td>{{offerGetsFundedToHuman(offer).toPrecision(6)}}</td>
-                </tr>
-            </table>
+            {{lang==0?'ASKS':'卖出盘面'}} {{trading.ask_status}}
+            <a class="btn btn-info" data-toggle="collapse" href="#sellopt" aria-expanded="true" aria-controls="sellopt">
+    {{lang==0?'Hide':'隐藏'}}
+  </a><br>
+            <div class="collapse in" id="sellopt">
+                <table class="table table-striped" style="text-align:center;">
+                    <tr>
+                        <th style="text-align:center;">{{lang==0?'Price':'卖出价'}}</th>
+                        <th style="text-align:center;">{{lang==0?'Volume':'委托量'}}</th>
+                    </tr>
+                    <tr ng-repeat="offer in trading.askOffers" style="color:{{offer.autobridged ? 'blue' : ''}};">
+                        <td>
+                            <span tooltip-animation="false" uib-tooltip="{{offer.autobridged ? 'autobridge' : offer.Account}}">{{offerPriceToHuman(offer, true).toPrecision(6)}}</span>
+                        </td>
+                        <td>{{offerGetsFundedToHuman(offer).toPrecision(6)}}</td>
+                    </tr>
+                </table>
+            </div>
         </div>
     </div>
 </div>
