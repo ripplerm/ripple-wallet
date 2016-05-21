@@ -19,8 +19,9 @@
                 <li><a href="#" ng-click="prepareTradePair()">{{lang==0?'-- Add New --':'--添加交易对--'}}</a></li>
                 <li ng-repeat="pair in tradepairs"><a href="#" ng-click="setTradePair(pair)">{{pairName(pair)}}</a></li>
             </ul>
-            <button class="btn btn-info" ng-click="flipTradePair()">{{lang==0?'Flip':'对调交易对'}}</button>
             </span>
+            <button class="btn btn-info" ng-click="flipTradePair()">{{lang==0?'Flip':'对调交易对'}}</button>
+            
 
             <hr>
             <h5 class="card-subtitle">{{lang==0?'Outstanding Orders':'该交易对委托单'}} 

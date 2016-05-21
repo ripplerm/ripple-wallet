@@ -1,6 +1,6 @@
 <div id="tabTrustlines">
   <div class="card" style="margin: 1em;padding:2em;word-wrap: break-word;  overflow:auto;">
-    <h4 class="card-title">{{lang==0?'Trustlines':'网关管理'}}</h4>
+    <h4 class="card-title">{{lang==0?'Trustlines':'资产管理'}}</h4>
     <button class="btn btn-warning" ng-click="accountLines(); search.currency='';" ng-disabled="!activeAccount">{{lang==0?'Refresh':'刷新'}} </button>    <br>{{accountLinesStatus}}
     <br><br>
     <b>{{lang==0?'Total Trustlines':'已连接网关数'}} = {{trustlinesStats ? totalTrustlines : ""}}</b>
