@@ -23,6 +23,8 @@ var translationsEN = {
     Use_secret: 'use secretkey',
     Submit: 'Submit',
     Cancel: 'Cancel',
+    Set_Secret: 'Set Wallet Secret',
+    Enter_Secret: 'enter secret',
 };
 
 var translationsCN = {
@@ -48,6 +50,8 @@ var translationsCN = {
     Use_secret: '使用密钥',
     Submit: '提交',
     Cancel: '取消',
+    Set_Secret: '设置密钥',
+    Enter_Secret: '输入密钥',
 };
 
 var Remote = ripple.Remote;
