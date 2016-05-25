@@ -1,122 +1,136 @@
 <!DOCTYPE html>
-<html ng-app="walletApp" lang="en-gb" id="ng-app">
-  <head>
+<html ng-app="walletApp" id="ng-app">
+
+<head>
     <meta charset="utf-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<meta name="description" content="Material Design Ripple Wallet">
-<meta name="keywords" content="Material Design Ripple Wallet">
-<meta name="author" content="Federico Zivolo, Kevin Ross, and Bootstrap Material Design contributors,ripplerm,yxxyun">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black">
-<title>
-  
-    Ripple Wallet &middot; Material Design
-  
-</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Material Design Ripple Wallet">
+    <meta name="keywords" content="Material Design Ripple Wallet">
+    <meta name="author" content="Federico Zivolo, Kevin Ross, and Bootstrap Material Design contributors,ripplerm,yxxyun">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <title>
+
+        Ripple Wallet &middot; Material Design
+
+    </title>
 
 
-<!-- Material Design fonts http://fonts.googleapis.com/css?family=Roboto:300,400,500,700 https://fonts.googleapis.com/icon?family=Material+Icons-->
-<link rel="stylesheet" href="lib/Roboto/Roboto.css"> 
-<link rel="stylesheet" href="lib/Roboto/MaterialIcons.css">
+    <!-- Material Design fonts http://fonts.googleapis.com/css?family=Roboto:300,400,500,700 https://fonts.googleapis.com/icon?family=Material+Icons-->
+    <link rel="stylesheet" href="lib/Roboto/Roboto.css">
+    <link rel="stylesheet" href="lib/Roboto/MaterialIcons.css">
 
-<!-- Material Design for Bootstrap generic -->
+    <!-- Material Design for Bootstrap generic -->
 
-<link href="lib/bootstrap-material-design/css/bootstrap-material-design.min.css" rel="stylesheet">
+    <link href="lib/bootstrap-material-design/css/bootstrap-material-design.min.css" rel="stylesheet">
 
-  <script src="lib/ripple-0.12.9.1-min.js"></script>
-  <script src="lib/angular-1.4.7.min.js"></script> 
-  <script src="lib/bootstrap/js/ui-bootstrap-tpls-0.14.3.min.js"></script>
-  <script src="lib/highcharts/lib/adapters/standalone-framework.js"></script>
-  <script src="lib/highcharts/lib/highstock.js"></script>
-  <script src="lib/md5.js"></script>
-<!-- Page style -->
-  <link href="css/index.css" rel="stylesheet">
+    <script src="lib/ripple-0.12.9.1-min.js"></script>
+    <script src="lib/angular-1.4.7.min.js"></script>
+    <script src="lib/bootstrap/js/ui-bootstrap-tpls-0.14.3.min.js"></script>
+    <script src="lib/highcharts/lib/adapters/standalone-framework.js"></script>
+    <script src="lib/highcharts/lib/highstock.js"></script>
+    <script src="lib/md5.js"></script>
 
-  <script src="js/mywallet.js"></script>
-  
-  </head>
-  <body>
+    <script src="lib/angular-cookies.min.js"></script>
+    <script src="lib/angular-translate.min.js"></script>
+    <script src="lib/angular-translate-storage-cookie.min.js"></script>
+    <script src="lib/angular-translate-storage-local.min.js"></script>
+    <!-- Page style -->
+    <link href="css/index.css" rel="stylesheet">
+
+    <script src="js/mywallet.js"></script>
+
+</head>
+
+<body>
     <div ng-controller="walletCtrl" class="bmd-layout-container bmd-drawer-f-l bmd-drawer-overlay-md-down bmd-drawer-in-lg-up">
-  <header class="bmd-layout-header">
-    <div class="navbar navbar-light bg-faded">
-      <button class="navbar-toggler hidden-lg-up" type="button" data-toggle="drawer" data-target="#dw-1">
+        <header class="bmd-layout-header">
+            <div class="navbar navbar-light bg-faded">
+                <button class="navbar-toggler hidden-lg-up" type="button" data-toggle="drawer" data-target="#dw-1">
         <span class="sr-only">Toggle drawer</span>
         <i class="material-icons">menu</i>
       </button>
-      <ul class="nav navbar-nav">
-        <li class="nav-item">{{lang==0?'Network:':'网络:'}} <font color="{{(state == 'online') ? 'green' : 'red'}}">{{state? "&#10004" : "&#10008"}}</font></li>
-        <li class="nav-item">{{lang==0?'Secret:':'密钥:'}} <font color="{{remote.secrets[activeAccount] ? 'green' : 'red' }}">{{remote.secrets[activeAccount] ? "&#10004" : "&#10008"}}</font></li>
-      </ul>
-      <ul class="nav navbar-nav pull-xs-right">
-        <li class="nav-item">
-          <div class="bmd-form-group bmd-collapse-inline pull-xs-right">
-            <button class="btn bmd-btn-icon" ng-click="prepareSetWalletAccount()">
+                <ul class="nav navbar-nav">
+                    <li class="nav-item">{{ 'Network' | translate }}
+                        <font color="{{(state == 'online') ? 'green' : 'red'}}">{{state? "&#10004" : "&#10008"}}</font>
+                    </li>
+                    <li class="nav-item">{{ 'Secret' | translate }}
+                        <font color="{{remote.secrets[activeAccount] ? 'green' : 'red' }}">{{remote.secrets[activeAccount] ? "&#10004" : "&#10008"}}</font>
+                    </li>
+                </ul>
+                <ul class="nav navbar-nav pull-xs-right">
+                    <li class="nav-item">
+                        <div class="bmd-form-group bmd-collapse-inline pull-xs-right">
+                            <button class="btn bmd-btn-icon" ng-click="prepareSetWalletAccount()">
               <i class="material-icons">account_circle</i>
             </button>
-          </div>
-        </li>
-        <li class="nav-item">
-          <div class="bmd-form-group bmd-collapse-inline pull-xs-right">
-            <button class="btn bmd-btn-icon" ng-click="prepareSetWalletSecret()">
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <div class="bmd-form-group bmd-collapse-inline pull-xs-right">
+                            <button class="btn bmd-btn-icon" ng-click="prepareSetWalletSecret()">
               <i class="material-icons">vpn_key</i>
             </button>
-          </div>
-        </li>
-        <li class="nav-item">
-          <div class="dropdown">
-            <button class="btn bmd-btn-icon btn-secondary dropdown-toggle" type="button" id="more-menu-1" data-toggle="dropdown" aria-haspopup="true">
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <div class="dropdown">
+                            <button class="btn bmd-btn-icon btn-secondary dropdown-toggle" type="button" id="more-menu-1" data-toggle="dropdown" aria-haspopup="true">
               <i class="material-icons">more_vert</i>
             </button>
-            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="more-menu-1">
-              <button class="dropdown-item" type="button">{{lang==0?'Wallet Account:':'钱包地址:'}} <b>{{activeAccount ? activeAccount : "-"}} </b></button>
-              <button class="dropdown-item" type="button">{{lang==0?'Server:':'服务器:'}} {{server}}</button>
-              <button class="dropdown-item" type="button">Last-Closed-Ledger: <font color="blue"> {{ledgerIndex}} </font></button>
-              <button class="dropdown-item" type="button" ng-click="setlang(0)">English</button>
-              <button class="dropdown-item" type="button" ng-click="setlang(1)">中文</button>
+                            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="more-menu-1">
+                                <button class="dropdown-item" type="button">{{ 'Account' | translate }} <b>{{activeAccount ? activeAccount : "-"}} </b></button>
+                                <button class="dropdown-item" type="button">{{ 'Server' | translate }}: {{server}}</button>
+                                <button class="dropdown-item" type="button">{{ 'LCL' | translate }}: <font color="blue"> {{ledgerIndex}} </font></button>
+                                <button class="dropdown-item" type="button" ng-click="changeLanguage('en')" translate="BUTTON_LANG_EN">English</button>
+                                <button class="dropdown-item" type="button" ng-click="changeLanguage('cn')" translate="BUTTON_LANG_CN">中文</button>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
             </div>
-          </div>
-        </li>
-      </ul>
+        </header>
+
+        <div id="dw-1" class="bmd-layout-drawer bg-faded menu">
+            <header>
+                <a class="navbar-brand">{{ 'Ripple_Wallet' | translate }}</a>
+            </header>
+            <ul class="list-group">
+                <a class="list-group-item" data-target="#Info"><i class="material-icons" role="presentation">info_outline</i>{{ 'Info' | translate }}</a>
+                <a class="list-group-item" data-target="#Trustlines"><i class="material-icons" role="presentation">playlist_add_check</i>{{ 'Trustlines' | translate }}</a>
+                <a class="list-group-item" data-target="#Payment"><i class="material-icons" role="presentation">low_priority</i>{{ 'Payment' | translate }}</a>
+                <a class="list-group-item" data-target="#Trading"><i class="material-icons" role="presentation">trending_up</i>{{ 'Trading' | translate }}</a>
+                <a class="list-group-item" data-target="#Offers"><i class="material-icons" role="presentation">repeat</i>{{ 'Offers' | translate }}</a>
+
+            </ul>
+        </div>
+        <main class="bmd-layout-content">
+            <div class="card page active" style="margin: 1em;padding:2em;word-wrap: break-word;  overflow:auto;">
+                <!-- main content -->
+                <h4 class="card-title">{{ 'Ripple_Wallet' | translate }}</h4>
+                <p class="card-text">The Ripple Wallet is an open-source GUI for the Ripple network that facilitates the peer-to-peer exchange of any store of value.</p>
+            </div>
+            <div class="page" ng-repeat="tab in tabs" id="{{tab.title}}" ng-init="tab.select()">
+                <div ng-include="tab.templete"></div>
+            </div>
+            <div class="card active" style="margin: 1em;padding:2em;word-wrap: break-word;  overflow:auto;">
+                <!-- main content -->
+                <h4 class="card-title">{{'Disclaimer'|translate}}</h4>
+                <p class="card-text">This product is provided "as is" without warranty of any kind and is not endorsed by Ripple Labs inc.</p>
+            </div>
+        </main>
     </div>
-  </header>
+    <script src="lib/jquery-2.2.3.min.js"></script>
+    <script src="lib/tether/js/tether.min.js"></script>
+    <script src="lib/bootstrap-material-design/js/bootstrap-material-design.iife.min.js"></script>
+    <script src="lib/qrcode.js"></script>
+    <script src="lib/qrcode_UTF8.js"></script>
+    <script src="lib/angular-qrcode.js"></script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src=""></script>
+    <script src="js/load.js"></script>
 
-  <div id="dw-1" class="bmd-layout-drawer bg-faded menu">
-    <header>
-      <a class="navbar-brand">{{lang==0?'Ripple Wallet':'Ripple钱包'}}</a>
-    </header>
-    <ul class="list-group">
-      <a class="list-group-item" data-target="#Info"><i class="material-icons" role="presentation">info_outline</i>{{lang==0?'Info':'账户信息'}}</a>
-      <a class="list-group-item" data-target="#Trustlines"><i class="material-icons" role="presentation">playlist_add_check</i>{{lang==0?'Trustlines':'资产管理'}}</a>
-      <a class="list-group-item" data-target="#Payment"><i class="material-icons" role="presentation">low_priority</i>{{lang==0?'Payment':'支付'}}</a>
-      <a class="list-group-item" data-target="#Trading"><i class="material-icons" role="presentation">trending_up</i>{{lang==0?'Trading':'交易'}}</a>
-      <a class="list-group-item" data-target="#Offers"><i class="material-icons" role="presentation">repeat</i>{{lang==0?'Offers':'挂单'}}</a>
-      
-    </ul>
-  </div>
-  <main class="bmd-layout-content">
-  <div class="card page active" style="margin: 1em;padding:2em;word-wrap: break-word;  overflow:auto;">
-      <!-- main content -->
-      <h4 class="card-title">{{lang==0?'Ripple Wallet':'Ripple钱包'}}</h4>
-      <p class="card-text">The Ripple Wallet is an open-source GUI for the Ripple network that facilitates the peer-to-peer exchange of any store of value.</p>
-  </div>	
-  <div class="page" ng-repeat="tab in tabs" id="{{tab.title}}" ng-init="tab.select()" ><div ng-include="tab.templete"></div></div>
-  <div class="card active" style="margin: 1em;padding:2em;word-wrap: break-word;  overflow:auto;">
-      <!-- main content -->
-      <h4 class="card-title">{{lang==0?'Disclaimer':'免责声明'}}</h4>
-      <p class="card-text">This product is provided "as is" without warranty of any kind and is not endorsed by Ripple Labs inc.</p>
-  </div>
-  </main>
-</div>
-  <script src="lib/jquery-2.2.3.min.js"></script>
-  <script src="lib/tether/js/tether.min.js"></script>
-  <script src="lib/bootstrap-material-design/js/bootstrap-material-design.iife.min.js"></script>
-  <script src="lib/qrcode.js"></script>
-  <script src="lib/qrcode_UTF8.js"></script>
-  <script src="lib/angular-qrcode.js"></script>
-<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-<script src=""></script>
-<script src="js/load.js"></script>
+</body>
 
-  </body>
 </html>

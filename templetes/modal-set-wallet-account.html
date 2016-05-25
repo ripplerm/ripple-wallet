@@ -1,13 +1,13 @@
 <div class="modal-header">
-    <h3 class="modal-title">{{lang==0?'Set Wallet Account':'设置账户'}}</h3>
+    <h3 class="modal-title">{{'Set_Wallet'|translate}}</h3>
 </div>
 <div class="modal-body">
     <form name="setWalletAccountForm" nonvalidate>
         <table>
             <tr>
                 <span class="dropdown">
-                        <td>{{lang==0?'Address:':'Ripple地址'}}</td>
-                        <td><input id="idinput" name="address" type="text" placeholder="{{lang==0?'enter address or click use secret key':'输入Ripple地址或点击使用密钥'}}" class="form-control" size=50 ng-model="options.address" ripple-valid-address autofocus dropdown-append-to-body></td>
+                        <td>{{'Address'|translate}}:</td>
+                        <td><input id="idinput" name="address" type="text" placeholder="{{'Idinput_holder'|translate}}" class="form-control" size="50" ng-model="options.address" ripple-valid-address autofocus dropdown-append-to-body></td>
                         <td><span class="dropdown">
                         <button class="btn dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="caret"></span></button>
 
@@ -20,25 +20,25 @@
             </tr>
             <tr>
                 <td></td>
-                <td><span style="color:red" ng-show="setWalletAccountForm.address.$dirty && setWalletAccountForm.address.$error.rippleValidAddress">{{lang==0?'Invalid Address!':'无效地址!'}}</span>
+                <td><span style="color:red" ng-show="setWalletAccountForm.address.$dirty && setWalletAccountForm.address.$error.rippleValidAddress">{{'Invalid'|translate}}</span>
                 </td>
                 <td></td>
 
 
             </tr>
             <tr ng-show="options.secret">
-                <td>{{lang==0?'Please save secret:':'请妥善保存密钥:'}}</td>
+                <td>{{'Save_secret'|translate}}:</td>
                 <td>
-                    <qrcode version="5" error-correction-level="M" size=160 data="{{options.secret}}" download></qrcode>
+                    <qrcode version="5" error-correction-level="M" size="160" data="{{options.secret}}" download></qrcode>
                 </td>
                 <td></td>
             </tr>
         </table>
         <br>
-        <div align="right"><button type="button" class="btn btn-info" ng-click="prepareGenerateAccount(options)">{{lang==0?'use secretkey':'使用密钥'}}</button></div>
+        <div align="right"><button type="button" class="btn btn-info" ng-click="prepareGenerateAccount(options)">{{'Use_secret'|translate}}</button></div>
     </form>
 </div>
 <div class="modal-footer">
-    <button class="btn btn-primary" type="button" ng-disabled="setWalletAccountForm.$invalid" ng-click="ok()">{{lang==0?'Submit':'提交'}}</button>
-    <button class="btn btn-warning" type="button" ng-click="cancel()">{{lang==0?'Cancel':'取消'}}</button>
+    <button class="btn btn-primary" type="button" ng-disabled="setWalletAccountForm.$invalid" ng-click="ok()">{{'Submit'|translate}}</button>
+    <button class="btn btn-warning" type="button" ng-click="cancel()">{{'Cancel'|translate}}</button>
 </div>
