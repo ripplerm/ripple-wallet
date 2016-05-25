@@ -1,24 +1,24 @@
 <div id="tabTrustlines">
     <div class="card" style="margin: 1em;padding:2em;word-wrap: break-word;  overflow:auto;">
-        <h4 class="card-title">{{lang==0?'Trustlines':'资产管理'}}</h4>
-        <button class="btn btn-warning" ng-click="accountLines(); search.currency='';" ng-disabled="!activeAccount">{{lang==0?'Refresh':'刷新'}} </button> <br>{{accountLinesStatus}}
+        <h4 class="card-title">{{ 'Trustlines' | translate }}</h4>
+        <button class="btn btn-warning" ng-click="accountLines(); search.currency='';" ng-disabled="!activeAccount">{{ 'Refresh' | translate }}</button> <br>{{accountLinesStatus}}
         <br><br>
-        <b>{{lang==0?'Total Trustlines':'已连接网关数'}} = {{trustlinesStats ? totalTrustlines : ""}}</b>
+        <b>{{ 'Total_Trustlines' | translate }} = {{trustlinesStats ? totalTrustlines : ""}}</b>
     </div>
     <div class="card" style="margin: 1em;padding:2em;word-wrap: break-word;  overflow:auto;">
-        <h4 class="card-title">{{lang==0?'Balance Statistics':'资产一览'}}</h4>
+        <h4 class="card-title">{{ 'Balance_Statistics' | translate }}</h4>
         <a class="btn btn-info" data-toggle="collapse" href="#Balanceopt1" aria-expanded="false" aria-controls="Balanceopt1">
-    {{lang==0?'advanced':'高级'}}
+    {{ 'Advanced' | translate }}
   </a><br>
         <div class="collapse" id="Balanceopt1"><span style="padding-left:1em">
           <label class="input-toggle"><input type="checkbox" ng-model="trustlineStatsIgnoreZero"><span></span></label>
-            {{lang==0?'Hide zero-balances':'隐藏余额为零的网关'}}
+            {{ 'Hide_zero' | translate }}
             </span>
         </div><br>
         <table style="table-layout:fixed" class="table table-hover">
             <tr>
-                <th style="text-align: center">{{lang==0?'Currency(Nos of Trustlines)':'币种（网关数）'}}</th>
-                <th style="text-align: center">{{lang==0?'Balances':'余额'}}</th>
+                <th style="text-align: center">{{ 'C_NOT' | translate }}</th>
+                <th style="text-align: center">{{ 'Balance' | translate }}</th>
             </tr>
             <tr ng-repeat="(key, value) in trustlinesStats" ng-hide="trustlineStatsIgnoreZero? value.balance == '0' : false">
                 <td style="text-align: center">{{currencyName(key)}}({{value.lineNumber}})</td>
@@ -27,32 +27,32 @@
         </table>
     </div>
     <div class="card" style="margin: 1em;padding:2em;word-wrap: break-word;  overflow:auto;">
-        <h4 class="card-title">{{lang==0?'List of Trustlines':'资产明细'}}</h4>
+        <h4 class="card-title">{{ 'List_Trustlines' | translate }}</h4>
         <a class="btn btn-info" data-toggle="collapse" href="#Balanceopt2" aria-expanded="false" aria-controls="Balanceopt2">
-    {{lang==0?'advanced':'高级'}}
+     {{ 'Advanced' | translate }}
   </a><br>
         <div class="collapse" id="Balanceopt2">
-            <span>{{lang==0?'Currency Filter:':'筛选币种:'}} </span>
+            <span>{{ 'Currency_Filter' | translate }} </span>
             <select class="form-control" ng-model="search.currency">
             <option value="">- ALL -</option>
             <option ng-repeat="(key, value) in trustlinesStats" value="{{key}}">{{currencyName(key)}}</option>
           </select>
-            <span style="padding-left:1em"><label class="input-toggle"><input type="checkbox" ng-model="trustlineDescending"><span></span></label>{{lang==0?'Descending':'降序排列'}}</span><br>
-            <span style="padding-left:1em"><label class="input-toggle"><input type="checkbox" ng-model="trustlineIgnoreZero"><span></span></label>{{lang==0?'Hide zero-balances':'隐藏余额为零的网关'}}
+            <span style="padding-left:1em"><label class="input-toggle"><input type="checkbox" ng-model="trustlineDescending"><span></span></label>{{'Descending'|translate}}</span><br>
+            <span style="padding-left:1em"><label class="input-toggle"><input type="checkbox" ng-model="trustlineIgnoreZero"><span></span></label>{{ 'Hide_zero' | translate }}
             </span><br>
             <span style="padding-left:1em"><label class="input-toggle"><input type="checkbox" ng-model="trustlineShowFull"><span></span></label>
-            {{lang==0?'Show Advance Detail':'显示高级明细'}}</span><br>
+            {{ 'Show_A_D' | translate }}</span><br>
 
             <span style="padding-left:1em">
-            <button class="btn btn-info" ng-click="addTrustline()">{{lang==0?'Add New Trustline':'连接新网关'}}</button> 
+            <button class="btn btn-info" ng-click="addTrustline()">{{ 'A_L' | translate }}</button> 
           </span>
             <br>
         </div>
         <table class="table table-hover" style="text-align: center;table-layout:fixed">
             <tr style="text-align: center">
-                <th style="text-align: center">{{lang==0?'Currency':'币种'}}</th>
-                <th style="text-align: center">{{lang==0?'Counter Party':'对手盘'}}</th>
-                <th style="text-align: center">{{lang==0?'Balance':'余额'}}</th>
+                <th style="text-align: center">{{ 'Currency' | translate }}</th>
+                <th style="text-align: center">{{ 'Counter_Party' | translate }}</th>
+                <th style="text-align: center">{{ 'Balance' | translate }}</th>
                 <th style="text-align: center" ng-show="trustlineShowFull">Peer's Rippling / Freeze / Auth</th>
                 <th style="text-align: center" ng-show="trustlineShowFull">Peer's Limit</th>
                 <th style="text-align: center" ng-show="trustlineShowFull">Self Limit</th>
