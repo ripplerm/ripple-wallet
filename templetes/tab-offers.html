@@ -1,35 +1,35 @@
 <div id="tabOffers">
-    <span style="font-weight:bold; font-size:20pt; padding-right:1em;">Account Offers: </span>
-    <button class="btn btn-warning" ng-click="getAccountOffers();" ng-disabled="!activeAccount"><span class="glyphicon glyphicon-refresh"></span>   {{lang==0?'Refresh':'刷新'}} </button> <br>{{accountOffers.status}}
-    <br><br>
+    <div class="card" style="margin: 1em;padding:2em;word-wrap: break-word;  overflow:auto;">
+        <h4 class="card-title">{{ 'Offers' | translate }} </h4>
+        <button class="btn btn-warning" ng-click="getAccountOffers();" ng-disabled="!activeAccount">{{ 'Refresh' | translate }}</button>        <br>{{accountOffers.status}}
+        <br><br>
 
-    <div class="panel panel-info" ng-show="tradingLog.status">
-        <div class="panel-body {{tradingLog.status == 'FINAL' ? (tradingLog.status_code.slice(0,3) == 'tes' ? 'bg-success' : 'bg-danger') : 'bg-warning'}}">
-            <b>Tx Status:</b>[{{tradingLog.status}}{{tradingLog.status_code ? ', ' + tradingLog.status_code : ''}}], <b>Result:</b> {{tradingLog.result}} {{tradingLog.tx_hash ? ', tx_hash: ' + tradingLog.tx_hash : ''}}
-        </div>
+        <table class="table table-striped" style="text-align:center;">
+            <tr>
+                <th style="text-align:center;">{{ 'Type' | translate }}</th>
+                <th style="text-align:center;">Base Amount</th>
+                <th style="text-align:center;">Trade Amount</th>
+                <th style="text-align:center;">{{ 'Price' | translate }}</th>
+                <th style="text-align:center;">Expired after </th>
+                <th style="text-align:center;"></th>
+            </tr>
+            <tr ng-repeat="offer in accountOffers.all">
+                <td><span style="color: {{offerIsSell(offer) ? 'red' : 'green'}};"> {{offerIsSell(offer) ? 'Sell' : 'Buy'}} </span></td>
+                <td>{{offerIsSell(offer) ? amountDisplay(offer.taker_gets) : amountDisplay(offer.taker_pays)}}</td>
+                <td>{{offerIsSell(offer) ? amountDisplay(offer.taker_pays) : amountDisplay(offer.taker_gets)}}</td>
+                <td>{{offerIsSell(offer) ? offerPriceToHuman(offer, true).toPrecision(5) : offerPriceToHuman(offer, false).toPrecision(5)}}</td>
+                <td>{{offer.expiration ? offerExpireHour(offer) + ' hour' : '-' }}</td>
+                <td>
+                    <a href="#" ng-click="prepareOfferEdit({type: offerIsSell(offer) ? 'sell' : 'buy', offer:offer}, true)"><i class="material-icons" role="presentation">edit</i></a>
+                    <a href="#" ng-click="prepareOfferCancel({type: offerIsSell(offer) ? 'sell' : 'buy', offer:offer}, true)"><i class="material-icons" role="presentation">delete</i></a>
+                </td>
+
+            </tr>
+        </table>
     </div>
+</div>
 
-    <table class="table table-striped" style="text-align:center;">
-        <tr>
-            <th style="text-align:center;">Type</th>
-            <th style="text-align:center;">Base Amount</th>
-            <th style="text-align:center;">Trade Amount</th>
-            <th style="text-align:center;">@ Price</th>
-            <th style="text-align:center;">Expired after </th>
-            <th style="text-align:center;"></th>
-        </tr>
-        <tr ng-repeat="offer in accountOffers.all">
-            <td><span style="color: {{offerIsSell(offer) ? 'red' : 'green'}};"> {{offerIsSell(offer) ? 'Sell' : 'Buy'}} </span></td>
-            <td>{{offerIsSell(offer) ? amountDisplay(offer.taker_gets) : amountDisplay(offer.taker_pays)}}</td>
-            <td>{{offerIsSell(offer) ? amountDisplay(offer.taker_pays) : amountDisplay(offer.taker_gets)}}</td>
-            <td>{{offerIsSell(offer) ? offerPriceToHuman(offer, true).toPrecision(5) : offerPriceToHuman(offer, false).toPrecision(5)}}</td>
-            <td>{{offer.expiration ? offerExpireHour(offer) + ' hour' : '-' }}</td>
-            <td>
-                <a href="#" ng-click="prepareOfferEdit({type: offerIsSell(offer) ? 'sell' : 'buy', offer:offer}, true)"><span class="glyphicon glyphicon-edit"></span></a>
-                <a href="#" ng-click="prepareOfferCancel({type: offerIsSell(offer) ? 'sell' : 'buy', offer:offer}, true)"><span class="glyphicon glyphicon-trash"></span></a>
-            </td>
-
-        </tr>
-    </table>
-
+<div ng-show="tradingLog.status" class="card {{tradingLog.status == 'FINAL' ? (tradingLog.status_code.slice(0,3) == 'tes' ? 'card-success' : 'card-danger') : 'card-warning'}}"
+    style="margin: 1em;padding:2em;word-wrap: break-word;  overflow:auto;">
+    <b>Tx Status:</b>[{{tradingLog.status}}{{tradingLog.status_code ? ', ' + tradingLog.status_code : ''}}], <b>Result:</b>    {{tradingLog.result}} {{tradingLog.tx_hash ? ', tx_hash: ' + tradingLog.tx_hash : ''}}
 </div>
