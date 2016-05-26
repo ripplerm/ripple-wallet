@@ -70,73 +70,7 @@
     opacity: 1;
 }
 
-label.input-radio {
-  margin: 0;
-  display: inline-block;
-  line-height: 0;
-  font-size: 0;
-}
-label.input-radio > span {
-  display: block;
-  width: 14px;
-  height: 14px;
-  border-radius: 100%;
-  border: 2px solid #6D6D6D;
-  cursor: pointer;
-}
-label.input-radio > span:before {
-  content: "";
-  display: block;
-  width: 14px;
-  height: 14px;
-  border-radius: 100%;
-  background-color: teal;
-  -webkit-transform: scale(0, 0);
-          transform: scale(0, 0);
-  -webkit-transform-origin: center;
-          transform-origin: center;
-  opacity: 0;
-  -webkit-transition: opacity 0.1s, border-color 0.2s, -webkit-transform 0.2s;
-  transition: opacity 0.1s, border-color 0.2s, -webkit-transform 0.2s;
-  transition: transform 0.2s, opacity 0.1s, border-color 0.2s;
-  transition: transform 0.2s, opacity 0.1s, border-color 0.2s, -webkit-transform 0.2s;
-  -webkit-transition-timing-function: cubic-bezier(0, 1, 1, 1);
-          transition-timing-function: cubic-bezier(0, 1, 1, 1);
-}
-label.input-radio > input:checked + span {
-  border-color: teal;
-}
-label.input-radio > input:checked + span:before {
-  opacity: 1;
-  -webkit-transform: scale(0.7, 0.7);
-          transform: scale(0.7, 0.7);
-  -webkit-transition-timing-function: cubic-bezier(0, 1.2, 1, 1.2);
-          transition-timing-function: cubic-bezier(0, 1.2, 1, 1.2);
-}
-label.input-radio > input:disabled + span:active:before {
-  -webkit-transform: scale(0, 0);
-          transform: scale(0, 0);
-}
-label.input-radio > input:checked:disabled + span:active:before {
-  -webkit-transform: scale(0.65, 0.65);
-          transform: scale(0.65, 0.65);
-}
-label.input-radio > input:disabled + span {
-  cursor: default;
-}
-label.input-radio > input:disabled + span {
-  border-color: #B0B0B0;
-}
-label.input-radio > input:disabled + span:before {
-  background: #B0B0B0;
-}
-label.input-radio > input {
-  display: block;
-  position: absolute;
-  opacity: 0;
-  width: 0;
-  height: 0;
-}
+
 
 label.input-toggle {
   line-height: 0;
