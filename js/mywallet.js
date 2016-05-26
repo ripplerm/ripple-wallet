@@ -63,6 +63,12 @@ var translationsEN = {
     ASKS: 'ASKS',
     Hide: 'Hide',
     Volume: 'Volume',
+    Receipient: 'Receipient',
+    Use_RF: 'Use RippleName / Federation Address.',
+    Resolve: 'Resolve',
+    DT: 'Destination Tag:',
+    Value: 'Value',
+    Issuer: 'Issuer',
 };
 
 var translationsCN = {
@@ -128,6 +134,12 @@ var translationsCN = {
     ASKS: '卖出盘面',
     Hide: '隐藏',
     Volume: '委托量',
+    Receipient: '接收方',
+    Use_RF: '使用RippleName或联邦地址',
+    Resolve: '解析',
+    DT: '终端标签:',
+    Value: '值',
+    Issuer: '发行者',
 };
 
 var Remote = ripple.Remote;

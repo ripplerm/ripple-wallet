@@ -1,17 +1,17 @@
 <div id="tabPayment">
     <div class="card" style="margin: 1em;padding:2em;word-wrap: break-word;  overflow:auto;">
-        <h4 class="card-title">{{lang==0?'Construct a Payment:':'支付:'}}</h4>
+        <h4 class="card-title">{{ 'Payment' | translate }}</h4>
         <form name="paymentForm" id="paymentForm" novalidate>
 
             <div class="card-block">
                 <h4 class="card-title">
-                Receipient:
+                {{ 'Receipient' | translate }}:
             </h4>
                 <table>
                     <div>
                         <label class="input-toggle">
 			  <input type="checkbox" name="useFederation" ng-model="Payment.useFederation" ng-click="Payment.federationAddress=''; federationReset()">
-			  <span></span></label> Use RippleName / Federation Address.<br>
+			  <span></span></label>{{ 'Use_RF' | translate }}<br>
                     </div>
                     <div>
                         <tr>
@@ -19,8 +19,8 @@
                                 <div ng-show="Payment.useFederation">
                                     <input type="text" class="form-control" placeholder="~myriplename / xyz@mydomain.com" ng-model="Payment.federationAddress" name="federation" size="80" ng-change="federationReset(); pathFindAutoStart()" ng-show="Payment.useFederation" ripple-valid-federation>
                                     <br>
-                                    <button ng-click="resolveFederation()" ng-show="Payment.useFederation" ng-disabled="!(Payment.federationAddress) || paymentForm.federation.$invalid || Payment.federation.resolving">Resolve</button>
-                                    <span style="color:red" ng-show="paymentForm.federation.$dirty && paymentForm.federation.$invalid">Invalid Address!</span> {{Payment.federation.status}} <br>
+                                    <button ng-click="resolveFederation()" ng-show="Payment.useFederation" ng-disabled="!(Payment.federationAddress) || paymentForm.federation.$invalid || Payment.federation.resolving">{{ 'Resolve' | translate }}</button>
+                                    <span style="color:red" ng-show="paymentForm.federation.$dirty && paymentForm.federation.$invalid">{{ 'Invalid' | translate }}</span> {{Payment.federation.status}} <br>
 
                                     <span style="padding-left:2em;" ng-form="quoteForm" ng-show="Payment.federation.quoteRequired"> 
 				<div>
@@ -31,7 +31,7 @@
                                 </div>
                     </div>
 
-                    <div>Quote Amount: <span style="color:red"> *</span>
+                    <div>{{ 'Amount' | translate }}: <span style="color:red"> *</span>
                         <input type="text" class="form-control" size="15" ng-model="Payment.federation.quoteAmount" name="amount" ng-change="federationQuoteReset(); pathFindAutoStart()">
                         <select class="form-control" ng-model="Payment.federation.quoteCurrency">
 						<option ng-repeat="currency in Payment.federation.quoteCurrencies" value="{{currency.currency}}">{{currency.currency}}</option>
@@ -39,7 +39,7 @@
                     </div>
 
             </div>
-            <button type="submit" ng-click="federationQuote()" ng-disabled="quoteForm.$pristine || quoteForm.$invalid">Submit Quote</button> {{Payment.federation.quoteStatus}} <br>
+            <button type="submit" ng-click="federationQuote()" ng-disabled="quoteForm.$pristine || quoteForm.$invalid">{{ 'Submit' | translate }}</button> {{Payment.federation.quoteStatus}} <br>
             </span>
 
             <br>
@@ -52,7 +52,7 @@
     </tr>
     <tr>
         <td>
-            <span style="padding-left:1em; color:red" ng-show="paymentForm.destination.$dirty && paymentForm.destination.$error.rippleValidAddress">Invalid Address!</span>
+            <span style="padding-left:1em; color:red" ng-show="paymentForm.destination.$dirty && paymentForm.destination.$error.rippleValidAddress">{{ 'Invalid' | translate }}</span>
         </td>
     </tr>
 </div>
@@ -60,7 +60,7 @@
 </div>
 <div class="card-block">
     <h4 class="card-title">
-    Destination Tag:
+    {{ 'DT' | translate }}
 </h4>
     <table>
         <tr>
@@ -76,24 +76,24 @@
 
 <div class="card-block">
     <h4 class="card-title">
-    Destination Amount:</h4>
+    {{ 'Amount' | translate }}:</h4>
 
 
     <table>
         <tr>
-            <td>Value:</td>
+            <td>{{ 'Value' | translate }}:</td>
             <td><input type="text" class="form-control" placeholder="Amount" name="amountValue" ng-model="Payment.amountValue" size="50" required positive-number ng-disabled="Payment.federation.quoteRequired" ng-change="pathFindAutoStart()">
-                <span style="padding-left:1em; color:red" ng-show="paymentForm.amountValue.$error.number || paymentForm.amountValue.$error.positiveNumber">Invalid Value!</span>
+                <span style="padding-left:1em; color:red" ng-show="paymentForm.amountValue.$error.number || paymentForm.amountValue.$error.positiveNumber">{{ 'Invalid' | translate }}</span>
             </td>
             <td></td>
         </tr>
         <tr>
-            <td>Currency:</td>
+            <td>{{ 'Currency' | translate }}:</td>
             <td><input type="text" class="form-control" placeholder="XRP" size="50" name="amountCurrency" required ng-model="Payment.amountCurrency" ng-change="(Payment.amountCurrency == 'XRP') ? Payment.amountIssuer = null : null; pathFindAutoStart()" ng-disabled="Payment.federation.quoteRequired"></td>
             <td></td>
         </tr>
         <tr>
-            <td>Issuer:</td>
+            <td>{{ 'Issuer' | translate }}:</td>
             <td>
 
                 <input type="text" class="form-control" placeholder="address" name="amountIssuer" ng-model="Payment.amountIssuer" size="50" ng-required="Payment.amountCurrency != 'XRP'" ng-disabled="Payment.amountCurrency == 'XRP' || Payment.federation.quoteRequired"
@@ -109,7 +109,7 @@
         </tr>
         <tr>
             <td></td>
-            <td><span style="padding-left:1em; color:red" ng-show="paymentForm.amountIssuer.$dirty && paymentForm.amountIssuer.$error.rippleValidAddress">Invalid Address!</span>
+            <td><span style="padding-left:1em; color:red" ng-show="paymentForm.amountIssuer.$dirty && paymentForm.amountIssuer.$error.rippleValidAddress">{{ 'Invalid' | translate }}</span>
 
             </td>
             <td></td>
@@ -258,8 +258,8 @@
 
 
 
-<button class="btn btn-primary" type="submit" ng-disabled="paymentForm.$invalid" ng-click="submitPayment()"> Submit </button>
-<button class="btn btn-warning" form="paymentForm" ng-click="paymentReset()"> Reset </button>
+<button class="btn btn-primary" type="submit" ng-disabled="paymentForm.$invalid" ng-click="submitPayment()"> {{'Submit'|translate}} </button>
+<button class="btn btn-warning" form="paymentForm" ng-click="paymentReset()"> {{ 'Reset' | translate }} </button>
 <br>
 </div>
 </div>
