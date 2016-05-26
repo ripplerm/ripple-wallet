@@ -4,7 +4,7 @@
 <div class="modal-body">
     <form name="offerCreateForm" nonvalidate>
         <h4> 
-        <table class="table table-striped">
+        <table style="table-layout:fixed;word-wrap: break-word;  overflow:auto;" class="table table-hover">
             <tr>
                 <td>Type:</td>
                 <td><span style="color: {{options.type=='sell' ? 'red' : 'green'}}">{{options.type == 'sell' ? 'SELL' : 'BUY'}}</span></td>
@@ -33,6 +33,6 @@
 </div>
 
 <div class="modal-footer">
-    <button class="btn btn-primary" type="button" ng-disabled="offerCreateForm.$invalid" ng-click="ok()">{{lang==0?'Submit':'提交'}}</button>
-    <button class="btn btn-warning" type="button" ng-click="cancel()">{{lang==0?'Cancel':'取消'}}</button>
+    <button class="btn btn-primary" type="button" ng-disabled="offerCreateForm.$invalid" ng-click="ok()">{{'Submit'|translate}}</button>
+    <button class="btn btn-warning" type="button" ng-click="cancel()">{{'Cancel'|translate}}</button>
 </div>

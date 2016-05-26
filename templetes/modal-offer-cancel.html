@@ -4,7 +4,7 @@
 <div class="modal-body">
     <form name="offerCancelForm" nonvalidate>
         <h5> 
-        <table class="table table-striped">
+        <table style="table-layout:fixed;word-wrap: break-word;  overflow:auto;" class="table table-hover">
             <tr>
                 <td>Offer Seq: </td>
                 <td>{{options.offer_sequence}}</td>
@@ -29,6 +29,6 @@
 </div>
 
 <div class="modal-footer">
-    <button class="btn btn-primary" type="button" ng-click="ok()">{{lang==0?'Submit':'提交'}}</button>
-    <button class="btn btn-warning" type="button" ng-click="cancel()">{{lang==0?'Cancel':'取消'}}</button>
+    <button class="btn btn-primary" type="button" ng-click="ok()">{{'Submit'|translate}}</button>
+    <button class="btn btn-warning" type="button" ng-click="cancel()">{{'Cancel'|translate}}</button>
 </div>

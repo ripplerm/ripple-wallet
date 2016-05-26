@@ -9,18 +9,18 @@
         </span>
     </h4>
         <h5>
-        <table class="table">
+        <table style="table-layout:fixed" class="table table-hover">
             <tr>
                 <td>Quantity:</td>
-                <td><input type="text" size="10" name="qty" ng-model="options.qty" placeholder="amount" positive-number> {{options.baseCurrency}}</td>
+                <td><input type="text" class="form-control" size="10" name="qty" ng-model="options.qty" placeholder="amount" positive-number> {{options.baseCurrency}}</td>
             </tr>
             <tr>
                 <td>at Price:</td>
-                <td><input type="text" size="10" name="price" ng-model="options.price" placeholder="price" positive-number> ({{options.tradeCurrency}})</td>
+                <td><input type="text" class="form-control" size="10" name="price" ng-model="options.price" placeholder="price" positive-number> ({{options.tradeCurrency}})</td>
             </tr>
             <tr>
                 <td>Expire after:</td>
-                <td><input type="text" size="10" name="expiration" ng-model="options.expiration" placeholder="hour" positive-number> Hour.</td>
+                <td><input type="text" class="form-control" size="10" name="expiration" ng-model="options.expiration" placeholder="hour" positive-number> Hour.</td>
             </tr>
         </table>                  
     </h5>
@@ -28,6 +28,6 @@
 </div>
 
 <div class="modal-footer">
-    <button class="btn btn-primary" type="button" ng-disabled="offerEditForm.$invalid" ng-click="ok()">{{lang==0?'Submit':'提交'}}</button>
-    <button class="btn btn-warning" type="button" ng-click="cancel()">{{lang==0?'Cancel':'取消'}}</button>
+    <button class="btn btn-primary" type="button" ng-disabled="offerEditForm.$invalid" ng-click="ok()">{{'Submit'|translate}}</button>
+    <button class="btn btn-warning" type="button" ng-click="cancel()">{{'Cancel'|translate}}</button>
 </div>
