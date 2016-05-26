@@ -139,7 +139,7 @@ var translationsCN = {
     Resolve: '解析',
     DT: '终端标签:',
     Value: '值',
-    Issuer: '发行者',
+    Issuer: '发行方',
 };
 
 var Remote = ripple.Remote;
