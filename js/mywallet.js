@@ -155,7 +155,7 @@ var OrderBookUtils = ripple.OrderBookUtils;
 
 // ================= configuration & Global constant  ==================
 
-var CLIENT_VERSION = "rm-0.1.0"
+var CLIENT_VERSION = "yxxyun-0.6";
 var INSERT_CLIENT_INFO = true;
 
 var DEFAULT_ACCOUNT = "rHb9CJAWyB4rj91VRWn96DkukG4bwdtyTh";
@@ -324,7 +324,7 @@ var TRADE_PAIRS = [
     'KRW.rUkMKjQitpgAM5WTGk79xpjT38DEJY283d/XRP',
     'BRL.rfNZPxoZ5Uaamdp339U9dCLWz2T73nZJZH/XRP',
     'MXN.rG6FZ31hDHN1K5Dkbma3PSB5uVCuVVRzfn/XRP',
-]
+];
 
 walletApp.config(['$translateProvider', function($translateProvider) {
     // add translation tables
@@ -1207,7 +1207,7 @@ walletApp.controller('walletCtrl', ['$translate', '$scope', '$http', '$uibModal'
 
         if (INSERT_CLIENT_INFO) {
             transaction.addMemo({
-                memoType: 'client',
+                memoType: 'ripple-wallet-md',
                 memoData: CLIENT_VERSION
             });
         }
