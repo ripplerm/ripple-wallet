@@ -3,7 +3,7 @@
 </div>
 <div class="modal-body">
     <form name="setTradePairForm" nonvalidate>
-        <table class="table">
+        <table>
             <tr>
                 <td>Base Currency:</td>
                 <td><input type="text" class="form-control" name="baseCurrency" ng-model="options.baseCurrency" size=50 autofocus ng-change="options.baseIssuer = (options.baseCurrency == 'XRP') ? null : options.baseIssuer;"></td>
@@ -30,7 +30,7 @@
             </tr>
         </table>
         <br>
-        <table class="table">
+        <table>
             <tr>
                 <td>Trade Currency:</td>
                 <td><input type="text" class="form-control" name="tradeCurrency" ng-model="options.tradeCurrency" size=50 ng-change="options.tradeIssuer = (options.tradeCurrency == 'XRP') ? null : options.tradeIssuer;"></td>
