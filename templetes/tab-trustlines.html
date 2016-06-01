@@ -26,6 +26,10 @@
             </tr>
         </table>
     </div>
+    <div ng-show="trustSetLog.status" class="card {{trustSetLog.status == 'FINAL' ? (trustSetLog.status_code.slice(0,3) == 'tes' ? 'card-success' : 'card-danger') : 'card-warning'}}" style="margin: 1em;padding:2em;word-wrap: break-word;  overflow:auto;">
+        <b>Tx Status:</b>[{{trustSetLog.status}}{{trustSetLog.status_code ? ', ' + trustSetLog.status_code : ''}}],
+        <b>Result:</b> {{trustSetLog.result}} {{trustSetLog.tx_hash ? ', tx_hash: ' + trustSetLog.tx_hash : ''}}
+    </div>
     <div class="card" style="margin: 1em;padding:2em;word-wrap: break-word;  overflow:auto;">
         <h4 class="card-title">{{ 'List_Trustlines' | translate }}</h4>
         <a class="btn btn-info" data-toggle="collapse" href="#Balanceopt2" aria-expanded="false" aria-controls="Balanceopt2">
@@ -83,8 +87,5 @@
             </tr>
         </table>
     </div>
-    <div ng-show="trustSetLog.status" class="card {{trustSetLog.status == 'FINAL' ? (trustSetLog.status_code.slice(0,3) == 'tes' ? 'card-success' : 'card-danger') : 'card-warning'}}" style="margin: 1em;padding:2em;word-wrap: break-word;  overflow:auto;">
-        <b>Tx Status:</b>[{{trustSetLog.status}}{{trustSetLog.status_code ? ', ' + trustSetLog.status_code : ''}}],
-        <b>Result:</b> {{trustSetLog.result}} {{trustSetLog.tx_hash ? ', tx_hash: ' + trustSetLog.tx_hash : ''}}
-    </div>
+
 </div>
