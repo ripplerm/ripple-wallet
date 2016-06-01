@@ -19,12 +19,12 @@ var translationsEN = {
     Address: 'Address',
     Idinput_holder: 'enter address or click use secret key',
     Invalid: 'Invalid',
-    Save_secret: 'Please save secret',
+    Save_secret: 'click QR image to download',
     Use_secret: 'use secretkey',
     Submit: 'Submit',
     Cancel: 'Cancel',
     Set_Secret: 'Set Wallet Secret',
-    Enter_Secret: 'enter secret',
+    Enter_Secret: 'enter secret or select QR image',
     Refresh: 'Refresh',
     Advanced: 'Advanced',
     Set_RegularKey: 'Set RegularKey',
@@ -69,6 +69,9 @@ var translationsEN = {
     DT: 'Destination Tag:',
     Value: 'Value',
     Issuer: 'Issuer',
+    SELQR: 'select QR',
+    RDQR: 'read secret',
+    Random: 'New Random Secret',
 };
 
 var translationsCN = {
@@ -90,12 +93,12 @@ var translationsCN = {
     Address: 'Ripple地址',
     Idinput_holder: '输入Ripple地址或点击使用密钥',
     Invalid: '无效',
-    Save_secret: '请妥善保存密钥',
+    Save_secret: '点击QR下载密钥',
     Use_secret: '使用密钥',
     Submit: '提交',
     Cancel: '取消',
     Set_Secret: '设置密钥',
-    Enter_Secret: '输入密钥',
+    Enter_Secret: '输入密钥或选择密钥QR',
     Refresh: '刷新',
     Advanced: '高级',
     Set_RegularKey: '设置RegularKey',
@@ -140,6 +143,9 @@ var translationsCN = {
     DT: '终端标签:',
     Value: '值',
     Issuer: '发行方',
+    SELQR: '选择 QR',
+    RDQR: '读取密钥',
+    Random: '新生成密钥',
 };
 
 var Remote = ripple.Remote;
@@ -643,7 +649,30 @@ walletApp.controller('walletCtrl', ['$translate', '$scope', '$http', '$uibModal'
         }, function() {
             // do nothing; 
         });
-    }
+    };
+
+    var qr = new QrCode();
+    var qrsec;
+    qr.callback = function(result) {
+        qrsec = result;
+    };
+    $scope.qrSecret = function() {
+
+        return qrsec;
+    };
+
+
+    $scope.file_changed = function(element) {
+
+        $scope.$apply(function(scope) {
+            var photofile = element.files[0];
+            var reader = new FileReader();
+            reader.onload = function(e) {
+                qr.decode(this.result); // handle onload
+            };
+            reader.readAsDataURL(photofile);
+        });
+    };
 
     $scope.prepareSetWalletAccount = function(options) {
         if (!options) options = {};
@@ -699,6 +728,7 @@ walletApp.controller('walletCtrl', ['$translate', '$scope', '$http', '$uibModal'
             animation: false,
             templateUrl: 'templetes/modal-set-wallet-secret.html',
             controller: 'ModalCtrl',
+            scope: $scope,
             resolve: {
                 options: function() {
                     return options;

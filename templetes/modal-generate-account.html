@@ -6,18 +6,25 @@
     <form name="generateAccountForm" nonvalidate>
         <table>
             <tr>
-                      <td>{{lang==0?'Secret:':'密钥'}}</td>
-                      <td><input id="keyinput" type="password" name="secret" placeholder="{{lang==0?'enter secret':'输入密钥'}}" class="form-control" size=50 ng-model="options.secret" ripple-valid-secret required autofocus></td>
+                <td>{{'Secret'|translate}}</td>
+                <td><input id="keyinput" type="password" name="secret" placeholder="{{'Enter_Secret'|translate}}" class="form-control" size=50 ng-model="options.secret" ripple-valid-secret required autofocus></td>
+
             </tr>
             <br>
             <tr>
-                      <td></td>
-                      <td><span style="color:red" ng-show="generateAccountForm.secret.$dirty && generateAccountForm.secret.$error.rippleValidSecret">{{lang==0?'Invalid Secret!':'无效密钥!'}}</span></td>
-                    
+                <td></td>
+                <td><span style="color:red" ng-show="generateAccountForm.secret.$dirty && generateAccountForm.secret.$error.rippleValidSecret">{{'Invalid'|translate}}</span></td>
+
+
+            </tr>
+            <br><br>
+            <tr>
+                <td>{{'SELQR'|translate}}</td>
+                <td><input ng-model="photo" onchange="angular.element(this).scope().file_changed(this);" type="file" accept="image/*" /><button type="button" class="btn btn-info" ng-click="options.secret = qrSecret(); options.index = 0;">{{'RDQR'|translate}}</button></td>
             </tr>
         </table>
     </form><br>
-    <div align="right"><button type="button" class="btn btn-info" ng-click="options.secret = generateNewSecret(); options.index = 0;">{{lang==0?'New Random Secret':'随机生成密钥'}}</button>
+    <div align="right"><button type="button" class="btn btn-info" ng-click="options.secret = generateNewSecret(); options.index = 0;">{{'Random'|translate}}</button>
     </div>
 </div>
 
