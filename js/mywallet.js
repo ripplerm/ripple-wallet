@@ -218,10 +218,6 @@ var GATEWAYS = [{
         address: "rKiCet8SdvWxPXnAgYarFUXMh1zCPz432Y",
         currencies: ['CNY', 'FMM', 'STR', 'XLM']
     }, {
-        name: "JustCoin",
-        address: "rJHygWcTLVpSXkowott6kzgZU6viQSVYM1",
-        currencies: ['BTC', 'USD']
-    }, {
         name: "TheRock",
         address: "rLEsXccBGNR3UPuPu2hUXPjziKC3qKSBun",
         currencies: ['BTC', 'LTC', 'NMC', 'PPC', 'DOG', 'USD ', 'EUR', 'GBP']
@@ -245,10 +241,6 @@ var GATEWAYS = [{
         name: "Bitso",
         address: "rG6FZ31hDHN1K5Dkbma3PSB5uVCuVVRzfn",
         currencies: ['BTC', 'MXN']
-    }, {
-        name: "RippleTradeJapan",
-        address: "rMAz5ZnK73nyNUL4foAvaxdreczCkG3vA6",
-        currencies: ['JPY']
     }, {
         name: "ExchangeTokyo",
         address: "r9ZFPSb1TFdnJwbTMYHvVwFK1bQPUCVNfJ",
@@ -297,22 +289,10 @@ var GATEWAYS = [{
         name: "PtyCoin",
         address: "rBadiLisPCyqeyRA1ufVLv5qgVRenP2Zyc",
         currencies: ['USD', 'PAB', 'BTC', 'LTC', 'DRK']
-    },
-
-    {
-        name: "LakeBTC",
-        address: "rpDMez6pm6dBve2TJsmDpv7Yae6V5Pyvy2",
-        currencies: ['USD']
-    },
-
-    {
+    },{
         name: "MrRipple",
         address: "rB3gZey7VWHYRqJHLoHDEJXJ2pEPNieKiS",
         currencies: ['JPY', 'USD']
-    }, {
-        name: "RippleDividend",
-        address: "rDVdJ62foD1sn7ZpxtXyptdkBSyhsQGviT",
-        currencies: ['BTC', 'CNY', 'USD', 'FMM', 'FBM', 'XMM', 'RXM']
     }
 ];
 
