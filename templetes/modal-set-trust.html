@@ -48,18 +48,20 @@
       <tr>
         <td>Others:</td>
         <td>
-          <table>
+          <table style="table-layout:fixed">
             <tr>
-              <td><input type="radio" ng-model="options.no_ripple" value="false" ng-checked="!options.no_ripple">Allow Rippling</td>
-              <td><input type="radio" ng-model="options.no_ripple" value="true" ng-checked="!!options.no_ripple">Disallow Rippling</td>
+              <td><label class="input-toggle"><input type="checkbox" ng-model="options.no_ripple"><span></span></label></td>
+              <td><input type="radio" ng-model="options.no_ripple" value="false" ng-disabled="true" ng-checked="!options.no_ripple">Allow Rippling</td>
+              <td><input type="radio" ng-model="options.no_ripple" value="true" ng-disabled="true" ng-checked="!!options.no_ripple">Disallow Rippling</td>
             </tr>
             <tr>
-              <td><input type="radio" ng-model="options.freeze" value="true" ng-checked="!!options.freeze">Freeze</td>
-              <td><input type="radio" ng-model="options.freeze" value="false" ng-checked="!options.freeze">No Freeze</td>
+              <td><label class="input-toggle"><input type="checkbox" ng-model="options.freeze"><span></span></label></td>
+              <td><input type="radio" ng-model="options.freeze" value="true" ng-disabled="true" ng-checked="!!options.freeze">Freeze</td>
+              <td><input type="radio" ng-model="options.freeze" value="false" ng-disabled="true" ng-checked="!options.freeze">No Freeze</td>
             </tr>
             <tr>
-              <td colspan="2"><input type="checkbox" ng-model="options.setAuth" ng-value="true" ng-checked="options.authorized">Set Authorized
-                (Note: this cannot be unset.)</td>
+              <td><label class="input-toggle"><input type="checkbox" ng-model="options.setAuth" ng-value="true" ng-checked="options.authorized"><span></span></label></td>
+              <td colspan="2">Set Authorized(Note: this cannot be unset.)</td>
             </tr>
           </table>
         </td>
