@@ -194,6 +194,14 @@ var remote = new Remote({
         host: 's2.ripple.com',
         port: 443,
         secure: true
+    }, {
+        host: 's-west.ripple.com',
+        port: 443,
+        secure: true
+    }, {
+        host: 's-east.ripple.com',
+        port: 443,
+        secure: true
     }]
 });
 
@@ -536,6 +544,13 @@ walletApp.controller('walletCtrl', ['$translate', '$scope', '$http', '$uibModal'
             if (err) {
                 if (err.remote) {
                     var account = err.remote.account || err.remote.request.account;
+                    if (!$scope.walletAccount) {
+                    // $scope.setWalletAccount({
+                    //     address: DEFAULT_ACCOUNT,
+                    //     secret: DEFAULT_SECRET
+                    // });
+                    return;
+                    }
                     if (account != $scope.walletAccount._account_id) return;
                     if (err.remote.error) $scope.accountLinesStatus = err.remote.error;
                 } else {
