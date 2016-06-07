@@ -1,7 +1,16 @@
 <div id="tabInfo">
     <div class="card" style="margin: 1em;padding:2em;word-wrap: break-word;  overflow:auto;">
         <h4 class="card-title">{{ 'Account' | translate }} {{activeAccount ? activeAccount : "-"}}</h4>
-        <button class="btn btn-warning" ng-click="accountInfo()" ng-disabled="!activeAccount">{{ 'Refresh' | translate }}</button> <br>{{accountInfoStatus}}
+        <button class="btn btn-warning" ng-click="accountInfo()" ng-disabled="!activeAccount">{{ 'Refresh' | translate }}</button> <br>{{accountInfoStatus}}<br>
+        <a class="btn btn-info" data-toggle="collapse" href="#infoopt" aria-expanded="false" aria-controls="infoopt">{{ 'Advanced' | translate }}</a>
+        <div class="collapse" id="infoopt">
+            <div style="padding-left:1em">
+                <button class="btn btn-info" ng-click="prepareSetWalletSecret()">{{'Set_Secret'|translate}}</button><br>
+                <button class="btn btn-info" ng-show="remote.secrets[activeAccount]" ng-click="showSecret = !showSecret">{{'SH_secret'|translate}}</button><br>
+                <div><span style="float:left"><qrcode ng-show="showSecret" version="5" error-correction-level="M" size="160" data="{{remote.secrets[activeAccount]}}" download></qrcode>
+                {{remote.secrets[activeAccount] && showSecret ? remote.secrets[activeAccount] : '' }}</span></div>
+            </div>
+        </div>
     </div>
     <div class="card" style="margin: 1em;padding:2em;word-wrap: break-word;  overflow:auto;">
         <h4 class="card-title">{{ 'Info' | translate }}</h4>

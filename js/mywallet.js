@@ -72,6 +72,7 @@ var translationsEN = {
     SELQR: 'select QR',
     RDQR: 'read secret',
     Random: 'New Random Secret',
+    SH_secret: 'Show Secret',
 };
 
 var translationsCN = {
@@ -146,6 +147,7 @@ var translationsCN = {
     SELQR: '选择 QR',
     RDQR: '读取密钥',
     Random: '新生成密钥',
+    SH_secret: '显示密钥',
 };
 
 var Remote = ripple.Remote;
