@@ -94,7 +94,7 @@
                     </div>
                 </td>
               </tr>
-              <tr><td>Slipage:</td><td><input type="number" min=0 ng-model="paymentSlipage" size="5"> (%)</td></tr>
+              <tr><td>Slipage:</td><td><input type="number" min=0 ng-model="Payment.slipage" size="5"> (%)</td></tr>
               <tr>
                 <td>Send Max: <br><button ng-click="setSendmax({value:Payment.amountValue, currency:Payment.amountCurrency, issuer:Payment.amountIssuer}); setPaths(null); pathFindClose();" ng-disabled="paymentForm.amountValue.$invalid || paymentForm.amountCurrency.$invalid || paymentForm.amountIssuer.$invalid">Direct Pay</button>
                 </td>

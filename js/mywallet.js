@@ -223,7 +223,9 @@ walletApp.controller('walletCtrl', ['$scope', '$http', '$uibModal', function($sc
 
   $scope.accountHistory = [];
   $scope.accountBalances = {};
-  $scope.paymentSlipage = SLIPAGE; 
+  $scope.Payment = {
+    slipage: SLIPAGE
+  };
 
   $scope.trading = { 
                       pair: $scope.tradepairs[0]
@@ -900,7 +902,7 @@ walletApp.controller('walletCtrl', ['$scope', '$http', '$uibModal', function($sc
   }
 
   $scope.setSendmax = function (amount) {
-    var multiplier = 1 + $scope.paymentSlipage / 100;
+    var multiplier = 1 + $scope.Payment.slipage / 100;
     if (amount.value) {
       if (amount.currency == 'XRP' && $scope.Payment.amountCurrency == 'XRP') multiplier = 1;
       $scope.Payment.sendmaxValue = String(amount.value * multiplier);
@@ -987,7 +989,9 @@ walletApp.controller('walletCtrl', ['$scope', '$http', '$uibModal', function($sc
   }
 
   $scope.paymentReset = function (){
-    $scope.Payment = {};
+    $scope.Payment = {
+      slipage: SLIPAGE
+    };
   }
 
   // =================== transaction submission ===================================
