@@ -375,7 +375,9 @@ walletApp.controller('walletCtrl', ['$scope', '$http', '$uibModal', function($sc
     var LINES = [];
     var page = 0;
 
-    var request = remote.requestAccountLines({account: $scope.activeAccount, ledger: 'validated'});
+    var ledger_index = remote._ledger_current_index - 1;
+
+    var request = remote.requestAccountLines({account: $scope.activeAccount, ledger: ledger_index});
     request.callback(function handle_message(err, res) {
       var self = this;
       
@@ -402,7 +404,7 @@ walletApp.controller('walletCtrl', ['$scope', '$http', '$uibModal', function($sc
           return;
         }
 
-        $scope.accountLinesStatus = 'Updated @ ledger:' + res.ledger_index;
+        $scope.accountLinesStatus = 'Updated @ ledger:' + ledger_index;
 
         $scope.trustlines = LINES;
         $scope.linesStats();
