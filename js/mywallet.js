@@ -285,31 +285,13 @@ walletApp.controller('walletCtrl', ['$scope', '$http', '$uibModal', function($sc
       $scope.accountInfoStatus = '';
   }
 
-  $scope.handleAccountTransaction = function (transaction){
-    if (!transaction.mmeta) return;
-    
-    var changed = false;
-    transaction.mmeta.each(function (an) {
-      var isAccount = an.fields.Account === $scope.walletAccount._account_id;
-      var isAccountRoot = isAccount && an.entryType === 'AccountRoot';
-      if (isAccountRoot) {
-        Object.assign($scope.walletAccount.account_data, an.fieldsNew, an.fieldsFinal);
-        Object.keys(an.fieldsPrev).forEach(function(field){
-          if (!an.fieldsFinal.hasOwnProperty(field)) { delete $scope.walletAccount.account_data[field]; }
-        })  
-        changed = true;
-      }
-    });
-    if (changed) $scope.updateAccountInfo();
-    $scope.accountInfoStatus = 'Updated @ Ledger:' + transaction.ledger_index;    
-  }
-
-  $scope.updateAccountInfo = function () {
-    var accountData = $scope.walletAccount.account_data;
+  $scope.updateAccountInfo = function (entry, ledger_index) {
+    $scope.accountInfoStatus = 'Updated @ Ledger:' + ledger_index;
+    var accountData = $scope.walletAccount._entry;
 
     accountData.domain = accountData.Domain? Utils.hexToString(accountData.Domain) : '';
     accountData.xrpBalance = accountData.Balance / 1000000;
-    accountData.xrpReserved = 20 + (accountData.OwnerCount ? accountData.OwnerCount : 0) * 5;
+    accountData.xrpReserved = remote.reserve(accountData.OwnerCount).to_human();
 
     accountData.settings = {};
 
@@ -319,11 +301,23 @@ walletApp.controller('walletCtrl', ['$scope', '$http', '$uibModal', function($sc
       accountData.settings['AccountTxnID'] = accountData.hasOwnProperty('AccountTxnID') ? true : false;
     }
 
-    $scope.accountData = accountData;
+    if (accountData.signer_lists && accountData.signer_lists[0]) {
+      var slist = accountData.signer_lists[0];
+      accountData.quorum = slist.SignerQuorum;  
+      accountData.signers = slist.SignerEntries.map(function (signer) {
+        return {
+          address: signer.SignerEntry.Account,
+          weight: signer.SignerEntry.SignerWeight,
+        }
+      });      
+    } else {
+      accountData.signers = [];
+      accountData.quorum = 0;
+    }
 
+    $scope.accountData = accountData;
     $scope.accountBalances.XRP = accountData.xrpBalance;
     $scope.accountBalances.reserved = accountData.xrpReserved;
-    //$scope.$apply();
   }
 
   $scope.accountInfo = function () {
@@ -331,7 +325,7 @@ walletApp.controller('walletCtrl', ['$scope', '$http', '$uibModal', function($sc
 
     $scope.accountInfoStatus = 'requesting...';
 
-    remote.requestAccountInfo({account: $scope.walletAccount._account_id, ledger:'validated'}, function (err, res){
+    $scope.walletAccount.entry(function (err, res){
       if (err) {
         if (err.remote) {
           var account = err.remote.account || err.remote.request.account;
@@ -339,13 +333,6 @@ walletApp.controller('walletCtrl', ['$scope', '$http', '$uibModal', function($sc
           if (err.remote.error) $scope.accountInfoStatus = err.remote.error; 
         } else { $scope.accountInfoStatus = err.error;}
       }
-      if (res && res.account_data) {
-        if (res.account_data.Account != $scope.walletAccount._account_id) return;
-        $scope.walletAccount.account_data = res.account_data;
-        $scope.accountInfoStatus = 'Updated @ Ledger:' + res.ledger_index;
-        $scope.updateAccountInfo();
-      }
-      //$scope.$apply();
     })
   }
 
@@ -353,7 +340,7 @@ walletApp.controller('walletCtrl', ['$scope', '$http', '$uibModal', function($sc
     if (!$scope.walletAccount) {
       $scope.setWalletAccount({address: DEFAULT_ACCOUNT, secret: DEFAULT_SECRET});
     }
-    if (!$scope.walletAccount.account_data) $scope.accountInfo();
+    if (!$scope.walletAccount._entry.Account) $scope.accountInfo();
   }
 
   $scope.trustlinesReset = function () {
@@ -503,7 +490,7 @@ walletApp.controller('walletCtrl', ['$scope', '$http', '$uibModal', function($sc
     if (!account) return;
 
     if (!$scope.walletAccount || $scope.walletAccount._account_id != account) {
-      if ($scope.walletAccount) $scope.walletAccount.removeAllListeners();
+      if ($scope.walletAccount) $scope.walletAccount.removeListener('entry', $scope.updateAccountInfo);
       $scope.accountInfoReset();
       $scope.trustlinesReset();
       $scope.accountOffers = {};      
@@ -516,9 +503,7 @@ walletApp.controller('walletCtrl', ['$scope', '$http', '$uibModal', function($sc
       $scope.accountInfo();
       //$scope.getAccountOffers();
 
-      $scope.walletAccount.on('transaction', function(tx){
-        $scope.handleAccountTransaction(tx);
-      })
+      $scope.walletAccount.on('entry', $scope.updateAccountInfo)
     }
   }
 

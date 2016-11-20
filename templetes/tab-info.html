@@ -28,11 +28,26 @@
                 <td width="90">Next Sequence</td><td width="40" align="center">{{accountData.Sequence}}</td>
               </tr>
               <tr>
+                <td style="vertical-align:middle">Signers</td>
+                <td style="vertical-align:middle">
+                  {{accountData['signers'] ? '' : '-'}}
+                  <table border="1" cellpadding="5" cellspacing="0" style="cellpadding:5px; width:360px; table-layout:fixed" class="table table-bordered">
+                    <tr ng-repeat="signer in accountData['signers']">
+                      <td width="310">{{signer.address}}</td>
+                      <td width="50" align="center">{{signer.weight}}</td>
+                    </tr>
+                  </table>
+                </td>
+                <td style="vertical-align:middle">Quorum</td>
+                <td align="center" style="vertical-align:middle">{{accountData['quorum'] ? accountData['quorum'] : '-'}}</td>
+              </tr>
+              <tr>
                 <td>Message Key</td><td colspan="3">{{accountData.MessageKey ? accountData.MessageKey : '-'}}</td>
               </tr>
               <tr>
-                <td colspan="4" word-wrap="break-word">
-                  <span style="padding-right:1em;" ng-repeat="(key, value) in accountData['settings']">{{key}}:<font color="{{value ? 'green' : 'red'}}">{{value ? "&#10004" : "&#10008"}} </font></span>     
+                <td>Settings</td>
+                <td colspan="3" word-wrap="break-word">
+                  <span style="padding-right:1em;" ng-repeat="(key, value) in accountData['settings']">{{key}}:<font color="{{value ? 'green' : 'red'}}">{{value ? "&#10004" : "&#10008"}} </font></span>
                 </td>      
               </tr>
             </table>
