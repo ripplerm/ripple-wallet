@@ -18,11 +18,24 @@
   <div ng-controller="walletCtrl" class="container">    
     <table class="table table-bordered table-condensed" style="text-align: center"> 
       <tr>
-        <td style="text-align: center">Network: <font color="{{(state == 'online') ? 'green' : 'red'}}">{{state}}</font></td>
+        <td style="text-align: center">
+          <div uib-dropdown uib-keyboard-nav>
+            <button type="button" uib-dropdown-toggle><span class="caret"></span></button>
+            <ul class="uib-dropdown-menu">
+                <li ng-repeat="network in networks"><a href="#" ng-click="switchNetwork(network)">{{network}}</a></li>
+            </ul>
+            Network: <font color="{{(state == 'online') ? 'green' : 'red'}}">{{state}}</font> [{{network}}]
+          </div> 
+        </td>
         <td style="text-align: center;">Server: {{server}} </td>
         <td style="text-align: center">Last-Closed-Ledger: <font color="blue"> {{ledgerIndex}} </font></td>
       </tr>
     </table>
+    <div ng-show="network == 'TEST'"> 
+      <font color="blue" size="5">[You are on TestNet]... to play around, get funded accounts from: <a href="https://ripple.com/build/ripple-test-net/" target="_blank">ripple-test-net</a>.</font>
+      <hr>
+    </div>
+
     <font size="5">Wallet Account: <b>{{activeAccount ? activeAccount : "-"}} </b></font>
     <button class="btn btn-primary" ng-click="prepareSetWalletAccount()"><span class="glyphicon glyphicon-pencil"> Change</button></span>
 

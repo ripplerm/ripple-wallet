@@ -30,26 +30,33 @@ var CHART_LIMIT = 1000; // limit number for single query;
 var DEVIATION_ALERT = 0.20;  // alert when offerCreate price deviate >20% from market.
 var APPLY_INTEREST = false; // false: showing raw amount instead of demuraged figure.
 
+var SERVERS_MAINNET = [
+                      {
+                          host:    's-east.ripple.com'
+                          , port:    443
+                          , secure:  true
+                      },
+                      {
+                          host:    's-west.ripple.com'
+                          , port:    443
+                          , secure:  true
+                      }                    
+                   ];
+
+var SERVERS_TESTNET = [{
+                          host: 's.altnet.rippletest.net'
+                          , port: 51233
+                          , secure: true
+                      }];
+
 var remote = new Remote({
     // see the API Reference for available options
     trusted:        false,
     local_signing:  true,
     local_fee:      true,
-    fee_cushion:     1.2,
-    max_fee:       15000,
-    max_attempts: 0,  // do not resubmit tx. 
-    servers: [
-        {
-            host:    's1.ripple.com'
-            , port:    443
-            , secure:  true
-        },
-        {
-            host:    's2.ripple.com'
-            , port:    443
-            , secure:  true
-        }
-    ]
+    fee_cushion:    1.2,
+    max_fee:        120,
+    servers:        SERVERS_MAINNET
 });
 
 var GATEWAYS = [
@@ -213,6 +220,28 @@ var TRADE_PAIRS = [
   'MXN.rG6FZ31hDHN1K5Dkbma3PSB5uVCuVVRzfn/XRP',
 ]
 
+var GATEWAYS_TEST = [
+      {
+        name: "GateOne",
+        address: "r9U9DDht72oMx7nrqsS7uELXNvfsYL4USm",
+        currencies: ['USD', 'BTC'] 
+      },
+      {
+        name: "GateTwo",
+        address: "rH6C28kDJURagNz1Mt6oX9PEyFtJqxyTwo",
+        currencies: ['CNY', 'JPY'] 
+      },
+    ];
+
+var TRADE_PAIRS_TEST = [
+  'USD.r9U9DDht72oMx7nrqsS7uELXNvfsYL4USm/XRP',
+  'BTC.r9U9DDht72oMx7nrqsS7uELXNvfsYL4USm/XRP',
+  'CNY.rH6C28kDJURagNz1Mt6oX9PEyFtJqxyTwo/XRP',
+  'JPY.rH6C28kDJURagNz1Mt6oX9PEyFtJqxyTwo/XRP',
+  'BTC.r9U9DDht72oMx7nrqsS7uELXNvfsYL4USm/USD.r9U9DDht72oMx7nrqsS7uELXNvfsYL4USm',
+  'USD.r9U9DDht72oMx7nrqsS7uELXNvfsYL4USm/CNY.rH6C28kDJURagNz1Mt6oX9PEyFtJqxyTwo',
+  'USD.r9U9DDht72oMx7nrqsS7uELXNvfsYL4USm/JPY.rH6C28kDJURagNz1Mt6oX9PEyFtJqxyTwo',
+]
 
 // ========= main controller ====================================
 
@@ -237,7 +266,6 @@ walletApp.controller('walletCtrl', ['$scope', '$http', '$uibModal', function($sc
   
   remote.on('state', function(state){
     $scope.state = state;
-    $scope.$apply();
   })
   remote.on('ledger_closed', function(msg, server){
     $scope.ledgerIndex = msg.ledger_index; 
@@ -255,6 +283,45 @@ walletApp.controller('walletCtrl', ['$scope', '$http', '$uibModal', function($sc
                 ]
 
   $scope.alerts = [];
+
+  $scope.networks = ['MAIN', 'TEST'];
+  $scope.network = 'MAIN';
+  $scope.state = 'offline'
+
+  $scope.switchNetwork = function (network) {
+    if (network == $scope.network) return;
+
+    //disconnect and remove all servers and accounts;
+    remote._servers.forEach(function (server) {
+      server.disconnect();
+    });
+    remote._servers = [];
+    remote._accounts = [];
+
+    //reconfigure and reconnect;
+    if (network == 'MAIN') {
+      remote.servers = SERVERS_MAINNET;
+      $scope.gateways = GATEWAYS;
+      $scope.tradepairs = TRADE_PAIRS;
+    } else if (network == 'TEST') {
+      remote.servers = SERVERS_TESTNET;
+      $scope.gateways = GATEWAYS_TEST;
+      $scope.tradepairs = TRADE_PAIRS_TEST;
+    }
+    remote._ledger_current_index = undefined;
+    remote.servers.forEach(function (serverOptions) {
+      var server = remote.addServer(serverOptions);
+      server.setMaxListeners(remote.max_listeners);
+    });
+    remote.connect();
+
+    $scope.network = network;
+    $scope.ledgerIndex;
+    $scope.walletAccount = null;
+    $scope.setWalletAccount({address: $scope.activeAccount});
+    $scope.setTradePair($scope.tradepairs[0]);
+    $scope.orderBooksReset();
+  }
 
   $scope.closeAlert = function(index) {
     $scope.alerts.splice(index, 1);
@@ -1463,10 +1530,11 @@ walletApp.controller('walletCtrl', ['$scope', '$http', '$uibModal', function($sc
   }
 
   $scope.prepareChart = function (options){
+    if ($scope.network != 'MAIN') return $scope.trading.chartStatus = 'Historical chart not available for Test Net';
+
     var pair = $scope.trading.pair;
 
     $scope.trading.chartStatus = 'Loading data from ' + RIPPLE_DATA_URL + ' ......';
-    // 'https://data.ripple.com/v2/exchanges/BTC+rvYAfWj5gh67oV6fW32ZzP3Aw4Eubs59B/XRP?descending=true&result=tesSUCCESS&interval=15minute'
 
     var data_url = RIPPLE_DATA_URL + '/v2/exchanges/' + 
                       $scope.trading.baseCurrency + 
@@ -1480,7 +1548,7 @@ walletApp.controller('walletCtrl', ['$scope', '$http', '$uibModal', function($sc
                      
     $http.get(data_url)
     .success(function(res){
-      if (pair != $scope.trading.pair) return;
+      if (pair != $scope.trading.pair || $scope.network != 'MAIN') return;
       var data = res.exchanges;
       data.sort(function(a,b){return Date.parse(a.start) - Date.parse(b.start)});
 
