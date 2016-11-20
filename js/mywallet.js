@@ -1060,6 +1060,57 @@ walletApp.controller('walletCtrl', ['$scope', '$http', '$uibModal', function($sc
     });
   };
 
+
+  // =============  modal Set Signer List =====================
+  $scope.prepareSetSignerList = function () {
+    var options = {
+      signers: [],
+      weightSum: function () {
+        var sum = 0;
+        for (var i=0; i<options.signers.length; i++) {
+          sum += options.signers[i].weight;
+        }
+        return sum;
+      }
+    }
+
+    var modalInstance = $uibModal.open({
+      animation: false,
+      templateUrl: 'templetes/modal-set-signer-list.html',
+      controller: 'ModalCtrl',
+      scope: $scope,
+      resolve: {
+        options: function () {
+          return options;
+        }       
+      }       
+    });
+
+    modalInstance.result.then(function (options) {
+      $scope.setSignerList(options);
+    }, function () {
+      // do nothing; 
+    });
+  };
+
+  $scope.setSignerList = function (options) {
+      var transaction = remote.transaction();    
+      transaction.signerListSet({
+        account: $scope.activeAccount,
+        signers: options.signers,
+        quorum: options.quorum
+      });
+
+      if (options.memos) {
+        var memos = options.memos;
+        for (var i = 0; i < memos.length; i++)  {
+          transaction.addMemo(memos[i]); 
+        }
+      }
+      $scope.accountSetLog = {};
+      $scope.submitTransaction({transaction:transaction, log: $scope.accountSetLog});
+  }
+
   // =============  modal Set RegularKey =====================
   $scope.regularKey = '';
 

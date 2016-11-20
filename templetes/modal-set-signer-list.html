@@ -1,0 +1,37 @@
+                    <div class="modal-header">
+                        <h3 class="modal-title">Set/Change SignerList</h3>
+                    </div>
+                    <div class="modal-body">
+                        <form name="setSignerListForm">
+                            Quorum: <input type="number" min=0 ng-model="options.quorum" size="5" required>
+                            <span style="color:red" ng-show="options.quorum > options.weightSum()">Quorum must be smaller than Total Weight!</span>
+                            <br><br>
+                            Signers: <button type="button" ng-click="options.signers[options.signers.length]={}">Add</button>
+                            <br>
+                            <table class="table">
+                                <tr>
+                                  <th style="width:345px">Address</th>
+                                  <th>Weight (Integer)</th>
+                                  <th></th>
+                                </tr>
+                                <tr ng-repeat = "signer in options.signers">
+                                  <td>
+                                    <input type="text" ng-model="options.signers[$index].address" name="signerAddress{{$index}}" size="50" ripple-valid-address required>
+                                    <span style="color:red" ng-show="setSignerListForm.signerAddress{{$index}}.$error.rippleValidAddress">Invalid Address!</span>
+                                  </td>
+                                  <td>
+                                    <input type="number" min=1 ng-model="options.signers[$index].weight" size="5" name="signerWeight{{$index}}" uint32 required>
+                                    <span style="color:red" ng-show="setSignerListForm.signerWeight{{$index}}.$dirty && setSignerListForm.signerWeight{{$index}}.$invalid">Invalid Value!</span>
+                                  </td>
+                                  <td><button class="btn btn-link" ng-click="options.signers.splice($index,1)"><span class="glyphicon glyphicon-trash"></span></button></td>                      
+                                </tr>
+                            </table>                         
+                            <br>NOTE: set Quorum = 0 will delete existing SignerList.<br>
+                        </form>
+                      
+                    </div>
+
+                    <div class="modal-footer">
+                        <button class="btn btn-primary" type="button" ng-disabled="setSignerListForm.$invalid || options.quorum > options.weightSum()" ng-click="ok()">Submit</button>
+                        <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
+                    </div>
