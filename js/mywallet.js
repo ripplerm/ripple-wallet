@@ -1693,6 +1693,14 @@ walletApp.controller('walletCtrl', ['$scope', '$http', '$uibModal', function($sc
     var tpays = offer.TakerPays || offer.taker_pays;
     return (typeof tpays == 'object') ? tpays.currency : 'XRP';
   }    
+  $scope.offerGetsIssuer = function (offer) {
+    var tgets = offer.TakerGets || offer.taker_gets;
+    return (typeof tgets == 'object') ? tgets.issuer : null;
+  }
+  $scope.offerPaysIssuer = function (offer) {
+    var tpays = offer.TakerPays || offer.taker_pays;
+    return (typeof tpays == 'object') ? tpays.issuer : null;
+  }
 
   $scope.offerGetsToHuman = function (offer) {
     var tgets = offer.TakerGets || offer.taker_gets;
@@ -1785,10 +1793,16 @@ walletApp.controller('walletCtrl', ['$scope', '$http', '$uibModal', function($sc
       var tgets = $scope.offerGetsCurrency(offer);
       var tpays = $scope.offerPaysCurrency(offer);
       options.baseCurrency = (options.type == 'sell') ? tgets : tpays;
-      options.tradeCurrency = (options.type == 'sell') ? tpays : tgets; 
+      options.tradeCurrency = (options.type == 'sell') ? tpays : tgets;
+      var tgets_issuer = $scope.offerGetsIssuer(offer);
+      var tpays_issuer = $scope.offerPaysIssuer(offer);
+      options.baseIssuer = (options.type == 'sell') ? tgets_issuer : tpays_issuer;
+      options.tradeIssuer = (options.type == 'sell') ? tpays_issuer : tgets_issuer;
     } else {
       options.baseCurrency = $scope.trading.baseCurrency;
       options.tradeCurrency = $scope.trading.tradeCurrency;
+      options.baseIssuer = $scope.trading.baseIssuer;
+      options.tradeIssuer = $scope.trading.tradeIssuer;
     }
 
     if (offer.expiration) {
@@ -1897,6 +1911,8 @@ walletApp.controller('walletCtrl', ['$scope', '$http', '$uibModal', function($sc
     }
     options.baseCurrency = $scope.trading.baseCurrency;
     options.tradeCurrency = $scope.trading.tradeCurrency;
+    options.baseIssuer = $scope.trading.baseIssuer;
+    options.tradeIssuer = $scope.trading.tradeIssuer;
 
     options.market_price = $scope.getMarketPrice();
 
@@ -1935,27 +1951,32 @@ walletApp.controller('walletCtrl', ['$scope', '$http', '$uibModal', function($sc
     var price = options.price;
     var expiration = options.expiration;
 
-    var pair = $scope.trading.pair;
+    var baseCurrency = options.baseCurrency;
+    var baseIssuer = options.baseIssuer;
+    var tradeCurrency = options.tradeCurrency;
+    var tradeIssuer = options.tradeIssuer;
 
-    var base_amount = ($scope.trading.baseCurrency == 'XRP') ? 
+    var base_amount = (baseCurrency == 'XRP') ? 
                         String(Math.round(qty * 1000000)) :
                         {
-                          "currency": $scope.trading.baseCurrency,
-                          "issuer": $scope.trading.baseIssuer,
-                          "value": qty
+                          "currency": baseCurrency,
+                          "issuer": baseIssuer,
+                          "value": String(qty)
                         }
 
-    var trade_amount = ($scope.trading.tradeCurrency == 'XRP') ? 
+    var trade_amount = (tradeCurrency == 'XRP') ? 
                         String(Math.round(qty * price* 1000000)) :
                         {
-                          "currency": $scope.trading.tradeCurrency,
-                          "issuer": $scope.trading.tradeIssuer,
-                          "value": qty * price
+                          "currency": tradeCurrency,
+                          "issuer": tradeIssuer,
+                          "value": String(qty * price)
                         }
 
     if (expiration) {
         var now = new Date();
         expiration = new Date(now.getTime() + (options.expiration * 60 * 60 * 1000));
+    } else {
+      expiration = undefined;
     }
 
     var transaction = remote.transaction();
