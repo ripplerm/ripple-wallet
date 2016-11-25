@@ -915,7 +915,7 @@ walletApp.controller('walletCtrl', ['$scope', '$http', '$uibModal', function($sc
       src_account: $scope.activeAccount,
       dst_account: payment.destination,
       dst_amount: Amount.from_json(AMOUNT),
-      src_currencies: sourceCurrencies
+      src_currencies: sourceCurrencies.length ? sourceCurrencies : undefined
     })
 
     pathfind.on('error', function(msg){ 
@@ -1022,7 +1022,7 @@ walletApp.controller('walletCtrl', ['$scope', '$http', '$uibModal', function($sc
         }
       }
       if (payment.sendmaxValue) transaction.tx_json.SendMax = SENDMAX;
-      if (payment.paths) transaction.tx_json.Paths = payment.paths;
+      if (payment.paths && payment.paths.length) transaction.tx_json.Paths = payment.paths;
     }
 
     if (payment.memos) {
@@ -1034,6 +1034,9 @@ walletApp.controller('walletCtrl', ['$scope', '$http', '$uibModal', function($sc
 
     $scope.paymentLog = {};
     $scope.submitTransaction({transaction:transaction, log: $scope.paymentLog}, function (err, res){
+      if (err && err.remote) {
+        $scope.paymentLog.result = err.remote.error + ': ' + err.remote.error_exception;
+      }
       if (res && res.metadata) {
         var delivered = res.metadata.DeliveredAmount;
         if (!delivered) delivered = res.tx_json.Amount;
