@@ -26,7 +26,7 @@
 		<h4>Outstanding Orders: 
 			<button class="btn btn-warning" ng-click="getAccountOffers()"><span class="glyphicon glyphicon-refresh"></span> Refresh </button> 
 		</h4>
-		@ ledger_index: {{accountOffers.ledger_index}}
+		{{accountOffers.status ? accountOffers.status : '-'}}
 		<div class="panel">
 			<table class="table table" style="text-align:center;">
 				<thead>
@@ -38,22 +38,22 @@
 						</tr>				
 				<thead>
 			</table>
+			{{bids.length === 0 && asks.length === 0 ? 'No outstanding Orders for this Trade-Pair' : ''}}
 			<div style="width:100%; height: 320px; overflow: auto;">
-				{{trading.getOfferStatus}}<br>
 				<table class="table table-striped" style="text-align:center;">
 					<tbody>
-						<tr class="row" ng-repeat="offer in accountOffers.ask">
+						<tr class="row" ng-repeat="offer in accountOffers.offers | filter:askFilter | orderBy:askPrice:true as bids track by offer.seq">
 							<td class="col-sm-3" style="text-align:center; color:red; "> Sell </td>
-							<td class="col-sm-3" style="text-align:center;"> {{ offerGetsToHuman(offer) }} </td>
+							<td class="col-sm-3" style="text-align:center;"> {{ offerGetsToHuman(offer).toPrecision(5) }} </td>
 							<td class="col-sm-3" style="text-align:center;"> {{ offerPriceToHuman(offer, true).toPrecision(5) }} </td>
 							<td class="col-sm-3" style="text-align:center;"> 
 								<a href="#" ng-click="prepareOfferEdit({type:'sell', offer:offer})"><span class="glyphicon glyphicon-edit"></span></a>
 								<a href="#" ng-click="prepareOfferCancel({type:'sell', offer:offer})"><span class="glyphicon glyphicon-trash"></span></a>
 							</td>
 						</tr>								
-						<tr class="row" ng-repeat="offer in accountOffers.bid">
+						<tr class="row" ng-repeat="offer in accountOffers.offers | filter:bidFilter | orderBy:bidPrice:true as asks track by offer.seq">
 							<td class="col-sm-3" style="text-align:center; color:green;"> Buy </td>
-							<td class="col-sm-3" style="text-align:center;"> {{ offerPaysToHuman(offer) }} </td>
+							<td class="col-sm-3" style="text-align:center;"> {{ offerPaysToHuman(offer).toPrecision(5) }} </td>
 							<td class="col-sm-3" style="text-align:center;"> {{ offerPriceToHuman(offer).toPrecision(5) }} </td>
 							<td class="col-sm-3" style="text-align:center;"> 
 								<a href="#" ng-click="prepareOfferEdit({type:'buy', offer:offer})"><span class="glyphicon glyphicon-edit"></span></a>

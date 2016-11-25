@@ -623,7 +623,7 @@ walletApp.controller('walletCtrl', ['$scope', '$http', '$uibModal', function($sc
   $scope.amountDisplay = function (amount, opts) {
     if (!opts) opts = { value: true, currency: true, issuer: true, gatewayName: true};
 
-    var options = {max_sig_digits: opts.max_sig_digits};
+    var options = {max_sig_digits: opts.max_sig_digits || 6};
 
     if (APPLY_INTEREST) {
       options.reference_date = new Date();  
@@ -1598,13 +1598,13 @@ walletApp.controller('walletCtrl', ['$scope', '$http', '$uibModal', function($sc
     $scope.trading.chartData = [];
     try { $scope.trading.chart.destroy(); } catch (e) {};
 
-    $scope.offersFilterTradePair();
     $scope.loadOrderBooks();
     $scope.prepareChart();
   }
 
   $scope.tradingPageLoad = function () {
     if (!$scope.trading.baseCurrency) $scope.setTradePair($scope.trading.pair);
+    if (!$scope.accountOffers.offers) $scope.getAccountOffers();
   };
 
   $scope.pairName = function (pair) {
@@ -1678,6 +1678,13 @@ walletApp.controller('walletCtrl', ['$scope', '$http', '$uibModal', function($sc
     return price;
   }
 
+  $scope.bidPrice = function (offer) {
+    return $scope.offerPriceToHuman(offer);
+  }
+  $scope.askPrice = function (offer) {
+    return $scope.offerPriceToHuman(offer, true);
+  }
+
   $scope.offerGetsCurrency = function (offer) {
     var tgets = offer.TakerGets || offer.taker_gets;
     return (typeof tgets == 'object') ? tgets.currency : 'XRP';
@@ -1719,59 +1726,26 @@ walletApp.controller('walletCtrl', ['$scope', '$http', '$uibModal', function($sc
     return (Utils.toTimestamp(offer.expiration) - now) / (60 * 60 * 1000);  // hours remaining.    
   }
 
-  $scope.offersFilterTradePair = function (offers){
-    var offers = offers ? offers : ($scope.accountOffers) ? $scope.accountOffers.all : null;
-    if (!offers) return;
+  $scope.bidFilter = function (offer) {
+    if ($scope.offerPaysCurrency(offer) == $scope.trading.baseCurrency &&
+        $scope.offerPaysIssuer(offer) == $scope.trading.baseIssuer &&
+        $scope.offerGetsCurrency(offer) == $scope.trading.tradeCurrency &&
+        $scope.offerGetsIssuer(offer) == $scope.trading.tradeIssuer
+      ) return true;
+    return false;
+  }
 
-    function tgetsCurrency (offer) {
-      var currency = (typeof offer.taker_gets == 'object') ? offer.taker_gets.currency : 'XRP';
-      return currency;
-    }
-    function tpaysCurrency (offer) {
-      var currency = (typeof offer.taker_pays == 'object') ? offer.taker_pays.currency : 'XRP';
-      return currency;
-    }
-    function tgetsIssuer (offer) {
-      var currency = (typeof offer.taker_gets == 'object') ? offer.taker_gets.issuer : null;
-      return currency;
-    }
-    function tpaysIssuer (offer) {
-      var currency = (typeof offer.taker_pays == 'object') ? offer.taker_pays.issuer : null;
-      return currency;
-    }
-
-    var bidOffers = [], askOffers = [], otherOffers = [];
-
-    offers.filter(function(offer){
-      if (tgetsCurrency(offer) == $scope.trading.baseCurrency &&
-          tgetsIssuer(offer) == $scope.trading.baseIssuer &&
-          tpaysCurrency(offer) == $scope.trading.tradeCurrency &&
-          tpaysIssuer(offer) == $scope.trading.tradeIssuer) {
-        askOffers.push(offer);
-      } 
-      else if (tpaysCurrency(offer) == $scope.trading.baseCurrency &&
-          tpaysIssuer(offer) == $scope.trading.baseIssuer &&
-          tgetsCurrency(offer) == $scope.trading.tradeCurrency &&
-          tgetsIssuer(offer) == $scope.trading.tradeIssuer) {
-        bidOffers.push(offer);
-      }
-      else {
-        otherOffers.push(offer); 
-      }
-    }); 
-
-    if (!$scope.accountOffers) $scope.accountOffers = {};
-    $scope.accountOffers.all = offers;
-    $scope.accountOffers.bid = bidOffers;
-    $scope.accountOffers.ask = askOffers;
-    $scope.accountOffers.other= otherOffers;
-
-    $scope.trading.getOfferStatus = (bidOffers.length == 0 && askOffers.length == 0) ? 'No outstanding offers for this Trade-pair.' : '';    
+  $scope.askFilter = function (offer) {
+    if ($scope.offerGetsCurrency(offer) == $scope.trading.baseCurrency &&
+        $scope.offerGetsIssuer(offer) == $scope.trading.baseIssuer &&
+        $scope.offerPaysCurrency(offer) == $scope.trading.tradeCurrency &&
+        $scope.offerPaysIssuer(offer) == $scope.trading.tradeIssuer
+      ) return true;
+    return false;
   }
 
   $scope.getAccountOffers = function () {
     $scope.accountOffers = {};
-    $scope.trading.getOfferStatus = 'Refreshing...';
     $scope.accountOffers.status = 'Refreshing...';
 
     var options = {
@@ -1786,17 +1760,14 @@ walletApp.controller('walletCtrl', ['$scope', '$http', '$uibModal', function($sc
           if (account != $scope.walletAccount._account_id) return;
           if (err.remote.error) {
             $scope.accountOffers.status = err.remote.error; 
-            $scope.trading.getOfferStatus = err.remote.error; 
           }
-        } else { $scope.accountOffers.status = err.error; $scope.trading.getOfferStatus = err.error; }
+        } else { $scope.accountOffers.status = err.error; }
       }
       if (res) {
         if (res.account != $scope.activeAccount) return;
-        $scope.accountOffers.status = 'Updated @ Ledger:' + res.ledger_index;
+        $scope.accountOffers.status = 'Updated @ Ledger: ' + res.ledger_index;
         $scope.accountOffers.ledger_index = res.ledger_index;
-
-        var offers = res.offers;
-        $scope.offersFilterTradePair(offers);
+        $scope.accountOffers.offers = res.offers;
       }
       //$scope.$apply();
     })
@@ -2040,7 +2011,7 @@ walletApp.controller('walletCtrl', ['$scope', '$http', '$uibModal', function($sc
   }
 
   $scope.offerPageLoad = function () {
-    if (!$scope.accountOffers.all) $scope.getAccountOffers();
+    if (!$scope.accountOffers.offers) $scope.getAccountOffers();
   }
 
   $scope.offerIsSell = function (offer) {
