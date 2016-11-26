@@ -1,4 +1,4 @@
-var walletApp = angular.module('walletApp', [ 'ui.bootstrap']);
+var walletApp = angular.module('walletApp', ['ui.bootstrap', 'jsonFormatter']);
 
 var Remote = ripple.Remote;
 var Seed = ripple.Seed;
@@ -280,6 +280,7 @@ walletApp.controller('walletCtrl', ['$scope', '$http', '$uibModal', function($sc
                   {title: 'Payment', templete:'templetes/tab-payment.html', select: function () {$scope.paymentReset();}},
                   {title: 'Trading', templete:'templetes/tab-trading.html', select: function () {$scope.tradingPageLoad();} },
                   {title: 'Offers', templete:'templetes/tab-offers.html', select: function () {$scope.offerPageLoad();} },
+                  {title: 'History', templete:'templetes/tab-history.html', select: function () {$scope.historyPageLoad();} },
                 ]
 
   $scope.alerts = [];
@@ -563,6 +564,7 @@ walletApp.controller('walletCtrl', ['$scope', '$http', '$uibModal', function($sc
       $scope.accountInfoReset();
       $scope.trustlinesReset();
       $scope.accountOffers = {};      
+      $scope.transactionHistoryStatus = '';
 
       $scope.activeAccount = account;
       $scope.walletAccount = $scope.remote.account(account);
@@ -630,8 +632,9 @@ walletApp.controller('walletCtrl', ['$scope', '$http', '$uibModal', function($sc
     if (APPLY_INTEREST) {
       options.reference_date = new Date();  
     }
-    var now = new Date();
-    var amount = Amount.from_json(amount).to_human_full(options).split('/');
+
+    if (!(amount instanceof Amount)) amount = Amount.from_json(amount);
+    amount = amount.to_human_full(options).split('/');
 
     var value = amount[0];
     var currency = amount[1];
@@ -2042,6 +2045,88 @@ walletApp.controller('walletCtrl', ['$scope', '$http', '$uibModal', function($sc
     return (offer.flags & Remote.flags['offer']['Sell']) ? true : false;
   }
 
+  $scope.transactionHistory = function (refresh) {
+    var account = $scope.activeAccount;
+    if (refresh || ! $scope.walletAccount.history) $scope.walletAccount.history = [];
+
+    var params = {
+      account: account,
+      ledger_index_min: -1,
+      ledger_index_max: -1,
+      limit: 10,
+      binary: false,
+      marker: refresh ? undefined : $scope.walletAccount.tx_marker 
+    };
+
+    $scope.transactionHistoryStatus = 'Loading...';
+    remote.requestAccountTransactions(params, function (err, data) {
+      if (err) return;
+      if (!data || data.account != $scope.activeAccount) return;
+      var history = $scope.walletAccount.history;
+      for(var i=0;i<data.transactions.length;i++) {
+        var tx = $scope.processTxn(data.transactions[i], account);
+        if (tx) history.push(tx);
+      }
+
+      if (data.marker) {
+        $scope.walletAccount.tx_marker = data.marker;
+        $scope.transactionHistoryStatus = 'Loaded';
+      } else {
+        $scope.transactionHistoryStatus = 'Full';
+      }
+      
+      $scope.walletAccount.history = history;
+      $scope.$apply();
+    }).request();
+  }
+
+  $scope.processTxn = function (transaction, account) {
+    var txn = transaction.tx || transaction.transaction;
+    var meta = transaction.meta || transaction.metadata;
+
+    function filterEffects (tx) {
+      if (! Array.isArray(tx.effects)) return;
+
+      var effects = [];
+      var balance_effects = [];
+
+      for (var i=0; i<tx.effects.length; i++) {
+        var effect = tx.effects[i];
+        switch (effect.type) {
+          case 'offer_funded':
+          case 'offer_partially_funded':
+          case 'offer_bought':
+          case 'offer_cancelled':
+          case 'offer_created':
+          case 'regular_key_added':
+          case 'regular_key_changed':
+          case 'regular_key_removed':
+            effects.push(effect);
+            break;
+
+          //case 'fee':
+          case 'balance_change':
+          case 'trust_change_balance':
+            balance_effects.push(effect)
+            break;
+        }
+      }
+      //sort offer effects
+      var index = {'offer_cancelled': 1, 'offer_funded': 2, 'offer_bought': 3, 'offer_partially_funded': 4, 'offer_created': 5}
+      effects.sort(function (a, b) { return (index[a.type] && index[b.type]) ? (index[a.type] - index[b.type]) : 0; })
+
+      tx.showEffects = effects;
+      tx.balanceEffects = balance_effects;
+    }
+
+    var tx = JsonRewriter.processTxn(txn, meta, account);
+    if (tx) filterEffects(tx);
+    return tx;
+  }
+
+  $scope.historyPageLoad = function () {
+    if (!$scope.walletAccount.history) $scope.transactionHistory();
+  }
 }]);  // main controller;
 
 

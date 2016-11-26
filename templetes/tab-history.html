@@ -1,0 +1,186 @@
+        <div id="tabHistory">
+          <span style="font-weight:bold; font-size:20pt; padding-right:1em;">Transaction History: </span>
+          <button class="btn btn-warning" ng-click="transactionHistory(true);" ng-disabled="!activeAccount"><span class="glyphicon glyphicon-refresh"></span>  Refresh </button>
+          <br><br>
+
+	      <div class="panel panel-default" ng-repeat="tx in walletAccount.history">
+	        <div class="panel-heading" ng-click="tx.showDetail = !tx.showDetail">
+	          	<span ng-show="tx.transaction.type == 'sent'" class="glyphicon glyphicon-arrow-up"></span>
+	          	<span ng-show="tx.transaction.type == 'received'" class="glyphicon glyphicon-arrow-down"></span>
+	          	<span ng-show="tx.transaction.type == 'trusted'" class="glyphicon glyphicon-arrow-left"></span>
+	          	<span ng-show="tx.transaction.type == 'trusting'" class="glyphicon glyphicon-arrow-right"></span>
+	          	<span ng-show="tx.transaction.type == 'rippling'" class="glyphicon glyphicon-resize-horizontal"></span>
+	          	<span ng-show="tx.transaction.type == 'accountset' || tx.transaction.type == 'setregularkey' || tx.transaction.type == 'signerlistset'" class="glyphicon glyphicon-cog"></span>
+	          	<span ng-show="!tx.transaction.type || tx.transaction.type == 'offernew' || tx.transaction.type == 'offercancel' || tx.transaction.type == 'exchange'" class="glyphicon glyphicon-transfer"></span>
+	          	<span ng-show="tx.transaction.type == 'failed'" class="glyphicon glyphicon-ban-circle"></span>
+
+	          	<span style="padding-left:1em; padding-right:1em"> {{tx.date | date:'yyyy-MM-dd, HH:mm:ss'}} </span>
+
+	          	<span ng-switch="tx.transaction.type">
+	              <span ng-switch-when="sent">
+	              	Sent
+	              	{{amountDisplay(tx.transaction.amountDelivered)}}
+	              	to
+	              	{{tx.transaction.counterparty}}</span>
+	              <span ng-switch-when="received">
+	              	Received
+	              	{{amountDisplay(tx.transaction.amountDelivered)}}
+	              	from
+	              	{{tx.transaction.counterparty}}</span>
+	              <span ng-switch-when="trusted">
+	              	Got Trusted 
+	              	{{amountDisplay(tx.transaction.amount, {value:1, currency:1})}}
+	              	from
+	              	{{tx.transaction.counterparty}}</span>
+	              <span ng-switch-when="trusting">
+	              	Set Trustline limit 
+	              	{{amountDisplay(tx.transaction.amount, {value:1, currency:1})}}
+	              	to 
+	              	{{tx.transaction.counterparty}}</span>
+	              <span ng-switch-when="exchange">
+	              	Exchanged 
+	              	{{amountDisplay(tx.transaction.spent)}} 
+	              	to
+	              	{{amountDisplay(tx.transaction.amountDelivered)}}</span>
+	              <span ng-switch-when="offernew">
+	              	Made offer to 
+	              	{{ tx.transaction.sell ? 
+	              	  'sell ' + amountDisplay(tx.transaction.gets) + ' at price ' + amountDisplay(tx.transaction.price) : 
+	              	  'buy ' + amountDisplay(tx.transaction.pays) + ' at price ' + amountDisplay(tx.transaction.price)}}</span>
+	              <span ng-switch-when="offercancel">
+	              	Cancelled offer which 
+	              	{{ tx.transaction.sell ? 
+	              	  'selling ' + amountDisplay(tx.transaction.gets) + ' at price ' + amountDisplay(tx.transaction.price) : 
+	              	  'buying ' + amountDisplay(tx.transaction.pays) + ' at price ' + amountDisplay(tx.transaction.price)}} </span>
+	              <span ng-switch-when="accountset"> Account's settings</span>
+	              <span ng-switch-when="setregularkey"> Regular Key changed</span>
+	              <span ng-switch-when="signerlistset"> Signer List changed</span>
+	              <span ng-switch-when="rippling"> Rippling</span>
+	              <span ng-switch-when="failed"> Failed transaction</span>
+	          	</span>
+
+              	<ul ng-show="tx.showEffects">
+	              <li ng-repeat="effect in tx.showEffects" ng-switch="effect.type">
+	              	<i>
+		              	<span ng-switch-when="regular_key_added"> 
+		              		new key: {{effect.address}} </span>
+		              	<span ng-switch-when="regular_key_changed"> 
+		              		new key: {{effect.newAddress}} </span>
+		              	<span ng-switch-when="regular_key_removed"> 
+		              		removed key: {{effect.address}} </span>
+		              	<span ng-switch-when="balance_change"> 
+		              		balance changed: {{amountDisplay(effect.amount)}} </span>
+		              	<span ng-switch-when="offer_funded"> 
+		              		<span ng-show="effect.sell">
+		              			sold 
+		              			{{amountDisplay(effect.gets)}}
+		              		</span>
+		              		<span ng-hide="effect.sell">
+		              			bought 
+		              			{{amountDisplay(effect.pays)}}
+		              		</span>
+		              		<span>
+		              			at price
+		              			{{amountDisplay(effect.price)}}.
+		              			(order fully matched)
+		              		</span>
+		              	</span>
+		              	<span ng-switch-when="offer_partially_funded"> 
+		              		<span ng-show="effect.sell">
+		              			sold 
+		              			{{amountDisplay(effect.got)}}
+		              		</span>
+		              		<span ng-hide="effect.sell">
+		              			bought 
+		              			{{amountDisplay(effect.paid)}}
+		              		</span>
+		              		<span>
+		              			at price
+		              			{{amountDisplay(effect.price)}}
+		              		</span>
+		              		<span ng-show="effect.cancelled">
+		              			<br>
+		              			(the rest of the order was cancelled due to lack of fund.)
+		              		</span>
+		              		<span ng-hide="effect.deleted">
+		              			<br>
+		              			(order remaining amount: {{amountDisplay(effect.remaining)}})
+		              		</span>
+		              	</span>
+		              	<span ng-switch-when="offer_cancelled"> 
+		              		order 
+		              		<span ng-show="effect.sell">
+		              			selling 
+		              			{{amountDisplay(effect.gets)}}
+		              		</span>
+		              		<span ng-hide="effect.sell">
+		              			buying 
+		              			{{amountDisplay(effect.pays)}}
+		              		</span>
+	              			at price
+	              			{{amountDisplay(effect.price)}}
+		              		has been cancelled.
+		              	</span>
+		              	<span ng-switch-when="offer_bought"> 
+		              		<span ng-show="effect.ownSell">
+		              			sold 
+		              			{{amountDisplay(effect.paid)}}
+		              		</span>
+		              		<span ng-hide="effect.ownSell">
+		              			bought 
+		              			{{amountDisplay(effect.got)}}
+		              		</span>
+	              			at price
+	              			{{amountDisplay(effect.price)}}
+		              	</span>
+		              	<span ng-switch-when="offer_created"> 
+		              		placed new order
+		              		<span ng-show="effect.sell">
+		              			selling 
+		              			{{amountDisplay(effect.gets)}}
+		              		</span>
+		              		<span ng-hide="effect.sell">
+		              			buying 
+		              			{{amountDisplay(effect.pays)}}
+		              		</span>
+	              			at price
+	              			{{amountDisplay(effect.price)}}
+		              	</span>
+		            </i>
+	              </li>
+	            </ul>
+	        </div>
+	        <div class="panel-body" ng-show="tx.showDetail">
+	            <table class="table" ng-show="tx.balanceEffects && tx.balanceEffects.length">
+		          <tr style="text-align: center">
+		            <th>Currency</th>
+		            <th>Counter Party</th>
+		            <th>Changed</th>
+		            <th>Balance</th>
+		          </tr>
+		          <tr ng-repeat="effect in tx.balanceEffects">
+		          	<td>{{effect.currency || 'XRP'}}</td>
+		          	<td>{{gatewayName(effect.counterparty) || '-'}}</td>
+		          	<td>{{amountDisplay(effect.amount, {value:1, max_sig_digits:6})}}</td>
+		          	<td>{{amountDisplay(effect.balance, {value:1, max_sig_digits:6})}}</td>
+		          </tr>
+	        	</table>
+	        	<b>Hash:</b> {{tx.hash}} <a href="https://charts.ripple.com/#/transactions/{{tx.hash}}" target="_blank" ng-show="network=='MAIN'"><span class="glyphicon glyphicon-new-window"></span> </a>
+	        	<br>
+	            <br>
+              	<b>Raw Tx: </b>
+   				<json-formatter json="tx.raw" open="1"></json-formatter>        	
+              	<br>
+				<b>Meta: </b>
+              	<json-formatter json="tx.meta" open="1"></json-formatter>
+	        </div>
+	      </div>
+
+	      <div class="panel panel-default" ng-show="transactionHistoryStatus">
+	      	<div class="panel-heading" ng-click="transactionHistoryStatus == 'Loaded' ? transactionHistory() : null" align="center">
+	      		{{transactionHistoryStatus == 'Full' ? 'No more transaction' : 
+	      			transactionHistoryStatus == 'Loaded' ? 'Load More' : 'Loading...'
+	      		}}
+	      	</div>
+	      </div>
+        </div>
