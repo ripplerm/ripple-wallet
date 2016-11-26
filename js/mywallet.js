@@ -385,6 +385,8 @@ walletApp.controller('walletCtrl', ['$scope', '$http', '$uibModal', function($sc
     $scope.accountData = accountData;
     $scope.accountBalances.XRP = accountData.xrpBalance;
     $scope.accountBalances.reserved = accountData.xrpReserved;
+
+    $scope.$apply();
   }
 
   $scope.accountInfo = function () {
@@ -464,7 +466,7 @@ walletApp.controller('walletCtrl', ['$scope', '$http', '$uibModal', function($sc
         $scope.linesStats();
       }
       callback(err, res);
-      //$scope.$apply();          
+      $scope.$apply();          
     });
   }
   
@@ -1777,7 +1779,7 @@ walletApp.controller('walletCtrl', ['$scope', '$http', '$uibModal', function($sc
         $scope.accountOffers.ledger_index = res.ledger_index;
         $scope.accountOffers.offers = res.offers;
       }
-      //$scope.$apply();
+      $scope.$apply();
     })
   }
 
