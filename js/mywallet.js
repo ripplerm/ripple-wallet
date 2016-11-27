@@ -560,7 +560,10 @@ walletApp.controller('walletCtrl', ['$scope', '$http', '$uibModal', function($sc
     if (!account) return;
 
     if (!$scope.walletAccount || $scope.walletAccount._account_id != account) {
-      if ($scope.walletAccount) $scope.walletAccount.removeListener('entry', $scope.updateAccountInfo);
+      if ($scope.walletAccount) {
+        $scope.walletAccount.removeListener('entry', $scope.updateAccountInfo);
+        $scope.walletAccount.removeListener('transaction', $scope.handleTransaction);
+      }
       $scope.accountInfoReset();
       $scope.trustlinesReset();
       $scope.accountOffers = {};      
@@ -574,7 +577,8 @@ walletApp.controller('walletCtrl', ['$scope', '$http', '$uibModal', function($sc
       $scope.accountInfo();
       //$scope.getAccountOffers();
 
-      $scope.walletAccount.on('entry', $scope.updateAccountInfo)
+      $scope.walletAccount.on('entry', $scope.updateAccountInfo);
+      $scope.walletAccount.on('transaction', $scope.handleTransaction);
     }
   }
 
@@ -2126,6 +2130,64 @@ walletApp.controller('walletCtrl', ['$scope', '$http', '$uibModal', function($sc
 
   $scope.historyPageLoad = function () {
     if (!$scope.walletAccount.history) $scope.transactionHistory();
+  }
+
+  $scope.updateOffers = function (tx) {
+    if (! $scope.accountOffers.offers) $scope.accountOffers.offers = [];
+    var offers = $scope.accountOffers.offers;
+
+    function modifyOffer (effect) {
+      var newFields = {
+        taker_gets: effect.gets,
+        taker_pays: effect.pays        
+      }
+      var offer = offers.find(function (offer){return offer.seq == effect.seq;});
+      if (offer) Object.assign(offer, newFields);
+    }
+
+    function deleteOffer (effect) {
+        var i = offers.findIndex(function (offer) {return offer.seq == effect.seq;})
+        if (i >= 0) offers.splice(i, 1);
+    }
+
+    function addOffer (effect) {
+      offers.push({
+        expiration: effect.expiration,
+        flags: effect.flags || 0,
+        seq: effect.seq,
+        taker_gets: effect.gets.to_json(),
+        taker_pays: effect.pays.to_json(),
+        quality: effect.pays.divide(effect.gets).to_text()        
+      });
+    }
+
+    tx.effects.forEach(function (effect){
+      switch(effect.type) {
+        case 'offer_created':
+          addOffer(effect)
+          break;
+        case 'offer_partially_funded':
+          if (! effect.deleted) {
+            modifyOffer(effect);
+            break;
+          } //else fall through
+        case 'offer_funded':
+        case 'offer_cancelled':
+          deleteOffer(effect);
+          break;
+      }
+    })
+  }
+
+  $scope.handleTransaction = function (tx) {
+    if (! tx.validated) return;
+    if (! $scope.walletAccount.history) $scope.walletAccount.history = [];
+
+    var tx = $scope.processTxn(tx, $scope.walletAccount._account_id);
+    if (!tx) return;
+
+    $scope.walletAccount.history.unshift(tx);
+    $scope.updateOffers(tx);
   }
 }]);  // main controller;
 
