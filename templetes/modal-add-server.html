@@ -1,0 +1,29 @@
+                    <form name="serverForm">
+                      <div class="modal-header">
+                        <h3 class="modal-title">Add/Edit Server</h3>
+                      </div>
+                      <div class="modal-body">
+                        <table class="table table-condensed">
+                          <tr>
+                            <td>Host:</td>
+                            <td><input type="text" name="host" ng-model="options.host" size=20 placeholder="example.com" required></td>
+                          </tr>
+                          <tr>
+                            <td>Port: </td>
+                            <td><input type="number" name="port" ng-model="options.port" size=10 placeholder="443" required></td>
+                          </tr>
+                          <tr>
+                            <td>Secure: <br>
+                            <td><input type="checkbox" ng-model="options.secure" checked></td>
+                          </tr>
+                          <tr>
+                            <td>Primary: <br>
+                            <td><input type="checkbox" ng-model="options.primary"></td>
+                          </tr>
+                        </table>
+                      </div>
+                      <div class="modal-footer">
+                        <button class="btn btn-primary" type="submit" ng-disabled="serverForm.$invalid" ng-click="ok()">Save</button>
+                        <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
+                      </div>
+                    </form>

@@ -248,6 +248,8 @@ var DEFAULT = {
   servers_test: SERVERS_TESTNET,
   gateways_test: GATEWAYS_TEST,
   tradepairs_test: TRADE_PAIRS_TEST,
+  contacts: [],
+  contacts_test: []
 }
 // ========= main controller ====================================
 
@@ -265,8 +267,10 @@ walletApp.controller('walletCtrl', ['$scope', '$http', '$uibModal', '$localStora
   });
   $scope.gateways = $localStorage.gateways;
   $scope.tradepairs = $localStorage.tradepairs;
+  $scope.servers = $localStorage.servers;
+  $scope.accountHistory = $localStorage.accounts;
+  $scope.contacts = $localStorage.contacts;
 
-  $scope.accountHistory = [];
   $scope.accountBalances = {};
   $scope.Payment = {
     slipage: $localStorage.slipage
@@ -297,6 +301,7 @@ walletApp.controller('walletCtrl', ['$scope', '$http', '$uibModal', '$localStora
                   {title: 'Trading', templete:'templetes/tab-trading.html', select: function () {$scope.tradingPageLoad();} },
                   {title: 'Offers', templete:'templetes/tab-offers.html', select: function () {$scope.offerPageLoad();} },
                   {title: 'History', templete:'templetes/tab-history.html', select: function () {$scope.historyPageLoad();} },
+                  {title: 'Settings', templete:'templetes/tab-settings.html', select: function () {} },
                 ]
 
   $scope.alerts = [];
@@ -317,13 +322,15 @@ walletApp.controller('walletCtrl', ['$scope', '$http', '$uibModal', '$localStora
 
     //reconfigure and reconnect;
     if (network == 'MAIN') {
-      remote.servers = $localStorage.servers;
+      remote.servers = $scope.servers = $localStorage.servers;
       $scope.gateways = $localStorage.gateways;
       $scope.tradepairs = $localStorage.tradepairs;
+      $scope.contacts = $localStorage.contacts;
     } else if (network == 'TEST') {
-      remote.servers = $localStorage.servers_test;
+      remote.servers = $scope.servers = $localStorage.servers_test;
       $scope.gateways = $localStorage.gateways_test;
       $scope.tradepairs = $localStorage.tradepairs_test;
+      $scope.contacts = $localStorage.contacts_test;
     }
     remote._ledger_current_index = undefined;
     remote.servers.forEach(function (serverOptions) {
@@ -1663,7 +1670,12 @@ walletApp.controller('walletCtrl', ['$scope', '$http', '$uibModal', '$localStora
 
     modalInstance.result.then(function (options) {     
       var pair = options.baseCurrency + (options.baseIssuer ? '.' + options.baseIssuer : '') + '/' + options.tradeCurrency + (options.tradeIssuer ? '.' + options.tradeIssuer : '');
-      if (pair != $scope.trading.pair) $scope.setTradePair(pair);
+      if (options.edit && (typeof options.index === 'number')) {
+        $scope.tradepairs[options.index] = pair;
+      } else if ($scope.tradepairs.indexOf(pair) < 0) {
+        $scope.tradepairs.unshift(pair);
+      }
+      if (options.set && pair != $scope.trading.pair) $scope.setTradePair(pair);
     }, function () {
       // do nothing
     });
@@ -1671,8 +1683,6 @@ walletApp.controller('walletCtrl', ['$scope', '$http', '$uibModal', '$localStora
 
   $scope.setTradePair = function (pair){
     $scope.trading.pair = pair;
-
-    if ($scope.tradepairs.indexOf(pair) < 0) $scope.tradepairs.unshift(pair);
 
     var base = pair.split('/')[0]; 
     var trade = pair.split('/')[1];
@@ -2205,6 +2215,209 @@ walletApp.controller('walletCtrl', ['$scope', '$http', '$uibModal', '$localStora
     $scope.walletAccount.history.unshift(tx);
     $scope.updateOffers(tx);
   }
+
+  $scope.editTradePair = function (pair, index) {
+    var base = pair.split('/')[0];
+    var trade = pair.split('/')[1];
+    var opts = {
+      baseCurrency: base.split('.')[0],
+      baseIssuer: base.split('.')[1],
+      tradeCurrency: trade.split('.')[0],
+      tradeIssuer: trade.split('.')[1],
+    };
+    opts.index = index;
+    opts.edit = true;
+    $scope.prepareTradePair(opts);
+  }
+
+  $scope.deleteTradePair= function (index) {
+    $scope.tradepairs.splice(index, 1);
+  }
+
+  $scope.addGateway = function (options) {
+    var modalInstance = $uibModal.open({
+      animation: false,
+      templateUrl: 'templetes/modal-add-gateway.html',
+      controller: 'ModalCtrl',
+      scope: $scope,
+      resolve: {
+        options: function () {
+          return options;
+        }
+      }
+    });
+
+    modalInstance.result.then(function (options) {
+      var newGateway = {
+        name: options.name,
+        address: options.address,
+        currencies: options.currencies.trim().split(/,\s*/),
+      }
+      if (options.edit && (typeof options.index === 'number')) {
+        $scope.gateways[options.index] = newGateway;
+      } else {
+        options.index = $scope.gateways.length;
+        $scope.gateways.push(newGateway);
+      }
+    }, function () {
+      // do nothing
+    });
+  }
+
+  $scope.isDuplicateGateway = function (gateway) {
+    var gateways = $scope.gateways;
+    for (var i=0, l=gateways.length; i<l; i++) {
+      if (i === gateway.index) continue;
+      var g = gateways[i];
+      if (g.name === gateway.name || g.address === gateway.address) return true;
+    }
+    return false; 
+  }
+
+  $scope.editGateway = function (gateway, index) {
+    var opts = JSON.parse(JSON.stringify(gateway)); // make a copy.
+    opts.currencies = gateway.currencies.join(', ');
+    opts.index = $scope.gateways.findIndex(function(g){
+      return g.address === gateway.address;
+    });
+    opts.edit = true;
+    $scope.addGateway(opts);
+  }
+
+  $scope.deleteGateway = function (index) {
+    $scope.gateways.splice(index, 1);
+  }
+
+  $scope.addServer = function (options) {
+    var modalInstance = $uibModal.open({
+      animation: false,
+      templateUrl: 'templetes/modal-add-server.html',
+      controller: 'ModalCtrl',
+      scope: $scope,
+      resolve: {
+        options: function () {
+          return options;
+        }
+      }
+    });
+
+    modalInstance.result.then(function (options) {
+      var newServer = {
+        host: options.server,
+        port: options.port,
+        secure: options.secure,
+        primary: options.primary
+      }
+      if (options.primary) {
+        for (var i=0, l=$scope.servers.length; i<l; i++) {
+          $scope.servers[i].primary = false;
+        }
+      }
+      if (options.edit && (typeof options.index === 'number')) {
+        $scope.servers[options.index] = options;
+      } else {
+        $scope.servers.push(options);
+      }
+    }, function () {
+      // do nothing
+    });
+  }
+
+  $scope.editServer = function (server, index) {
+    var opts = JSON.parse(JSON.stringify(server)); // make a copy.
+    opts.index = index;
+    opts.edit = true;
+    $scope.addServer(opts);
+  }
+
+  $scope.deleteServer = function (index) {
+    $scope.servers.splice(index, 1);
+  }
+
+  $scope.editConfig = function () {
+    var options = {
+      slipage: $localStorage.slipage,
+      fee_cushion: $localStorage.fee_cushion,
+      max_fee: ($localStorage.max_fee) / 1000000,
+      address: $localStorage.account.address,
+    }
+
+    var modalInstance = $uibModal.open({
+      animation: false,
+      templateUrl: 'templetes/modal-config.html',
+      controller: 'ModalCtrl',
+      scope: $scope,
+      resolve: {
+        options: function () {
+          return options;
+        }
+      }
+    });
+
+    modalInstance.result.then(function (options) {
+      $localStorage.account = {address: options.address};
+      $localStorage.max_fee = Math.ceil(options.max_fee * 1000000);
+      $localStorage.fee_cushion = options.fee_cushion;
+      $localStorage.slipage = options.slipage;
+    }, function () {
+      // do nothing
+    });
+  }
+
+  $scope.addContact = function (options) {
+    var modalInstance = $uibModal.open({
+      animation: false,
+      templateUrl: 'templetes/modal-add-contact.html',
+      controller: 'ModalCtrl',
+      scope: $scope,
+      resolve: {
+        options: function () {
+          return options;
+        }
+      }
+    });
+
+    modalInstance.result.then(function (options) {
+      var newContact = {
+        name: options.name,
+        address: options.address,
+        dtag: options.dtag,
+      }
+      if (options.edit && (typeof options.index === 'number')) {
+        $scope.contacts[options.index] = newContact;
+      } else {
+        options.index = $scope.contacts.length;
+        $scope.contacts.push(newContact);
+      }
+    }, function () {
+      // do nothing
+    });
+  }
+
+  $scope.isDuplicateContact = function (contact) {
+    var contacts = $scope.contacts;
+    for (var i=0, l=contacts.length; i<l; i++) {
+      if (i === contact.index) continue;
+      var c = contacts[i];
+      if (c.name === contact.name) return true;
+      if (c.address === contact.address && c.dtag == contact.dtag) return true;
+    }
+    return false; 
+  }
+
+  $scope.editContact = function (contact, index) {
+    var opts = JSON.parse(JSON.stringify(contact)); // make a copy.
+    opts.index = $scope.contacts.findIndex(function(c){
+      return c.name === contact.name;
+    });
+    opts.edit = true;
+    $scope.addContact(opts);
+  }
+
+  $scope.deleteContact = function (index) {
+    $scope.contacts.splice(index, 1);
+  }
+
 }]);  // main controller;
 
 

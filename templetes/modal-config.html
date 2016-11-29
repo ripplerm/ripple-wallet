@@ -1,0 +1,33 @@
+                    <form name="configForm" novalidate>
+                      <div class="modal-header">
+                        <h3 class="modal-title">Configuration</h3>
+                      </div>
+                      <div class="modal-body">
+                        <table class="table table-condensed">
+                          <tr>
+                            <td>Default Account:</td>
+                            <td>
+                              <input type="text" name="address" ng-model="options.address" size="45" placeholder="ripple address" ripple-valid-address>
+                              <span style="color:red" ng-show="configForm.address.$error.rippleValidAddress">Invalid Address!</span> 
+                            </td>
+                          </tr>
+                          <tr>
+                            <td>Slipage:</td>
+                            <td><input type="number" ng-model="options.slipage" size="5" min="0" max="100" required> (%)</td>
+                          </tr>
+                          <tr>
+                            <td>Fee Cushion:</td>
+                            <td><input type="number" name="fee_cushion" ng-model="options.fee_cushion" size="5" min="1" max="1000" required> <span style="color:red" ng-show="configForm.fee_cushion.$invalid">Invalid Value</span></td>
+                          </tr>
+                          <tr>
+                            <td>Max Fee: </td>
+                            <td><input type="number" ng-model="options.max_fee" size="5" min="0.00001" max="1000" required> XRP</td>
+                          </tr>
+                        </table>
+                        <span style="color:red" ng-show="options.fee_cushion * 0.00001 > options.max_fee">MaxFee Must higher than (0.000010 x FeeCushion)!</span> 
+                      </div>
+                      <div class="modal-footer">
+                        <button class="btn btn-primary" type="submit" ng-disabled="configForm.$invalid || options.fee_cushion * 0.00001 > options.max_fee" ng-click="ok()">Save</button>
+                        <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
+                      </div>
+                    </form>

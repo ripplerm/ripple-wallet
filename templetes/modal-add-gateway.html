@@ -1,0 +1,31 @@
+                    <form name="gatewayForm">
+                      <div class="modal-header">
+                        <h3 class="modal-title">Add/Edit Gateway</h3>
+                      </div>
+                      <div class="modal-body">
+                        <table class="table table-condensed">
+                          <tr>
+                            <td>Name:</td>
+                            <td><input type="text" name="name" ng-model="options.name" size="50" autofocus required></td>
+                          </tr>
+                          <tr>
+                            <td>Address: </td>
+                            <td>
+                                <input type="text" name="address" ng-model="options.address" size="50" ripple-valid-address required>
+                                <span style="color:red" ng-show="gatewayForm.address.$dirty && gatewayForm.address.$error.rippleValidAddress">Invalid Address!</span> 
+                            </td>
+                          </tr>
+                          <tr>
+                            <td>Currencies: <br>(comma seperated)</td>
+                            <td>
+                                <input type="text" name="currencies" ng-model="options.currencies" size="50" ng-minlength="3" required>
+                            </td>
+                          </tr>
+                        </table>
+                        <span style="color:red" ng-show="isDuplicateGateway(options)">Duplicate Gateway!</span>
+                      </div>
+                      <div class="modal-footer">
+                        <button class="btn btn-primary" type="submit" ng-disabled="gatewayForm.$invalid || isDuplicateGateway(options)" ng-click="ok()">Save</button>
+                        <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
+                      </div>
+                    </form>

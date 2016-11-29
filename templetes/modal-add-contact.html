@@ -1,0 +1,32 @@
+                    <form name="contactForm">
+                      <div class="modal-header">
+                        <h3 class="modal-title">Add/Edit Contact</h3>
+                      </div>
+                      <div class="modal-body">
+                        <table class="table table-condensed">
+                          <tr>
+                            <td>Name:</td>
+                            <td><input type="text" name="name" ng-model="options.name" size="50" autofocus required></td>
+                          </tr>
+                          <tr>
+                            <td>Address: </td>
+                            <td>
+                                <input type="text" name="address" ng-model="options.address" size="50" ripple-valid-address required>
+                                <span style="color:red" ng-show="contactForm.address.$dirty && contactForm.address.$error.rippleValidAddress">Invalid Address!</span> 
+                            </td>
+                          </tr>
+                          <tr>
+                            <td>Destination Tag: <br>(optional)</td>
+                            <td>
+                                <input type="number" name="dtag" ng-model="options.dtag" size="10" uint32>
+                                <span style="color:red" ng-show="contactForm.dtag.$invalid">Invalid Number!</span>
+                            </td>
+                          </tr>
+                        </table>
+                        <span style="color:red" ng-show="isDuplicateContact(options)">Duplicate Contact!</span>
+                      </div>
+                      <div class="modal-footer">
+                        <button class="btn btn-primary" type="submit" ng-disabled="contactForm.$invalid || isDuplicateContact(options)" ng-click="ok()">Save</button>
+                        <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
+                      </div>
+                    </form>

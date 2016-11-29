@@ -1,12 +1,13 @@
+<form name="setTradePairForm" novalidate>
+
 <div class="modal-header">
     <h3 class="modal-title">Set Trade Pair</h3>
 </div>
 <div class="modal-body">
-  <form name="setTradePairForm" nonvalidate>
     <table class="table">
         <tr>
             <td>Base Currency:</td>
-            <td><input type="text" name="baseCurrency" ng-model="options.baseCurrency" size=50 autofocus ng-change="options.baseIssuer = (options.baseCurrency == 'XRP') ? null : options.baseIssuer;"></td>
+            <td><input type="text" name="baseCurrency" ng-model="options.baseCurrency" size=50 autofocus ng-minlength="3" ng-change="options.baseIssuer = (options.baseCurrency == 'XRP') ? null : options.baseIssuer;"></td>
         </tr>
         <tr>
             <td>
@@ -31,7 +32,7 @@
     <table class="table">
         <tr>
             <td>Trade Currency:</td>
-            <td><input type="text" name="tradeCurrency" ng-model="options.tradeCurrency" size=50 ng-change="options.tradeIssuer = (options.tradeCurrency == 'XRP') ? null : options.tradeIssuer;"></td>
+            <td><input type="text" name="tradeCurrency" ng-model="options.tradeCurrency" size=50 ng-minlength="3" ng-change="options.tradeIssuer = (options.tradeCurrency == 'XRP') ? null : options.tradeIssuer;"></td>
         </tr>
         <tr>
             
@@ -52,10 +53,11 @@
             
         </tr>
     </table>
-  </form>
 </div>
 
 <div class="modal-footer">
-    <button class="btn btn-primary" type="button" ng-disabled="setTradePairForm.$pristine || setTradePairForm.$invalid || (options.baseCurrency == options.tradeCurrency && (options.baseIssuer == options.tradeIssuer))" ng-click="ok()">Submit</button>
+    <button class="btn btn-primary" type="submit" ng-disabled="setTradePairForm.$invalid || (options.baseCurrency == options.tradeCurrency && (options.baseIssuer == options.tradeIssuer))" ng-click="ok()">Submit</button>
     <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
 </div>
+
+</form>

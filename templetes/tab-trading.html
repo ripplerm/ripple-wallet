@@ -17,7 +17,7 @@
 			</span>
 	        <button type="button" uib-dropdown-toggle ><span class="caret"></span></button>
             <ul class="uib-dropdown-menu">
-            	<li><a href="#" ng-click="prepareTradePair()"> -- Add New -- </a></li>
+            	<li><a href="#" ng-click="prepareTradePair({set:true})"> -- Add New -- </a></li>
                 <li ng-repeat="pair in tradepairs"><a href="#" ng-click="setTradePair(pair)">{{pairName(pair)}}</a></li>
             </ul>
             <button ng-click="flipTradePair()"><span class="glyphicon glyphicon-transfer"></span> Flip</button> 

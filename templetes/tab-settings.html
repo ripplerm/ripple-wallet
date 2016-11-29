@@ -1,0 +1,113 @@
+        <div id="tabSettings">
+		    <span style="font-weight:bold; font-size:20pt; padding-right:1em;">Wallet Settings: </span>
+		    <br><br>
+		    <uib-tabset type="pills">
+		    	<uib-tab heading="Contacts">
+		    		<table class="table table-striped">
+			            <tr>
+				            <th>Name</th>
+				            <th>Address</th>
+				            <th style="text-align: center">Destination Tag</th>
+				            <th style="text-align: center">
+				            	<button class="btn btn-info" ng-click="addContact()">Add New</button>
+				            </th>
+			            </tr>
+			            <tr ng-repeat="contact in contacts | orderBy:'name' track by contact.name">
+			            	<td>{{contact.name}}</td>
+			            	<td>{{contact.address}}</td>
+			            	<td style="text-align: center">{{contact.dtag == undefined ? '-' : contact.dtag}}</td>
+							<td style="text-align: center">
+								<a href="#" ng-click="editContact(contact, $index)"><span class="glyphicon glyphicon-edit"></span></a>
+								<a href="#" ng-click="deleteContact($index)"><span class="glyphicon glyphicon-trash"></span></a>
+							</td>			            	
+			            </tr>
+		    		</table>
+		    	</uib-tab>
+		    	<uib-tab heading="Gateways">
+		    		<table class="table table-striped">
+			            <tr>
+				            <th>Name</th>
+				            <th>Address</th>
+				            <th style="text-align: center">Currencies</th>
+				            <th style="text-align: center">
+				            	<button class="btn btn-info" ng-click="addGateway()">Add New</button>
+				            </th>
+			            </tr>
+			            <tr ng-repeat="gateway in gateways | orderBy:'name' track by gateway.name">
+			            	<td>{{gateway.name}}</td>
+			            	<td>{{gateway.address}}</td>
+			            	<td style="text-align: center">{{gateway.currencies.join(', ')}}</td>
+							<td style="text-align: center">
+								<a href="#" ng-click="editGateway(gateway, $index)"><span class="glyphicon glyphicon-edit"></span></a>
+								<a href="#" ng-click="deleteGateway($index)"><span class="glyphicon glyphicon-trash"></span></a>
+							</td>			            	
+			            </tr>
+		    		</table>
+		    	</uib-tab>
+		    	<uib-tab heading="TradePairs">
+		    		<table class="table table-striped">
+			            <tr>
+				            <th>Base Currency</th>
+				            <th>Trade Currency</th>
+				            <th style="text-align: center">
+				            	<button class="btn btn-info" ng-click="prepareTradePair()">Add New</button>
+				            </th>
+			            </tr>
+			            <tr ng-repeat="pair in tradepairs track by $index">
+			            	<td>{{pairName(pair).split('/')[0]}}</td>
+			            	<td>{{pairName(pair).split('/')[1]}}</td>
+							<td style="text-align: center">
+								<a href="#" ng-click="editTradePair(pair, $index)"><span class="glyphicon glyphicon-edit"></span></a>
+								<a href="#" ng-click="deleteTradePair($index)"><span class="glyphicon glyphicon-trash"></span></a>
+							</td>			            	
+			            </tr>
+		    		</table>
+		    	</uib-tab>
+		    	<uib-tab heading="Servers">
+		    		<table class="table">
+			            <tr>
+				            <th>Host</th>
+				            <th>Port</th>
+				            <th style="text-align: center">Secure</th>
+				            <th style="text-align: center">Primary</th>
+				            <th style="text-align: center">
+				            	<button class="btn btn-info" ng-click="addServer({secure:true})">Add New</button>
+				            </th>
+			            </tr>
+			            <tr ng-repeat="server in servers track by $index">
+			            	<td>{{server.host}}</td>
+			            	<td>{{server.port}}</td>
+			            	<td style="text-align: center">{{server.secure}}</td>
+			            	<td style="text-align: center">{{server.primary ? '&#10004' : ''}}</td>
+							<td style="text-align: center">
+								<a href="#" ng-click="editServer(server, $index)"><span class="glyphicon glyphicon-edit"></span></a>
+								<a href="#" ng-click="deleteServer($index)"><span class="glyphicon glyphicon-trash"></span></a>
+							</td>			            	
+			            </tr>
+		    		</table>
+		    	</uib-tab>
+		    	<uib-tab heading="Configure">
+		    		<table class="table table-condensed">
+		    			<tr>
+		    				<td>Default Account:</td>
+		    				<td>{{$storage.account.address || '-'}}</td>
+		    			</tr>
+		    			<tr>
+		    				<td>Slipage:</td>
+		    				<td>{{$storage.slipage}} %</td>
+		    			</tr>
+		    			<tr>
+		    				<td>Fee Cushion:</td>
+		    				<td>{{$storage.fee_cushion}}</td>
+		    			</tr>
+		    			<tr>
+		    				<td>Max Fee: </td>
+		    				<td>{{$storage.max_fee / 1000000}} XRP</td>
+		    			</tr>
+		    		</table>
+			        <span style="float:right">
+			            <button class="btn btn-info" type="submit" ng-disabled="configForm.$invalid" ng-click="editConfig()">edit</button> 
+			        </span>
+		    	</uib-tab>
+		    </uib-tabset>
+        </div>
