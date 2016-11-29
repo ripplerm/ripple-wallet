@@ -1,4 +1,4 @@
-var walletApp = angular.module('walletApp', ['ui.bootstrap', 'jsonFormatter']);
+var walletApp = angular.module('walletApp', ['ui.bootstrap', 'jsonFormatter', 'ngStorage']);
 
 var Remote = ripple.Remote;
 var Seed = ripple.Seed;
@@ -48,16 +48,6 @@ var SERVERS_TESTNET = [{
                           , port: 51233
                           , secure: true
                       }];
-
-var remote = new Remote({
-    // see the API Reference for available options
-    trusted:        false,
-    local_signing:  true,
-    local_fee:      true,
-    fee_cushion:    1.2,
-    max_fee:        120,
-    servers:        SERVERS_MAINNET
-});
 
 var GATEWAYS = [
       {
@@ -243,17 +233,43 @@ var TRADE_PAIRS_TEST = [
   'USD.r9U9DDht72oMx7nrqsS7uELXNvfsYL4USm/JPY.rH6C28kDJURagNz1Mt6oX9PEyFtJqxyTwo',
 ]
 
+var DEFAULT = {
+  account: {
+    address: DEFAULT_ACCOUNT,
+    secret: DEFAULT_SECRET
+  },
+  accounts: [],
+  slipage: SLIPAGE,
+  max_fee: 120,
+  fee_cushion: 1.2,
+  servers: SERVERS_MAINNET,
+  gateways: GATEWAYS,
+  tradepairs: TRADE_PAIRS,
+  servers_test: SERVERS_TESTNET,
+  gateways_test: GATEWAYS_TEST,
+  tradepairs_test: TRADE_PAIRS_TEST,
+}
 // ========= main controller ====================================
 
 
-walletApp.controller('walletCtrl', ['$scope', '$http', '$uibModal', function($scope, $http, $uibModal) {
-  $scope.gateways = GATEWAYS;
-  $scope.tradepairs = TRADE_PAIRS;
+walletApp.controller('walletCtrl', ['$scope', '$http', '$uibModal', '$localStorage', function($scope, $http, $uibModal, $localStorage) {
+  $scope.$storage = $localStorage.$default(DEFAULT);
+
+  var remote = new Remote({
+      trusted:        false,
+      local_signing:  true,
+      local_fee:      true,
+      fee_cushion:    $localStorage.fee_cushion,
+      max_fee:        $localStorage.max_fee,
+      servers:        $localStorage.servers,
+  });
+  $scope.gateways = $localStorage.gateways;
+  $scope.tradepairs = $localStorage.tradepairs;
 
   $scope.accountHistory = [];
   $scope.accountBalances = {};
   $scope.Payment = {
-    slipage: SLIPAGE
+    slipage: $localStorage.slipage
   };
 
   $scope.trading = { 
@@ -301,13 +317,13 @@ walletApp.controller('walletCtrl', ['$scope', '$http', '$uibModal', function($sc
 
     //reconfigure and reconnect;
     if (network == 'MAIN') {
-      remote.servers = SERVERS_MAINNET;
-      $scope.gateways = GATEWAYS;
-      $scope.tradepairs = TRADE_PAIRS;
+      remote.servers = $localStorage.servers;
+      $scope.gateways = $localStorage.gateways;
+      $scope.tradepairs = $localStorage.tradepairs;
     } else if (network == 'TEST') {
-      remote.servers = SERVERS_TESTNET;
-      $scope.gateways = GATEWAYS_TEST;
-      $scope.tradepairs = TRADE_PAIRS_TEST;
+      remote.servers = $localStorage.servers_test;
+      $scope.gateways = $localStorage.gateways_test;
+      $scope.tradepairs = $localStorage.tradepairs_test;
     }
     remote._ledger_current_index = undefined;
     remote.servers.forEach(function (serverOptions) {
@@ -408,7 +424,7 @@ walletApp.controller('walletCtrl', ['$scope', '$http', '$uibModal', function($sc
 
   $scope.infoPageLoad = function (){
     if (!$scope.walletAccount) {
-      $scope.setWalletAccount({address: DEFAULT_ACCOUNT, secret: DEFAULT_SECRET});
+      if ($localStorage.account) $scope.setWalletAccount($localStorage.account);
     }
     if (!$scope.walletAccount._entry.Account) $scope.accountInfo();
   }
@@ -1056,7 +1072,7 @@ walletApp.controller('walletCtrl', ['$scope', '$http', '$uibModal', function($sc
 
   $scope.paymentReset = function (){
     $scope.Payment = {
-      slipage: SLIPAGE
+      slipage: $localStorage.slipage
     };
   }
 
