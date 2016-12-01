@@ -58,11 +58,11 @@
                     </tr>
                     <tr>
                       <td>Currency:</td>
-                      <td><input type="text" placeholder="XRP" size="50" name="amountCurrency" required ng-model="Payment.amountCurrency" ng-change="(Payment.amountCurrency == 'XRP') ? Payment.amountIssuer = null : null; pathFindAutoStart()" ng-disabled="Payment.federation.quoteRequired"></td>
+                      <td><input type="text" placeholder="XRP" name="amountCurrency" ng-model="Payment.amountCurrency" ng-change="(Payment.amountCurrency == 'XRP') ? Payment.amountIssuer = null : null; pathFindAutoStart()" ng-disabled="Payment.federation.quoteRequired" size="50" uppercase-only required></td>
                     </tr>
                     <tr>
                       <td>Issuer:</td>
-                      <td>
+                      <td> 
                         <input type="text" placeholder="address" name="amountIssuer" ng-model="Payment.amountIssuer" size="50" ng-required="Payment.amountCurrency != 'XRP'" ng-disabled="Payment.amountCurrency == 'XRP' || Payment.federation.quoteRequired" ng-change="pathFindAutoStart()" ripple-valid-address uib-typeahead="gateway.address as gateway.name for gateway in gateways | filter: {name: $viewValue, currencies: Payment.amountCurrency}" typeahead-on-select="pathFindAutoStart()">
                         <span style="padding-left:1em; color:red" ng-show="paymentForm.amountIssuer.$dirty && paymentForm.amountIssuer.$error.rippleValidAddress">Invalid Address!</span>
                         <span style="color:green" ng-hide="gatewayName(Payment.amountIssuer) == Payment.amountIssuer">{{gatewayName(Payment.amountIssuer)}}</span> 
@@ -105,7 +105,7 @@
                     </tr>
                     <tr>
                       <td>Currency:</td>
-                      <td><input type="text" placeholder="XRP" ng-model="Payment.sendmaxCurrency" ng-change="(Payment.sendmaxCurrency == 'XRP') ? Payment.sendmaxIssuer = null : null" size="50" ng-required="Payment.sendmaxValue"></td>
+                      <td><input type="text" name="sendmaxCurrency" placeholder="XRP" ng-model="Payment.sendmaxCurrency" ng-change="(Payment.sendmaxCurrency == 'XRP') ? Payment.sendmaxIssuer = null : null" ng-required="Payment.sendmaxValue" size="50" uppercase-only></td>
                     </tr>
                     <tr>
                       <td>Issuer:</td>

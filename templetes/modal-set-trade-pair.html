@@ -7,7 +7,7 @@
     <table class="table">
         <tr>
             <td>Base Currency:</td>
-            <td><input type="text" name="baseCurrency" ng-model="options.baseCurrency" size=50 autofocus ng-minlength="3" ng-change="options.baseIssuer = (options.baseCurrency == 'XRP') ? null : options.baseIssuer;"></td>
+            <td><input type="text" name="baseCurrency" ng-model="options.baseCurrency" size=50 autofocus ng-minlength="3" ng-change="options.baseIssuer = (options.baseCurrency == 'XRP') ? null : options.baseIssuer;" uppercase-only></td>
         </tr>
         <tr>
             <td>
@@ -24,7 +24,7 @@
     <table class="table">
         <tr>
             <td>Trade Currency:</td>
-            <td><input type="text" name="tradeCurrency" ng-model="options.tradeCurrency" size=50 ng-minlength="3" ng-change="options.tradeIssuer = (options.tradeCurrency == 'XRP') ? null : options.tradeIssuer;"></td>
+            <td><input type="text" name="tradeCurrency" ng-model="options.tradeCurrency" size=50 ng-minlength="3" ng-change="options.tradeIssuer = (options.tradeCurrency == 'XRP') ? null : options.tradeIssuer;" uppercase-only></td>
         </tr>
         <tr>
             

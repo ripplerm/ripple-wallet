@@ -2582,3 +2582,32 @@ walletApp.directive('rippleValidMemo', function () {
   }
 });
 
+walletApp.directive('uppercaseOnly', function () {
+  return {
+    restrict: 'A',
+    require: 'ngModel', 
+    link: function (scope, element, attr, ctrl) {
+        function parser(value) {
+          if (ctrl.$isEmpty(value)) {
+            return value;
+          }
+          var formatedValue = value.toUpperCase();
+          if (ctrl.$viewValue !== formatedValue) {
+            ctrl.$setViewValue(formatedValue);
+            ctrl.$render();
+          }
+          return formatedValue;
+        }
+
+        function formatter(value) {
+          if (ctrl.$isEmpty(value)) {
+            return value;
+          }
+          return value.toUpperCase();
+        }
+
+        ctrl.$parsers.push(parser);
+        parser(scope[attr.ngModel]);
+    }
+  }
+});
