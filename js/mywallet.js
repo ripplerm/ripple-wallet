@@ -18,19 +18,26 @@ var INSERT_CLIENT_INFO = true;
 
 var DEFAULT_ACCOUNT = "rHb9CJAWyB4rj91VRWn96DkukG4bwdtyTh";
 var DEFAULT_SECRET = "snoPBrXtMeMyMHUVTgbuqAfg1SUTb";
+var HISTORY_MAX = 5;
 
 var PATHFIND_MAX = 10; // stop pathfinding after reaching PATHFIND_MAX
 var SLIPAGE = 1;  // 1%, for calculating sendMax
 
 var RIPPLE_DATA_URL = 'https://data.ripple.com'; 
 var CHART_INTERVAL = '1hour'; // 1minute, 15minute, 30minute, 1hour, 1day...
-var CHART_MAX_PAGE = 5; // max pages for repeated queries to data.ripple.com;
+var CHART_MAX_PAGE = 1; // max pages for repeated queries to data.ripple.com;
 var CHART_LIMIT = 1000; // limit number for single query;
 
 var DEVIATION_ALERT = 0.20;  // alert when offerCreate price deviate >20% from market.
 var APPLY_INTEREST = false; // false: showing raw amount instead of demuraged figure.
 
 var SERVERS_MAINNET = [
+                      {
+                          host:    's2.ripple.com'
+                          , port:    443
+                          , secure:  true
+                          , primary: true
+                      },
                       {
                           host:    's-east.ripple.com'
                           , port:    443
@@ -76,19 +83,9 @@ var GATEWAYS = [
         currencies: ['CNY', 'FMM', 'STR', 'XLM']  
       },
       {
-        name: "JustCoin",
-        address: "rJHygWcTLVpSXkowott6kzgZU6viQSVYM1",
-        currencies: ['BTC', 'USD']  
-      },
-      {
         name: "TheRock",
         address: "rLEsXccBGNR3UPuPu2hUXPjziKC3qKSBun",
         currencies: ['BTC', 'LTC','NMC', 'PPC', 'DOG', 'USD ', 'EUR', 'GBP']  
-      },
-      {
-        name: "RippleSingapore",
-        address: "r9Dr5xwkeLegBeXq6ujinjSBLQzQ1zQGjH",
-        currencies: ['SGD', 'XAG', 'XAU', 'XPT', 'USD']  
       },
       {
         name: "DividendRippler",
@@ -116,7 +113,7 @@ var GATEWAYS = [
         currencies: ['JPY']      
       },
       {
-        name: "ExchangeTokyo",
+        name: "RippleExchangeTokyo",
         address: "r9ZFPSb1TFdnJwbTMYHvVwFK1bQPUCVNfJ",
         currencies: ['JPY']
       },
@@ -131,16 +128,6 @@ var GATEWAYS = [
         currencies: ['JPY']  
       },
       {
-        name: "Central24",
-        address: "rM1JztoSdHmX2EPnRGRYmKQvkxZ2hnrWsn",
-        currencies: ['JPY']
-      },  
-      {
-        name: "PaxMoneta",
-        address: "rUkMKjQitpgAM5WTGk79xpjT38DEJY283d",
-        currencies: ['KRW']  
-      }, 
-      {
         name: "Ripula",
         address: "rBycsjqxD8RVZP5zrrndiVtJwht7Z457A8",
         currencies: ['BTC', 'EUR', 'GBP', 'USD']  
@@ -149,6 +136,31 @@ var GATEWAYS = [
         name: "Gatehub",
         address: "rhub8VRN55s94qWKDv6jmDy1pUykJzF3wq",
         currencies: ['EUR', 'USD']  
+      },
+      {
+        name: "GatehubFifthBTC",
+        address: "rchGBxcD1A1C2tdxF6papQYZ8kjRKMYcL",
+        currencies: ['BTC']  
+      },
+      {
+        name: "GatehubFifthETH",
+        address: "rcA8X3TVMST1n3CJeAdGk1RdRCHii7N2h",
+        currencies: ['ETH']  
+      },
+      {
+        name: "GatehubFifthETC",
+        address: "rDAN8tzydyNfnNf2bfUQY6iR96UbpvNsze",
+        currencies: ['ETC']  
+      },
+      {
+        name: "GatehubFifthREP",
+        address: "rckzVpTnKpP4TJ1puQe827bV3X4oYtdTP",
+        currencies: ['REP']  
+      },
+      {
+        name: "BPG",
+        address: "rcoef87SYMJ58NAFx7fNM5frVknmvHsvJ",
+        currencies: ['XAU']  
       },
       {
         name: "Bluzelle",
@@ -161,53 +173,32 @@ var GATEWAYS = [
         currencies: ['KRW']    
       },
       {
-        name: "GBI",
-        address: "rrh7rf1gV2pXAoqA8oYbpHd8TKv5ZQeo67",
-        currencies: ['0158415500000000C1F76FF6ECB0BAC600000000', 'XAU (-.5%pa)']    
-      },
-      {
         name: "Rippex",
         address: "rfNZPxoZ5Uaamdp339U9dCLWz2T73nZJZH",
         currencies: ['BRL']  
       },
       {
-        name: "PtyCoin",
-        address: "rBadiLisPCyqeyRA1ufVLv5qgVRenP2Zyc",
-        currencies: ['USD', 'PAB', 'BTC', 'LTC', 'DRK']  
+        name: "RippexBridge",
+        address: "rKxKhXZCeSDsbkyB8DVgxpjy5AHubFkMFe",
+        currencies: ['BTC']  
       },
-
-      {
-        name: "LakeBTC",
-        address: "rpDMez6pm6dBve2TJsmDpv7Yae6V5Pyvy2",
-        currencies: ['USD']
-      },
-
       {
         name: "MrRipple",
         address: "rB3gZey7VWHYRqJHLoHDEJXJ2pEPNieKiS",
-        currencies: ['JPY', 'USD']
+        currencies: ['JPY', 'USD', 'BTC', 'LTC', 'DOG', 'STR']
       },
-      {
-        name: "RippleDividend",
-        address: "rDVdJ62foD1sn7ZpxtXyptdkBSyhsQGviT",
-        currencies: ['BTC', 'CNY' , 'USD', 'FMM', 'FBM', 'XMM', 'RXM']  
-      }
     ];
 
 var TRADE_PAIRS = [
   'USD.rvYAfWj5gh67oV6fW32ZzP3Aw4Eubs59B/XRP',
   'BTC.rvYAfWj5gh67oV6fW32ZzP3Aw4Eubs59B/XRP',
-  'BTC.rMwjYedjc7qqtKYVLiAccJSmCwih4LnE2q/XRP',
-  'BTC.rLEsXccBGNR3UPuPu2hUXPjziKC3qKSBun/XRP',
   'CNY.rKiCet8SdvWxPXnAgYarFUXMh1zCPz432Y/XRP',
-  'CNY.razqQKzJRdB4UxFPWf5NEpEG3WMkmwgcXA/XRP',
-  'CNY.rnuF96W4SZoCJmbHYBFoJZpR8eCaxNvekK/XRP',
-  'JPY.r9ZFPSb1TFdnJwbTMYHvVwFK1bQPUCVNfJ/XRP',
   'JPY.r94s8px6kSw1uZ1MV98dhSRTvc6VMPoPcN/XRP',
-  'JPY.rJRi8WW24gt9X85PHAxfWNPCizMMhqUQwg/XRP',
-  'KRW.rUkMKjQitpgAM5WTGk79xpjT38DEJY283d/XRP',
+  'KRW.rPxU6acYni7FcXzPCMeaPSwKcuS2GTtNVN/XRP',
   'BRL.rfNZPxoZ5Uaamdp339U9dCLWz2T73nZJZH/XRP',
   'MXN.rG6FZ31hDHN1K5Dkbma3PSB5uVCuVVRzfn/XRP',
+  'EUR.rhub8VRN55s94qWKDv6jmDy1pUykJzF3wq/XRP',
+  'ETH.rcA8X3TVMST1n3CJeAdGk1RdRCHii7N2h/XRP',
 ]
 
 var GATEWAYS_TEST = [
@@ -662,7 +653,8 @@ walletApp.controller('walletCtrl', ['$scope', '$http', '$uibModal', '$localStora
   }
 
   $scope.addAccountHistory = function (address) {
-    if ($scope.accountHistory.indexOf(address) < 0) $scope.accountHistory.push(address);
+    if ($scope.accountHistory.indexOf(address) < 0) $scope.accountHistory.unshift(address);
+    if ($scope.accountHistory.length > HISTORY_MAX) $scope.accountHistory.splice(HISTORY_MAX);
   }
 
   $scope.setSecret = function () {
@@ -1960,7 +1952,7 @@ walletApp.controller('walletCtrl', ['$scope', '$http', '$uibModal', '$localStora
   }
 
   $scope.priceAlert = function (options) {
-    if (!options.market_price || !options.price) return false;
+    if (!DEVIATION_ALERT || !options.market_price || !options.price) return false;
     return (Math.abs(options.price - options.market_price) / options.market_price) > DEVIATION_ALERT;
   }
 
