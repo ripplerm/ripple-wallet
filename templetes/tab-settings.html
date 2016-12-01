@@ -109,5 +109,23 @@
 			            <button class="btn btn-info" type="submit" ng-disabled="configForm.$invalid" ng-click="editConfig()">edit</button> 
 			        </span>
 		    	</uib-tab>
+		    	<uib-tab heading="Import/Export">
+		    		<table class="table table-condensed">
+		    			<tr>
+		    				<td style="text-align: center">Export: </td>
+		    				<td>
+		    					<input type="text" size="20" ng-model="filename">
+			    				<button ng-click="exportProfile()">Save</button> 
+			    			</td>
+		    			</tr>
+		    			<tr>
+		    				<td style="text-align: center">Import: </td>
+		    				<td>
+		    					<input type="file" onchange="angular.element(this).scope().fileNameChanged(this)">
+		    					{{uploaded}}
+		    				</td>
+		    			</tr>
+		    		</table>
+		    	</uib-tab>
 		    </uib-tabset>
         </div>

@@ -310,6 +310,27 @@ walletApp.controller('walletCtrl', ['$scope', '$http', '$uibModal', '$localStora
   $scope.network = 'MAIN';
   $scope.state = 'offline'
 
+  $scope.filename = 'ripple-wallet-profile.txt';
+
+  $scope.exportProfile = function () {
+    var data = JSON.stringify($scope.$storage, null, 2);
+    var blob = new Blob([data], {type: "text/json;charset=utf-8"});
+    saveAs(blob, $scope.filename);
+  }
+
+  $scope.fileNameChanged = function (element) {
+    var file = element.files[0];
+    var reader = new FileReader();
+    reader.onload = function(e) {
+      var result;
+      try {result = JSON.parse(reader.result)} catch (e) {};
+      $scope.uploaded = result ? 'Load Success, please refresh the browser.' : 'Failed parsing data.';
+      Object.assign($localStorage, result); 
+      $scope.$apply();
+    };
+    reader.readAsText(file);
+  }
+
   $scope.switchNetwork = function (network) {
     if (network == $scope.network) return;
 
