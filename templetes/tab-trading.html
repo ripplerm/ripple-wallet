@@ -78,36 +78,37 @@
 	<div class="col-sm-6">
 		<div class='panel panel-success'>
 			<div class="panel-body bg-success">
-
-						Buy: 
-						<input type="text" size="15" name="buyQuantity" ng-model="trading.buyQuantity" placeholder="amount" positive-number>
-						{{trading.baseCurrency}}, 
-
-						at: 
-						<input type="text" size="15" name="buyPrice" ng-model="trading.buyPrice" placeholder="price in {{trading.tradeCurrency}}" positive-number>
-						<br><br>
-						<div align='right'>
-							<button class="btn btn-primary" type="button" ng-click="prepareOfferCreate({type: 'buy'})" ng-disabled="!trading.buyQuantity || !trading.buyPrice">Buy</button>
-							<button class="btn btn-warning" type="button" ng-click="buyReset()">Reset</button>
-						</div>
-
+				<form>
+					Buy: 
+					<input type="text" size="15" name="buyQuantity" ng-model="trading.buyQuantity" placeholder="amount" positive-number>
+					{{trading.baseCurrency}}, 
+					at: 
+					<input type="text" size="15" name="buyPrice" ng-model="trading.buyPrice" placeholder="price in {{trading.tradeCurrency}}" positive-number>
+					<br><br>
+					<div align='right'>
+						<button class="btn btn-primary" type="submit" ng-click="prepareOfferCreate({type: 'buy'})" ng-disabled="!trading.buyQuantity || !trading.buyPrice">Buy</button>
+						<button class="btn btn-warning" type="button" ng-click="buyReset()">Reset</button>
+					</div>
+				</form>
 			</div>
 		</div>
 	</div>
 	<div class="col-sm-6">
 		<div class='panel panel-danger'>
 			<div class="panel-body bg-danger">
-				Sell: 
-				<input type="text" size="15" name="sellQuantity" ng-model="trading.sellQuantity" placeholder="amount" positive-number>
-				{{trading.baseCurrency}},
-				at: 
-				<input type="text" size="15" name="sellPrice" ng-model="trading.sellPrice" placeholder="price in {{trading.tradeCurrency}}" positive-number>
-				<br>
-				<br>
-				<div align='right'>
-					<button class="btn btn-danger" type="button" ng-click="prepareOfferCreate({type: 'sell'})" ng-disabled="!trading.sellQuantity || !trading.sellPrice">Sell</button>
-					<button class="btn btn-warning" type="button" ng-click="sellReset()">Reset</button>
-				</div>
+				<form>
+					Sell: 
+					<input type="text" size="15" name="sellQuantity" ng-model="trading.sellQuantity" placeholder="amount" positive-number>
+					{{trading.baseCurrency}},
+					at: 
+					<input type="text" size="15" name="sellPrice" ng-model="trading.sellPrice" placeholder="price in {{trading.tradeCurrency}}" positive-number>
+					<br>
+					<br>
+					<div align='right'>
+						<button class="btn btn-danger" type="submit" ng-click="prepareOfferCreate({type: 'sell'})" ng-disabled="!trading.sellQuantity || !trading.sellPrice">Sell</button>
+						<button class="btn btn-warning" type="button" ng-click="sellReset()">Reset</button>
+					</div>
+				</form>
 			</div>
 		</div>
 	</div>

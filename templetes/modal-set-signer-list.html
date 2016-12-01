@@ -6,7 +6,7 @@
                             Quorum: <input type="number" min=0 ng-model="options.quorum" size="5" required>
                             <span style="color:red" ng-show="options.quorum > options.weightSum()">Quorum must be smaller than Total Weight!</span>
                             <br><br>
-                            Signers: <button type="button" ng-click="options.signers[options.signers.length]={}">Add</button>
+                            Signers: <button ng-click="options.signers[options.signers.length]={}">Add</button>
                             <br>
                             <table class="table">
                                 <tr>
