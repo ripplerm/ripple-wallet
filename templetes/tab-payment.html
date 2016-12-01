@@ -37,7 +37,9 @@
 
                     <br>
                   </div>
-                  <input type="text" placeholder="address" ng-model="Payment.destination" name="destination" size="50" required ripple-valid-address ng-disabled="Payment.useFederation" ng-change="pathFindAutoStart()"><span style="padding-left:1em; color:red" ng-show="paymentForm.destination.$dirty && paymentForm.destination.$error.rippleValidAddress">Invalid Address!</span> 
+                  <input type="text" placeholder="address" ng-model="Payment.destination" name="destination" size="50" required ripple-valid-address ng-disabled="Payment.useFederation" ng-change="pathFindAutoStart()"  uib-typeahead="contact.address as contact.name for contact in contacts | filter:{name:$viewValue}">
+                  <span style="padding-left:1em; color:red" ng-show="paymentForm.destination.$dirty && paymentForm.destination.$error.rippleValidAddress">Invalid Address!</span>
+                  <span style="color:green">{{contactName(Payment.destination)}}</span> 
                 </td>
               </tr>
               <tr>
@@ -61,15 +63,9 @@
                     <tr>
                       <td>Issuer:</td>
                       <td>
-                        <div uib-dropdown uib-keyboard-nav>
-                          <input type="text" 
-  placeholder="address" name="amountIssuer" ng-model="Payment.amountIssuer" size="50" ng-required="Payment.amountCurrency != 'XRP'" ng-disabled="Payment.amountCurrency == 'XRP' || Payment.federation.quoteRequired" ng-change="pathFindAutoStart()" ripple-valid-address>
-                          <button type="button" uib-dropdown-toggle ><span class="caret"></span></button>
-                          <ul class="uib-dropdown-menu">
-                            <li ng-repeat="gateway in gateways | filter: {currencies: Payment.amountCurrency} | orderBy:'name'"><a href="#" ng-click="Payment.amountIssuer=gateway.address; pathFindAutoStart()">{{gateway.name}}</a></li>
-                          </ul>
-                          <span style="padding-left:1em; color:red" ng-show="paymentForm.amountIssuer.$dirty && paymentForm.amountIssuer.$error.rippleValidAddress">Invalid Address!</span>
-                        </div>
+                        <input type="text" placeholder="address" name="amountIssuer" ng-model="Payment.amountIssuer" size="50" ng-required="Payment.amountCurrency != 'XRP'" ng-disabled="Payment.amountCurrency == 'XRP' || Payment.federation.quoteRequired" ng-change="pathFindAutoStart()" ripple-valid-address uib-typeahead="gateway.address as gateway.name for gateway in gateways | filter: {name: $viewValue, currencies: Payment.amountCurrency}" typeahead-on-select="pathFindAutoStart()">
+                        <span style="padding-left:1em; color:red" ng-show="paymentForm.amountIssuer.$dirty && paymentForm.amountIssuer.$error.rippleValidAddress">Invalid Address!</span>
+                        <span style="color:green" ng-hide="gatewayName(Payment.amountIssuer) == Payment.amountIssuer">{{gatewayName(Payment.amountIssuer)}}</span> 
                       </td>
                     </tr>
                   </table>
@@ -114,15 +110,9 @@
                     <tr>
                       <td>Issuer:</td>
                       <td>
-                        <div uib-dropdown uib-keyboard-nav>
-                          <input type="text" 
-  placeholder="address" name="sendmaxIssuer" ng-model="Payment.sendmaxIssuer" size="50" ng-required="Payment.sendmaxCurrency && Payment.sendmaxCurrency != 'XRP'" ng-disabled="Payment.sendmaxCurrency == 'XRP'" ripple-valid-address>
-                          <button type="button" uib-dropdown-toggle ><span class="caret"></span></button>
-                          <ul class="uib-dropdown-menu">
-                            <li ng-repeat="gateway in gateways | filter: {currencies: Payment.sendmaxCurrency} | orderBy:'name'"><a href="#" ng-click="Payment.sendmaxIssuer=gateway.address;">{{gateway.name}}</a></li>
-                          </ul> 
-                          <span style="padding-left:1em; color:red" ng-show="paymentForm.sendmaxIssuer.$dirty && paymentForm.sendmaxIssuer.$error.rippleValidAddress">Invalid Address!</span>
-                        </div>
+                        <input type="text" placeholder="address" name="sendmaxIssuer" ng-model="Payment.sendmaxIssuer" size="50" ng-required="Payment.sendmaxCurrency && Payment.sendmaxCurrency != 'XRP'" ng-disabled="Payment.sendmaxCurrency == 'XRP'" ripple-valid-address uib-typeahead="gateway.address as gateway.name for gateway in gateways | filter: {name: $viewValue, currencies: Payment.sendmaxCurrency}">
+                        <span style="padding-left:1em; color:red" ng-show="paymentForm.sendmaxIssuer.$dirty && paymentForm.sendmaxIssuer.$error.rippleValidAddress">Invalid Address!</span>
+                        <span style="color:green" ng-hide="gatewayName(Payment.sendmaxIssuer) == Payment.sendmaxIssuer">{{gatewayName(Payment.sendmaxIssuer)}}</span> 
                       </td>
                     </tr>
                   </table> 

@@ -14,17 +14,9 @@
                 Issuer: 
             </td>
             <td>
-                <div uib-dropdown uib-keyboard-nav>
-                    <input type="text" name="baseIssuer" ng-model="options.baseIssuer" size=50 ripple-valid-address ng-required="options.baseCurrency != 'XRP'" ng-disabled="options.baseCurrency === 'XRP'"> 
-                    <button type="button" uib-dropdown-toggle >Gateway<span class="caret"></span></button>
-                    <ul class="uib-dropdown-menu">
-                        <li ng-repeat="gateway in gateways | filter: {currencies: options.baseCurrency} | orderBy:'name'"><a href="#" ng-click="options.baseIssuer=gateway.address;">{{gateway.name}}</a></li>
-                    </ul>
-
-                    <br>&nbsp
-                    <span style="color:green">{{gatewayName(options.baseIssuer)}}</span>
-                    <span style="color:red" ng-show="setTradePairForm.baseIssuer.$dirty && setTradePairForm.baseIssuer.$error.rippleValidAddress">Invalid Address!</span>
-                </div>
+                <input type="text" name="baseIssuer" ng-model="options.baseIssuer" size=50 ripple-valid-address ng-required="options.baseCurrency != 'XRP'" ng-disabled="options.baseCurrency === 'XRP'" uib-typeahead="gateway.address as gateway.name for gateway in gateways | filter: {name: $viewValue, currencies: options.baseCurrency}"> 
+                <span style="color:green" ng-hide="gatewayName(options.baseIssuer) == options.baseIssuer">{{gatewayName(options.baseIssuer)}}</span>
+                <span style="color:red" ng-show="setTradePairForm.baseIssuer.$dirty && setTradePairForm.baseIssuer.$error.rippleValidAddress">Invalid Address!</span>
             </td>
         </tr>
     </table>
@@ -38,17 +30,9 @@
             
             <td>Issuer:</td>
             <td>
-                <div uib-dropdown uib-keyboard-nav>
-                    <input type="text" name="tradeIssuer" ng-model="options.tradeIssuer" size=50 ripple-valid-address ng-required="options.tradeCurrency != 'XRP'" ng-disabled="options.tradeCurrency === 'XRP'">
-                    <button type="button" uib-dropdown-toggle >Gateway<span class="caret"></span></button>
-                    <ul class="uib-dropdown-menu">
-                        <li ng-repeat="gateway in gateways | filter: {currencies: options.tradeCurrency} | orderBy:'name' "><a href="#" ng-click="options.tradeIssuer=gateway.address;">{{gateway.name}}</a></li>
-                        <li class="divider"></li>
-                    </ul>
-                    <br>&nbsp
-                    <span style="color:green">{{gatewayName(options.tradeIssuer)}}</span>                    
-                    <span style="color:red" ng-show="setTradePairForm.tradeIssuer.$dirty && setTradePairForm.tradeIssuer.$error.rippleValidAddress">Invalid Address!</span>
-                </div>
+                <input type="text" name="tradeIssuer" ng-model="options.tradeIssuer" size=50 ripple-valid-address ng-required="options.tradeCurrency != 'XRP'" ng-disabled="options.tradeCurrency === 'XRP'" uib-typeahead="gateway.address as gateway.name for gateway in gateways | filter: {name: $viewValue, currencies: options.tradeCurrency}">
+                <span style="color:green" ng-hide="gatewayName(options.tradeIssuer) == options.tradeIssuer">{{gatewayName(options.tradeIssuer)}}</span>                    
+                <span style="color:red" ng-show="setTradePairForm.tradeIssuer.$dirty && setTradePairForm.tradeIssuer.$error.rippleValidAddress">Invalid Address!</span>
             </td>
             
         </tr>

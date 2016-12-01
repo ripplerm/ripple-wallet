@@ -391,6 +391,15 @@ walletApp.controller('walletCtrl', ['$scope', '$http', '$uibModal', '$localStora
     return account;
   }
 
+  $scope.contactName = function (account) {
+    if (!account) { return ''; }
+    var contacts = $scope.contacts;
+    for (var i=0, l=contacts.length; i<l; i++) {
+      if (account == contacts[i].address) return contacts[i].name;
+    } 
+    return '';
+  }
+
   $scope.accountInfoReset = function () {
       $scope.accountData = null;
       $scope.accountBalances.XRP = null;

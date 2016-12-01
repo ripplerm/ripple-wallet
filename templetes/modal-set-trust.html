@@ -11,14 +11,9 @@
                           <tr>
                             <td>Issuer: </td>
                             <td>
-                              <div uib-dropdown uib-keyboard-nav>
-                                <input type="text" name="issuer" ng-model="options.account" size="50" ripple-valid-address required ng-disabled="options.edit">
-                                <button type="button" uib-dropdown-toggle ng-disabled="options.edit"><span class="caret"></span></button>
-                                <ul class="uib-dropdown-menu">
-                                  <li ng-repeat="gateway in gateways | filter: {currencies: options.currency} | orderBy:'name'"><a href="#" ng-click="options.account=gateway.address;">{{gateway.name}}</a></li>
-                                </ul>                                 
-                                <span style="color:red" ng-show="editTrustlineForm.issuer.$dirty && editTrustlineForm.issuer.$error.rippleValidAddress">Invalid Address!</span> 
-                              </div>
+                              <input type="text" name="issuer" ng-model="options.account" size="50" ripple-valid-address required ng-disabled="options.edit" uib-typeahead="gateway.address as gateway.name for gateway in gateways | filter: {name: $viewValue, currencies: options.currency}">
+                              <span style="color:red" ng-show="editTrustlineForm.issuer.$dirty && editTrustlineForm.issuer.$error.rippleValidAddress">Invalid Address!</span>
+                              <span style="color:green" ng-hide="gatewayName(options.account) == options.account">{{gatewayName(options.account)}}</span> 
                             </td>
                           </tr>                         
                           <tr>
