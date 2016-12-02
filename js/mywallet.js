@@ -13,8 +13,8 @@ var OrderBookUtils = ripple.OrderBookUtils;
 
 // ================= configuration & Global constant  ==================
 
-var CLIENT_VERSION = "rm-0.1.0"
-var INSERT_CLIENT_INFO = true;
+var CLIENT_VERSION = "rm-1.0.0"
+var INSERT_CLIENT_INFO = false;
 
 var DEFAULT_ACCOUNT = "rHb9CJAWyB4rj91VRWn96DkukG4bwdtyTh";
 var DEFAULT_SECRET = "snoPBrXtMeMyMHUVTgbuqAfg1SUTb";
@@ -2439,7 +2439,6 @@ walletApp.controller('walletCtrl', ['$scope', '$http', '$uibModal', '$localStora
   $scope.deleteContact = function (index) {
     $scope.contacts.splice(index, 1);
   }
-
 }]);  // main controller;
 
 
