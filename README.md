@@ -15,6 +15,11 @@ Or, simply open the index.html in browser for local usage.
 ### Demo
 [http://ripplerm.github.io/ripple-wallet/](http://ripplerm.github.io/ripple-wallet/)
 
+### License
+MIT  
+
+* certain dependencies e.g. [highcharts](https://www.highcharts.com/license) are not free for commercial use.
+
 ---
 
 ### Donation
