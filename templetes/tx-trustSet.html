@@ -1,0 +1,59 @@
+              <table class="table table-bordered">
+                <tr>
+                  <td>LimitAmount:</td>
+                  <td>
+                    <table>
+                      <tr>
+                        <td>value:</td>
+                        <td>
+                          <input type="text" size="50" name="LimitAmountValue" placeholder="amount" ng-model="txJson.LimitAmount.value" ng-required="txJson.TransactionType == 'TrustSet'" positive-number>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>currency:</td>
+                        <td>
+                          <input type="text" size="50" name="LimitAmountCurrency" placeholder="currency" ng-model="txJson.LimitAmount.currency" ng-required="txJson.TransactionType == 'TrustSet'" uppercase-only>
+                      </td>
+                      </tr>
+                      <tr>
+                        <td>issuer:</td>
+                        <td>
+                          <input type="text" size="50" name="LimitAmountIssuer" placeholder="address" ng-model="txJson.LimitAmount.issuer" ng-required="txJson.TransactionType == 'TrustSet'" ripple-valid-address uib-typeahead="gateway.address as gateway.name for gateway in gateways | filter: {name: $viewValue, currencies: txJson.LimitAmount.currency}">
+                        </td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+
+                <tr>
+                  <td>
+                    Flags
+                  </td>
+                  <td>
+                    <span ng-repeat="(key, value) in txFlags[txJson.TransactionType]" style="padding-right:2em;">
+                      <input type="checkbox" ng-model="txOptions[key]" ng-change="txOptions[key] ? txSetFlag(key) : txClearFlag(key)">
+                      {{key}}
+                    </span>
+                  </td>
+                </tr>
+
+                <tr>
+                  <td>
+                    <input type="checkbox" ng-model="txOptions.QualityIn" ng-click="txOptions.QualityIn ? '' : txJsonRemove('QualityIn')"> 
+                    QualityIn
+                  </td>
+                  <td>
+                    <input type="number" size="50" name="QualityIn" placeholder="uint32" ng-model="txJson.QualityIn" uint32 ng-disabled="!txOptions.QualityIn" ng-required="txJson.TransactionType == 'TrustSet' && txOptions.QualityIn"> 
+                  </td>
+                </tr>
+
+                <tr>
+                  <td>
+                    <input type="checkbox" ng-model="txOptions.QualityOut" ng-click="txOptions.QualityOut ? '' : txJsonRemove('QualityOut')"> 
+                    QualityOut
+                  </td>
+                  <td>
+                    <input type="number" size="50" name="QualityOut" placeholder="uint32" ng-model="txJson.QualityOut" uint32 ng-disabled="!txOptions.QualityOut" ng-required="txJson.TransactionType == 'TrustSet' && txOptions.QualityOut"> 
+                  </td>
+                </tr>
+              </table> 

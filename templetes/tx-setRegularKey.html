@@ -1,0 +1,11 @@
+              <table class="table table-bordered">
+                <tr>
+                  <td>
+                    <input type="checkbox" ng-model="txOptions.RegularKey" ng-click="txOptions.RegularKey ? '' : txJsonRemove('RegularKey')"> 
+                    RegularKey:
+                  </td>
+                  <td>
+                    <input type="text" size="50" name="RegularKey" placeholder="Ripple Address" ng-model="txJson.RegularKey" ng-disabled="!txOptions.RegularKey" ripple-valid-address> 
+                  </td>
+                </tr>
+              </table> 

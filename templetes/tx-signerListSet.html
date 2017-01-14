@@ -1,0 +1,19 @@
+              <table class="table table-bordered">
+                <tr>
+                  <td>
+                    SignerQuorum:
+                  </td>
+                  <td>
+                    <input type="text" size="20" name="SignerQuorum" placeholder="Uint32" ng-model="txJson.SignerQuorum" disabled ng-required="txJson.TransactionType == 'SignerListSet'">
+                    <button type="button" ng-click="txSetSigners()">Set</button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    SignerEntries:
+                  </td>
+                  <td>
+                    {{txJson.SignerEntries}} 
+                  </td>
+                </tr>
+              </table> 

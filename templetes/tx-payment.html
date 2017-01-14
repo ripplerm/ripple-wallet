@@ -1,0 +1,118 @@
+              <table class="table table-bordered">
+                <tr>
+                  <td>Destination:</td>
+                  <td>
+                    <input type="text" size="50" name="Destination" placeholder="Ripple Address" ng-model="txJson.Destination" ng-required="txJson.TransactionType == 'Payment'"> 
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    DestinationTag:
+                    <input type="checkbox" ng-model="txOptions.DestinationTag" ng-click="txOptions.DestinationTag ? txJson.DestinationTag = 0 : txJsonRemove('DestinationTag')"> 
+                  </td>
+                  <td>
+                    <input type="number" size="50" name="DestinationTag" placeholder="uint32" ng-model="txJson.DestinationTag" uint32 ng-disabled="!txOptions.DestinationTag" ng-required="txOptions.DestinationTag"> 
+                  </td>
+                </tr>
+                <tr>
+                  <td>Amount:</td>
+                  <td>
+                    <input type="checkbox" name="AmountIou" ng-model="txOptions.AmountIou" ng-click="txOptions.AmountIou ? txJson.Amount={} : txJson.Amount=''"> 
+                    IOU
+                    <br>
+                    <input type="text" min="1" size="50" name="AmountXrp" placeholder="drops" ng-model="txJson.Amount" ng-hide="txOptions.AmountIou" ng-required="txJson.TransactionType == 'Payment' && (!txOptions.AmountIou)" xrp-drops> 
+                    <table ng-show="txOptions.AmountIou">
+                      <tr>
+                        <td>value:</td>
+                        <td>
+                          <input type="text" size="50" name="AmountValue" placeholder="amount" ng-model="txJson.Amount.value" ng-required="txOptions.AmountIou" positive-number>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>currency:</td>
+                        <td>
+                          <input type="text" size="50" name="AmountCurrency" placeholder="currency" ng-model="txJson.Amount.currency" ng-required="txOptions.AmountIou" uppercase-only>
+                      </td>
+                      </tr>
+                      <tr>
+                        <td>issuer:</td>
+                        <td>
+                          <input type="text" size="50" name="AmountIssuer" placeholder="address" ng-model="txJson.Amount.issuer" ng-required="txOptions.AmountIou" ripple-valid-address uib-typeahead="gateway.address as gateway.name for gateway in gateways | filter: {name: $viewValue, currencies: txJson.Amount.currency}">
+                        </td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    SendMax: 
+                    <input type="checkbox" ng-model="txOptions.SendMax" ng-click="txOptions.SendMax ? '' : txJsonRemove('SendMax')"> 
+                  </td>
+                  <td>
+                    <input type="checkbox" name="SendMaxIou" ng-model="txOptions.SendMaxIou" ng-click="txOptions.SendMaxIou ? txJson.SendMax={} : txJson.SendMax=''"> 
+                    IOU
+                    <br>
+                    <input type="text" size="50" placeholder="drops" ng-model="txJson.SendMax" ng-disabled="!txOptions.SendMax" ng-hide="txOptions.SendMaxIou" ng-required="txOptions.SendMax && (!txOptions.SendMaxIou)" xrp-drops>
+                    <table ng-show="txOptions.SendMaxIou">
+                      <tr>
+                        <td>value:</td>
+                        <td>
+                          <input type="text" size="50" placeholder="amount" ng-model="txJson.SendMax.value" ng-disabled="!txOptions.SendMax" ng-required="txOptions.SendMax && txOptions.SendMaxIou" positive-number>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>currency:</td>
+                        <td>
+                          <input type="text" size="50" placeholder="currency" ng-model="txJson.SendMax.currency" ng-disabled="!txOptions.SendMax" ng-required="txOptions.SendMax && txOptions.SendMaxIou" uppercase-only>
+                      </td>
+                      </tr>
+                      <tr>
+                        <td>issuer:</td>
+                        <td>
+                          <input type="text" size="50" placeholder="address" ng-model="txJson.SendMax.issuer" ng-disabled="!txOptions.SendMax" ng-required="txOptions.SendMax && txOptions.SendMaxIou" ripple-valid-address uib-typeahead="gateway.address as gateway.name for gateway in gateways | filter: {name: $viewValue, currencies: txJson.SendMax.currency}">
+                        </td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    Flags
+                  </td>
+                  <td>
+                    <span ng-repeat="(key, value) in txFlags[txJson.TransactionType]" style="padding-right:2em;">
+                      <input type="checkbox" ng-model="txOptions[key]" ng-change="txOptions[key] ? txSetFlag(key) : txClearFlag(key); txOptions.PartialPayment ? '' : txJsonRemove('DeliverMin')">
+                      {{key}}
+                    </span>
+                  </td>
+                </tr>
+                <tr ng-show="txOptions.PartialPayment">
+                  <td>
+                    DeliverMin:
+                    <input type="checkbox" ng-model="txOptions.DeliverMin" ng-click="txOptions.DeliverMin ? '': txJsonRemove('DeliverMin')">
+                  </td>
+                  <td>
+                    <input type="text" size="50" placeholder="drops" ng-model="txJson.DeliverMin" ng-disabled="!txOptions.DeliverMin" ng-hide="txOptions.AmountIou" ng-required="txJson.DeliverMin && (!txOptions.AmountIou)" xrp-drops>
+                    <table ng-show="txOptions.AmountIou">
+                      <tr>
+                        <td>value:</td>
+                        <td>
+                          <input type="text" size="50" placeholder="amount" ng-model="txJson.DeliverMin.value" ng-disabled="!txOptions.DeliverMin" ng-required="txJson.DeliverMin && txOptions.AmountIou" positive-number>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>currency:</td>
+                        <td>
+                          <input type="text" size="50" placeholder="currency" ng-model="txJson.DeliverMin.currency" ng-disabled="!txOptions.DeliverMin" ng-required="txJson.DeliverMin && txOptions.AmountIou" uppercase-only>
+                      </td>
+                      </tr>
+                      <tr>
+                        <td>issuer:</td>
+                        <td>
+                          <input type="text" size="50" placeholder="address" ng-model="txJson.DeliverMin.issuer" ng-disabled="!txOptions.DeliverMin" ng-required="txJson.DeliverMin && txOptions.AmountIou" ripple-valid-address uib-typeahead="gateway.address as gateway.name for gateway in gateways | filter: {name: $viewValue, currencies: txJson.DeliverMin.currency}">
+                        </td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+              </table> 

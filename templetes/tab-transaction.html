@@ -1,0 +1,111 @@
+
+        <div id="tabTransaction">
+          <span style="font-weight:bold; font-size:20pt; padding-right:2em;">Construct Raw Transaction: </span>
+          <br>
+          Import tx_blob: <input type="file" onchange="angular.element(this).scope().txImport(this)">
+          <br>
+          <form name="txForm" id="txForm" novalidate>
+          <table class="table table-bordered">
+            <tr>
+              <td>Account:</td>
+              <td>
+                <input type="text" size="50" name="Account" placeholder="Ripple Address" ng-model="txJson.Account" required> 
+                <button ng-click="txSetAccount()">wallet account</button>
+              </td>
+            </tr>
+            <tr>
+              <td>Sequence:</td>
+              <td>
+                <input type="number" size="10" name="Sequence" placeholder="Uint32" min="1" ng-model="txJson.Sequence" uint32 required> 
+              </td>
+            </tr>
+            <tr>
+              <td>Fee:</td>
+              <td>
+                <input type="text" size="20" name="Fee" placeholder="drops" ng-model="txJson.Fee" xrp-drops required> 
+              </td>
+            </tr>
+            <tr>
+              <td>Flags:</td>
+              <td>
+                <input type="number" size="10" name="Flags" ng-model="txJson.Flags" uint32 disabled> 
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <input type="checkbox" ng-model="txOptions.LastLedgerSequence" ng-click="txOptions.LastLedgerSequence ? '' : txJsonRemove('LastLedgerSequence')">
+                LastLedgerSequence:
+              </td>
+              <td>
+                <input type="number" name="LastLedgerSequence" size="10" placeholder="Uint32" min="1" ng-model="txJson.LastLedgerSequence" ng-disabled="!txOptions.LastLedgerSequence" uint32 ng-required="txOptions.LastLedgerSequence">
+                <button ng-click="txLastLedgerSequence()" ng-disabled="!txOptions.LastLedgerSequence">Last-Closed-Ledger</button>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <input type="checkbox" ng-model="txOptions.SourceTag" ng-click="txOptions.SourceTag ? '' : txJsonRemove('SourceTag')">                
+                SourceTag:
+              </td>
+              <td>
+                <input type="number" name="SourceTag" size="10" placeholder="Uint32" min="1" ng-model="txJson.SourceTag" ng-disabled="!txOptions.SourceTag" uint32 ng-required="txOptions.SourceTag"> 
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <input type="checkbox" ng-model="txOptions.AccountTxnID" ng-click="txOptions.AccountTxnID ? '' : txJsonRemove('AccountTxnID')">                
+                AccountTxnID:
+              </td>
+              <td>
+                <input type="text" name="AccountTxnID" size="100" placeholder="hash256" ng-model="txJson.AccountTxnID" ng-disabled="!txOptions.AccountTxnID" ng-required="txOptions.AccountTxnID"> 
+              </td>
+            </tr>
+          </table>
+          <h4>Transaction Types: </h4>
+          <uib-tabset type="pills">
+            <uib-tab ng-repeat="tx in transactions" heading="{{tx.type}}" select="txJsonReset(); txJson.TransactionType = tx.type" active="txActive[tx.type]">
+              <div ng-include="tx.templete"></div>             
+            </uib-tab>          
+          </uib-tabset>
+
+          <h4>Signing: </h4>
+          <table class="table table-bordered">
+            <tr>
+              <td> 
+                multi-signature: 
+                <input type="checkbox" ng-model="txOptions.isMultiSign"> 
+              </td>
+              <td> 
+                signAs: 
+                <input type="text" name="signAs" size="50" placeholder="signer Address" ng-model="txOptions.signAs" ng-disabled="!txOptions.isMultiSign" ng-required="txOptions.isMultiSign" ripple-valid-address> 
+              </td>
+            </tr>
+            <tr>
+              <td> </td>
+              <td> 
+                secret: 
+                <input type="text" name="secret" size="50" placeholder="secret" ng-model="txOptions.secret" required ripple-valid-secret>
+                <button ng-click="txSetSecret()">wallet secret</button> 
+              </td>
+            </tr>
+          </table>
+
+          <button type="button" class="btn btn-info" ng-disabled="txForm.$invalid" ng-click="txSign()">Sign</button>
+          <table class="table table-bordered" style="width:800px; table-layout:fixed">
+            <tr>
+              <td style="word-wrap:break-word"> 
+                tx_json: 
+                <json-formatter json="txJson" open="1"></json-formatter> 
+              </td>
+            </tr>
+            <tr>
+              <td style="word-wrap:break-word"> 
+                blob: 
+                  <button ng-click="txBlobSave()">Save to File</button>
+                <br>
+                {{txBlob}}
+              </td>
+            </tr>
+          </table>
+
+          </form>
+        </div>

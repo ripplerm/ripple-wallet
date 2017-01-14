@@ -272,6 +272,7 @@ walletApp.controller('walletCtrl', ['$scope', '$http', '$uibModal', '$localStora
                    };                    
 
   $scope.flags = Remote.flags;
+  $scope.txFlags = ripple.Transaction.flags;
 
   $scope.remote = remote;
   
@@ -293,6 +294,8 @@ walletApp.controller('walletCtrl', ['$scope', '$http', '$uibModal', '$localStora
                   {title: 'Offers', templete:'templetes/tab-offers.html', select: function () {$scope.offerPageLoad();} },
                   {title: 'History', templete:'templetes/tab-history.html', select: function () {$scope.historyPageLoad();} },
                   {title: 'Settings', templete:'templetes/tab-settings.html', select: function () {} },
+                  {title: 'Raw Txn', templete:'templetes/tab-transaction.html', select: function () {} },
+                  {title: 'Submit', templete:'templetes/tab-submit.html', select: function () {} },
                 ]
 
   $scope.alerts = [];
@@ -301,8 +304,161 @@ walletApp.controller('walletCtrl', ['$scope', '$http', '$uibModal', '$localStora
   $scope.network = 'MAIN';
   $scope.state = 'offline'
 
-  $scope.filename = 'ripple-wallet-profile.txt';
+  $scope.transactions = [ 
+    { type: 'AccountSet', templete: 'templetes/tx-accountSet.html'},
+    { type: 'SetRegularKey', templete: 'templetes/tx-setRegularKey.html'},
+    { type: 'SignerListSet', templete: 'templetes/tx-signerListSet.html'},
+    { type: 'TrustSet', templete: 'templetes/tx-trustSet.html'},
+    { type: 'Payment', templete: 'templetes/tx-payment.html'},
+    { type: 'OfferCreate', templete: 'templetes/tx-offerCreate.html'},
+    { type: 'OfferCancel', templete: 'templetes/tx-offerCancel.html'},
+  ];
+  $scope.txActive = {AccountSet: true};
 
+  $scope.txSetSigners = function () {
+    function formatSignerEntry (signer) {
+      return {
+        SignerEntry: {
+          Account: signer.address,
+          SignerWeight: signer.weight
+        }      
+      }      
+    }
+    $scope.prepareSetSignerList(function (options){
+      $scope.txJson.SignerQuorum = options.quorum;
+      if (options.quorum) {
+        $scope.txJson.SignerEntries = options.signers.map(formatSignerEntry);
+      } else {
+        delete $scope.txJson.SignerEntries; 
+      }
+    })
+  };
+  $scope.txSetAccount = function () {
+    $scope.txJson.Account = $scope.activeAccount;
+  };
+  $scope.txLastLedgerSequence = function () {
+    $scope.txJson.LastLedgerSequence = $scope.ledgerIndex;
+  };
+  $scope.txSetSecret = function () {
+    $scope.txOptions.secret = remote.secrets[$scope.activeAccount];
+  };
+  $scope.txSetExpirationNow = function () {
+    var now = Date.now();
+    $scope.txJson.Expiration = Utils.time.toRipple(now);
+  };
+  $scope.txExpirationAddHour = function () {
+    $scope.txJson.Expiration += 3600;
+  };
+  $scope.txExpirationAddDay = function () {
+    $scope.txJson.Expiration += (24 * 3600);
+  };
+
+  $scope.txJsonReset = function () {
+    if (!$scope.txJson) $scope.txJson = {};
+    var newJson = {};
+    newJson.Flags = 0x80000000;
+    ['Account', 'Sequence', 'Fee', 'LastLedgerSequence', 'SourceTag', 'AccountTxnID'].forEach(function (field) {
+      if ($scope.txJson[field]) newJson[field] = $scope.txJson[field];
+    })
+    $scope.txJson = newJson;
+
+    if (!$scope.txOptions) $scope.txOptions = {};
+    var newOptions = {};
+    ['LastLedgerSequence', 'SourceTag', 'AccountTxnID', 'secret', 'signAs', 'isMultiSign'].forEach(function (field) {
+      if ($scope.txOptions[field]) newOptions[field] = $scope.txOptions[field];
+    });
+    $scope.txOptions = newOptions;
+    $scope.txBlob = '';
+  }
+  $scope.txJsonRemove = function (field) {
+    delete $scope.txJson[field];
+  }
+  $scope.txSetFlag = function (flag) {
+    var flagValue = ripple.Transaction.flags[$scope.txJson.TransactionType][flag];
+    if (!flagValue) return;
+    $scope.txJson.Flags |= flagValue;
+    $scope.txJson.Flags = $scope.txJson.Flags >>> 0;
+  }
+  $scope.txClearFlag = function (flag) {
+    var flagValue = ripple.Transaction.flags[$scope.txJson.TransactionType][flag];
+    if (!flagValue) return;
+    $scope.txJson.Flags &= (~flagValue);
+    $scope.txJson.Flags = $scope.txJson.Flags >>> 0;
+  }
+  $scope.txSign = function () {
+    $scope.txError = '';
+
+    var tx = remote.transaction();
+    tx.on('error', function (e) {
+      if (e && e.result) $scope.txError = e.result;
+    })
+    tx._setFixedFee = true;
+    tx.tx_json = $scope.txJson;
+    tx._secret = $scope.txOptions.secret;
+
+    // Removing existing signature    
+    delete tx.tx_json.SigningPubKey;
+    delete tx.tx_json.TxnSignature;
+
+    var signAs = $scope.txOptions.signAs;
+    if ($scope.txOptions.isMultiSign) {
+      tx._multiSign = true;
+      if (Array.isArray(tx.tx_json.Signers)) {
+        var signers = tx.tx_json.Signers;
+        for (var i=signers.length - 1; i>=0; i--) {
+          if (signers[i].Signer.Account === signAs) signers.splice(i,1);
+        }
+      }
+    } else {
+      delete tx.tx_json.Signers;
+    }
+
+    if (! tx.complete())  return; 
+
+    if (! tx._multiSign) tx.sign();
+    else tx.multiSignFor(signAs);
+
+    $scope.txBlob = tx.serialize().to_hex();
+  }
+  $scope.txBlobSave = function () {
+    var blob = new Blob([$scope.txBlob], {type: "text/json;charset=utf-8"});
+    saveAs(blob, 'tx-blob.txt');
+  }
+  $scope.txImport = function (element) {
+    var file = element.files[0];
+    var reader = new FileReader();
+    reader.onload = function(e) {
+      try {
+        var tx = new ripple.SerializedObject(reader.result).to_json();
+        $scope.txJson = tx;
+        $scope.txActive[tx.TransactionType] = true;
+      } catch (e) {};
+      $scope.$apply();
+    };
+    reader.readAsText(file);
+  }
+  $scope.txSubmitBlob = {};
+  $scope.txSubmitImport = function (element) {
+    var file = element.files[0];
+    var reader = new FileReader();
+    reader.onload = function(e) {
+      $scope.txSubmitBlob = {blob: reader.result};
+      $scope.txSubmitResponse = '';
+      $scope.$apply();
+    };
+    reader.readAsText(file);
+  }
+  $scope.txSubmit = function () {
+    $scope.txSubmitResponse = 'submitting...';
+    var submitRequest = remote.requestSubmit();
+    submitRequest.tx_blob($scope.txSubmitBlob.blob);
+    submitRequest.once('success', function (res) {
+      $scope.txSubmitResponse = res.engine_result + ': ' + res.engine_result_message;
+    });
+    submitRequest.broadcast().request();
+  }
+
+  $scope.filename = 'ripple-wallet-profile.txt';
   $scope.exportProfile = function () {
     var data = JSON.stringify($scope.$storage, null, 2);
     var blob = new Blob([data], {type: "text/json;charset=utf-8"});
@@ -1186,7 +1342,7 @@ walletApp.controller('walletCtrl', ['$scope', '$http', '$uibModal', '$localStora
 
 
   // =============  modal Set Signer List =====================
-  $scope.prepareSetSignerList = function () {
+  $scope.prepareSetSignerList = function (callback) {
     var options = {
       signers: [],
       weightSum: function () {
@@ -1211,6 +1367,7 @@ walletApp.controller('walletCtrl', ['$scope', '$http', '$uibModal', '$localStora
     });
 
     modalInstance.result.then(function (options) {
+      if (typeof callback == 'function') return callback(options);
       $scope.setSignerList(options);
     }, function () {
       // do nothing; 
@@ -2545,7 +2702,7 @@ walletApp.directive('uint32', function () {
   return {
     require: 'ngModel', 
     link: function (scope, element, attr, ctrl) {
-      ctrl.$validators.positiveNumber = function(modelValue, viewValue) {
+      ctrl.$validators.uint32 = function(modelValue, viewValue) {
         if (ctrl.$isEmpty(modelValue)) {
           return true;
         }
@@ -2553,6 +2710,29 @@ walletApp.directive('uint32', function () {
         if (/^\d+$/.test(modelValue)) { 
           var value = Number(modelValue);  
           if (value >= 0 && value <= 4294967295) return true;
+        }
+
+        return false;
+      }
+    }
+  }
+});
+
+walletApp.directive('xrpDrops', function () {
+  return {
+    require: 'ngModel', 
+    link: function (scope, element, attr, ctrl) {
+      ctrl.$validators.xrpDrops = function(modelValue, viewValue) {
+        if (ctrl.$isEmpty(modelValue)) {
+          return true;
+        }
+        if (typeof modelValue == 'object') {
+          return true;
+        }
+        
+        if (/^\d+$/.test(modelValue)) { 
+          var value = Number(modelValue);  
+          if (value > 0 && value < 1e17) return true;
         }
 
         return false;

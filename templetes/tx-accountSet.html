@@ -1,0 +1,56 @@
+              <table class="table table-bordered">
+                <tr>
+                  <td>
+                    <input type="checkbox" ng-model="txOptions.Domain" ng-click="txOptions.Domain ? txJson.Domain='' : txJsonRemove('Domain')"> 
+                    Domain:
+                  </td>
+                  <td>
+                    <input type="text" size="50" name="Domain" placeholder="Hex string of ASCII" ng-model="txJson.Domain" ng-disabled="!txOptions.Domain"> 
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <input type="checkbox" ng-model="txOptions.EmailHash" ng-click="txOptions.EmailHash ? txJson.EmailHash='' : txJsonRemove('EmailHash')">
+                    EmailHash:
+                  </td>
+                  <td>
+                    <input type="text" size="50" name="EmailHash" placeholder="Hash128" ng-model="txJson.EmailHash" ng-disabled="!txOptions.EmailHash"> 
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <input type="checkbox" ng-model="txOptions.MessageKey" ng-click="txOptions.MessageKey ? txJson.MessageKey='' : txJsonRemove('MessageKey')">
+                    MessageKey:
+                  </td>
+                  <td>
+                    <input type="text" size="50" name="MessageKey" placeholder="33-byte hex string of PubKey" ng-model="txJson.MessageKey" ng-disabled="!txOptions.MessageKey"> 
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <input type="checkbox" ng-model="txOptions.TransferRate" ng-click="txOptions.TransferRate ? txJson.TransferRate=0 : txJsonRemove('TransferRate')">
+                    TransferRate:
+                  </td>
+                  <td>
+                    <input type="number" size="20" name="TransferRate" placeholder="UInt32" ng-model="txJson.TransferRate" uint32 ng-disabled="!txOptions.TransferRate"> 
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <input type="checkbox" ng-model="txOptions.SetFlag" ng-click="txOptions.SetFlag ? txJson.SetFlag=0 : txJsonRemove('SetFlag')">
+                    SetFlag:
+                  </td>
+                  <td>
+                    <input type="number" size="20" name="SetFlag" min="1" max="8" placeholder="UInt32" ng-model="txJson.SetFlag" uint32 ng-disabled="!txOptions.SetFlag"> 
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <input type="checkbox" ng-model="txOptions.ClearFlag" ng-click="txOptions.ClearFlag ? txJson.ClearFlag=0 : txJsonRemove('ClearFlag')">
+                    ClearFlag:
+                  </td>
+                  <td>
+                    <input type="number" size="20" name="ClearFlag" min="1" max="8" placeholder="UInt32" ng-model="txJson.ClearFlag" uint32 ng-disabled="!txOptions.ClearFlag"> 
+                  </td>
+                </tr>
+              </table> 

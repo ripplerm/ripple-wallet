@@ -1,0 +1,94 @@
+              <table class="table table-bordered">
+                <tr>
+                  <td>TakerGets:</td>
+                  <td>
+                    <input type="checkbox" name="TakerGetsIou" ng-model="txOptions.TakerGetsIou" ng-click="txOptions.TakerGetsIou ? txJson.TakerGets={} : txJson.TakerGets=''"> 
+                    IOU
+                    <br>
+                    <input type="text" min="1" size="50" name="TakerGetsXrp" placeholder="drops" ng-model="txJson.TakerGets" ng-hide="txOptions.TakerGetsIou" ng-required="txJson.TransactionType == 'OfferCreate' && (!txOptions.TakerGetsIou)" xrp-drops> 
+                    <table ng-show="txOptions.TakerGetsIou">
+                      <tr>
+                        <td>value:</td>
+                        <td>
+                          <input type="text" size="50" name="TakerGetsValue" placeholder="amount" ng-model="txJson.TakerGets.value" ng-required="txOptions.TakerGetsIou" positive-number>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>currency:</td>
+                        <td>
+                          <input type="text" size="50" name="TakerGetsCurrency" placeholder="currency" ng-model="txJson.TakerGets.currency" ng-required="txOptions.TakerGetsIou" uppercase-only>
+                      </td>
+                      </tr>
+                      <tr>
+                        <td>issuer:</td>
+                        <td>
+                          <input type="text" size="50" name="TakerGetsIssuer" placeholder="address" ng-model="txJson.TakerGets.issuer" ng-required="txOptions.TakerGetsIou" ripple-valid-address uib-typeahead="gateway.address as gateway.name for gateway in gateways | filter: {name: $viewValue, currencies: txJson.TakerGets.currency}">
+                        </td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+
+                <tr>
+                  <td>TakerPays:</td>
+                  <td>
+                    <input type="checkbox" name="TakerPaysIou" ng-model="txOptions.TakerPaysIou" ng-click="txOptions.TakerPaysIou ? txJson.TakerPays={} : txJson.TakerPays=''"> 
+                    IOU
+                    <br>
+                    <input type="text" min="1" size="50" name="TakerPaysXrp" placeholder="drops" ng-model="txJson.TakerPays" ng-hide="txOptions.TakerPaysIou" ng-required="txJson.TransactionType == 'OfferCreate' && (!txOptions.TakerPaysIou)" xrp-drops> 
+                    <table ng-show="txOptions.TakerPaysIou">
+                      <tr>
+                        <td>value:</td>
+                        <td>
+                          <input type="text" size="50" name="TakerPaysValue" placeholder="amount" ng-model="txJson.TakerPays.value" ng-required="txOptions.TakerPaysIou" positive-number>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>currency:</td>
+                        <td>
+                          <input type="text" size="50" name="TakerPaysCurrency" placeholder="currency" ng-model="txJson.TakerPays.currency" ng-required="txOptions.TakerPaysIou" uppercase-only>
+                      </td>
+                      </tr>
+                      <tr>
+                        <td>issuer:</td>
+                        <td>
+                          <input type="text" size="50" name="TakerPaysIssuer" placeholder="address" ng-model="txJson.TakerPays.issuer" ng-required="txOptions.TakerPaysIou" ripple-valid-address uib-typeahead="gateway.address as gateway.name for gateway in gateways | filter: {name: $viewValue, currencies: txJson.TakerPays.currency}">
+                        </td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+
+                <tr>
+                  <td>
+                    Flags
+                  </td>
+                  <td>
+                    <span ng-repeat="(key, value) in txFlags[txJson.TransactionType]" style="padding-right:2em;">
+                      <input type="checkbox" ng-model="txOptions[key]" ng-change="txOptions[key] ? txSetFlag(key) : txClearFlag(key)">
+                      {{key}}
+                    </span>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <input type="checkbox" ng-model="txOptions.Expiration" ng-click="txOptions.Expiration ? '' : txJsonRemove('Expiration')"> 
+                    Expiration
+                  </td>
+                  <td>
+                    <input type="number" size="50" name="Expiration" placeholder="uint32" ng-model="txJson.Expiration" uint32 ng-disabled="!txOptions.Expiration" ng-required="txJson.TransactionType == 'OfferCreate' && txOptions.Expiration">
+                    <button ng-click="txSetExpirationNow()" ng-disabled="!txOptions.Expiration">now</button>
+                    <button ng-click="txExpirationAddHour()" ng-disabled="!txJson.Expiration">+1Hour</button>
+                    <button ng-click="txExpirationAddDay()" ng-disabled="!txJson.Expiration">+1Day</button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <input type="checkbox" ng-model="txOptions.OfferSequence" ng-click="txOptions.OfferSequence ? '' : txJsonRemove('OfferSequence')"> 
+                    OfferSequence
+                  </td>
+                  <td>
+                    <input type="number" size="50" name="OfferSequence" placeholder="uint32" ng-model="txJson.OfferSequence" uint32 ng-disabled="!txOptions.OfferSequence" ng-required="txJson.TransactionType == 'OfferCreate' && txOptions.OfferSequence"> 
+                  </td>
+                </tr>
+              </table> 
