@@ -815,13 +815,17 @@ walletApp.controller('walletCtrl', ['$scope', '$http', '$uibModal', '$localStora
       var index = Number(new_options.index) || 0;
 
       if (secret) {
+        var key = undefined;
         var seed = Seed.from_json(secret);
-        var key = seed.get_key(index);
-        var address = key.get_address().to_json();
-
+        if (seed.is_valid()) {
+          key = seed.get_key(index);  
+        } else {
+          key = KeyPair.from_json(secret);
+        }
+        if (!key || !(key.is_valid())) return;
         options.secret = secret;
         options.index = index;
-        options.address = address;
+        options.address = key.to_address_string();
       }
       
     }, function () {
@@ -868,7 +872,7 @@ walletApp.controller('walletCtrl', ['$scope', '$http', '$uibModal', '$localStora
 
       $scope.activeAccount = account;
       $scope.walletAccount = $scope.remote.account(account);
-      if (secret) remote.setSecret(account, secret);      
+      if (secret) $scope.setWalletSecret({secret: secret});
 
       $scope.addAccountHistory($scope.activeAccount);      
       $scope.accountInfo();
@@ -900,26 +904,23 @@ walletApp.controller('walletCtrl', ['$scope', '$http', '$uibModal', '$localStora
     });    
   }
 
+  $scope.secrets = {};
   $scope.setWalletSecret = function (options) {
     var secret = options.secret;
-    remote.setSecret($scope.activeAccount, secret);
+    var account = $scope.activeAccount;
+    if (Seed.is_valid(secret)) {
+      remote.setSecret(account, secret);
+    } else if (KeyPair.is_valid(secret)) {
+      // remove existing secrets
+      delete remote.secrets[account];
+      remote.setKey(account, secret)
+    }
+    $scope.secrets[account] = secret;
   }
 
   $scope.addAccountHistory = function (address) {
     if ($scope.accountHistory.indexOf(address) < 0) $scope.accountHistory.unshift(address);
     if ($scope.accountHistory.length > HISTORY_MAX) $scope.accountHistory.splice(HISTORY_MAX);
-  }
-
-  $scope.setSecret = function () {
-    var secret = $scope.formSecret;
-
-    if (secret[0] != 's' || !Seed.from_json(secret).is_valid()) {
-      return alert('Invalid Secret!')
-    };
-
-    remote.setSecret($scope.activeAccount, secret);
-    $scope.editSecret = false;
-    $scope.formSecret = '';
   }
 
   $scope.currencyName = function (currency) {
@@ -2751,8 +2752,9 @@ walletApp.directive('rippleValidSecret', function () {
     link: function (scope, element, attr, ctrl) {
       ctrl.$validators.rippleValidSecret = function(modelValue, viewValue) {
         if (ctrl.$isEmpty(modelValue)) return true;
-
-        return (modelValue[0] == 's' && Seed.from_json(modelValue).is_valid()) 
+        if (Seed.is_valid(modelValue)) return true;
+        if (KeyPair.is_valid(modelValue)) return true;
+        return false; 
       }
     }
   }

@@ -8,7 +8,7 @@
             <table>
               <tr>
                 <td>Secret:</td>
-                <td><input type="text" name="secret" ng-model="options.secret" size=50 ripple-valid-secret required autofocus> <span style="color:red" ng-show="generateAccountForm.secret.$dirty && generateAccountForm.secret.$error.rippleValidSecret">Invalid Secret!</span>  </td>
+                <td><input type="text" name="secret" ng-model="options.secret" size=80 placeholder="seed / privatekey  ( hex / base58 / rfc1751 )" ripple-valid-secret required autofocus> <span style="color:red" ng-show="generateAccountForm.secret.$dirty && generateAccountForm.secret.$error.rippleValidSecret">Invalid Secret!</span>  </td>
               </tr>              
             </table>
           </form><br>

@@ -48,11 +48,11 @@
     <button class="btn btn-primary" ng-click="prepareSetWalletAccount()"><span class="glyphicon glyphicon-pencil"> Change</button></span>
 
     <br>
-    secret set: <font color="{{remote.secrets[activeAccount] ? 'green' : 'red' }}">{{remote.secrets[activeAccount] ? "&#10004" : "&#10008"}}</font>
-    <button ng-click="prepareSetWalletSecret()"><span class="glyphicon glyphicon-pencil"></span> {{remote.secrets[activeAccount] ? 'Change' : 'Set' }}</button>
-    <button ng-show="remote.secrets[activeAccount]" ng-click="showSecret = !showSecret">{{showSecret ? "Hide" : "Show"}}</button> {{remote.secrets[activeAccount] && showSecret ? remote.secrets[activeAccount] : '' }} 
+    secret set: <font color="{{secrets[activeAccount] ? 'green' : 'red' }}">{{secrets[activeAccount] ? "&#10004" : "&#10008"}}</font>
+    <button ng-click="prepareSetWalletSecret()"><span class="glyphicon glyphicon-pencil"></span> {{secrets[activeAccount] ? 'Change' : 'Set' }}</button>
+    <button ng-show="secrets[activeAccount]" ng-click="showSecret = !showSecret">{{showSecret ? "Hide" : "Show"}}</button> {{secrets[activeAccount] && showSecret ? secrets[activeAccount] : '' }} 
     <hr>
-      
+
     <!-- Tabs -->
     <uib-tabset>
       <uib-tab ng-repeat="tab in tabs" heading="{{tab.title}}" active="tab.active" disable="tab.disabled" select="tab.select()">
