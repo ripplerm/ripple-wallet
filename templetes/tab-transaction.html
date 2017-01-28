@@ -105,6 +105,9 @@
                   <button type="button" ng-click="txBlobSave()">Save to File</button>
                 <br>
                 {{txBlob}}
+                <div style="text-align:center;">
+                  <qrcode version="{{txBlob.length > 500 ? 22 : 12 }}" error-correction-level="L" size="{{txBlob.length > 500 ? 420 : 260 }}" data="{{txBlob}}" download></qrcode>
+                </div>
               </td>
             </tr>
           </table>

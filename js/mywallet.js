@@ -1,4 +1,4 @@
-var walletApp = angular.module('walletApp', ['ui.bootstrap', 'jsonFormatter', 'ngStorage']);
+var walletApp = angular.module('walletApp', ['ui.bootstrap', 'jsonFormatter', 'ngStorage', 'monospaced.qrcode']);
 
 var Remote = ripple.Remote;
 var Seed = ripple.Seed;
