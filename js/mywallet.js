@@ -1099,8 +1099,14 @@ walletApp.controller('walletCtrl', ['$scope', '$http', '$uibModal', '$localStora
     if (payment.pathFindSeparateIssuer) {
       var lines = $scope.trustlines;
       if (lines) {
+        var len = lines.length;
+        if (len > 15) {
+          // if there's too many trustlines, take 15 highest balance.
+          lines.sort(function (a,b) {return b.balance - a.balance});
+          len = 15;
+        }
         sourceCurrencies.push({currency: 'XRP'});
-        for (var i = 0; i < lines.length; i++) {
+        for (var i = 0; i < len; i++) {
           sourceCurrencies.push({
             currency: lines[i].currency,
             issuer: lines[i].account
@@ -1527,10 +1533,10 @@ walletApp.controller('walletCtrl', ['$scope', '$http', '$uibModal', '$localStora
     }
 
     if (settings.editMessageKey) {
-      transaction.tx_json.messageKey = settings.messageKey ? settings.messageKey : '';
+      transaction.tx_json.MessageKey = settings.messageKey ? settings.messageKey : '';
     }
 
-    if (settings.memos) transaction.tx_json.memos = settings.memos;   
+    if (settings.memos) transaction.tx_json.Memos = settings.memos;   
 
     $scope.accountSetLog = {};
     $scope.submitTransaction({transaction:transaction, log: $scope.accountSetLog});
