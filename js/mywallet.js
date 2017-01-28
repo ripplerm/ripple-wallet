@@ -295,8 +295,7 @@ walletApp.controller('walletCtrl', ['$scope', '$http', '$uibModal', '$localStora
                   {title: 'Offers', templete:'templetes/tab-offers.html', select: function () {$scope.offerPageLoad();} },
                   {title: 'History', templete:'templetes/tab-history.html', select: function () {$scope.historyPageLoad();} },
                   {title: 'Settings', templete:'templetes/tab-settings.html', select: function () {} },
-                  {title: 'Raw Txn', templete:'templetes/tab-transaction.html', select: function () {} },
-                  {title: 'Submit', templete:'templetes/tab-submit.html', select: function () {} },
+                  {title: 'Tools', templete:'templetes/tab-tools.html', select: function () {} },
                 ]
 
   $scope.alerts = [];
@@ -304,6 +303,11 @@ walletApp.controller('walletCtrl', ['$scope', '$http', '$uibModal', '$localStora
   $scope.networks = ['MAIN', 'TEST'];
   $scope.network = 'MAIN';
   $scope.state = 'offline'
+
+  $scope.tools = [ 
+    {title: 'Raw Txn', templete:'templetes/tab-transaction.html'},
+    {title: 'Submit', templete:'templetes/tab-submit.html'},
+  ];
 
   $scope.transactions = [ 
     { type: 'AccountSet', templete: 'templetes/tx-accountSet.html'},

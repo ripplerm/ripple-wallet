@@ -1,0 +1,9 @@
+        <div id="tabSettings">
+		    <span style="font-weight:bold; font-size:20pt; padding-right:1em;">Tools: </span>
+		    <br><br>
+		    <uib-tabset>
+		      <uib-tab ng-repeat="tool in tools" heading="{{tool.title}}" select="tool.select()">
+		        <div ng-include="tool.templete"></div>
+		      </uib-tab>
+		    </uib-tabset>
+        </div>
