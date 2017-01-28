@@ -49,7 +49,7 @@
                     <input type="checkbox" ng-model="txOptions.SendMax" ng-click="txOptions.SendMax ? '' : txJsonRemove('SendMax')"> 
                   </td>
                   <td>
-                    <input type="checkbox" name="SendMaxIou" ng-model="txOptions.SendMaxIou" ng-click="txOptions.SendMaxIou ? txJson.SendMax={} : txJson.SendMax=''"> 
+                    <input type="checkbox" name="SendMaxIou" ng-model="txOptions.SendMaxIou" ng-click="txOptions.SendMaxIou ? txJson.SendMax={} : txJson.SendMax=''" ng-disabled="!txOptions.SendMax"> 
                     IOU
                     <br>
                     <input type="text" size="50" placeholder="drops" ng-model="txJson.SendMax" ng-disabled="!txOptions.SendMax" ng-hide="txOptions.SendMaxIou" ng-required="txOptions.SendMax && (!txOptions.SendMaxIou)" xrp-drops>

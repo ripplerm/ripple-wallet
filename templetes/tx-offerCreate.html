@@ -77,9 +77,9 @@
                   </td>
                   <td>
                     <input type="number" size="50" name="Expiration" placeholder="uint32" ng-model="txJson.Expiration" uint32 ng-disabled="!txOptions.Expiration" ng-required="txJson.TransactionType == 'OfferCreate' && txOptions.Expiration">
-                    <button ng-click="txSetExpirationNow()" ng-disabled="!txOptions.Expiration">now</button>
-                    <button ng-click="txExpirationAddHour()" ng-disabled="!txJson.Expiration">+1Hour</button>
-                    <button ng-click="txExpirationAddDay()" ng-disabled="!txJson.Expiration">+1Day</button>
+                    <button type="button" ng-click="txSetExpirationNow()" ng-disabled="!txOptions.Expiration">now</button>
+                    <button type="button" ng-click="txExpirationAddHour()" ng-disabled="!txJson.Expiration">+1Hour</button>
+                    <button type="button" ng-click="txExpirationAddDay()" ng-disabled="!txJson.Expiration">+1Day</button>
                   </td>
                 </tr>
                 <tr>

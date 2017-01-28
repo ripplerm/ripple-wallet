@@ -273,6 +273,7 @@ walletApp.controller('walletCtrl', ['$scope', '$http', '$uibModal', '$localStora
 
   $scope.flags = Remote.flags;
   $scope.txFlags = ripple.Transaction.flags;
+  $scope.scFlags = ripple.Transaction.set_clear_flags.AccountSet;
 
   $scope.remote = remote;
   
@@ -336,11 +337,17 @@ walletApp.controller('walletCtrl', ['$scope', '$http', '$uibModal', '$localStora
   $scope.txSetAccount = function () {
     $scope.txJson.Account = $scope.activeAccount;
   };
+  $scope.txSetSequence = function () {
+    $scope.txJson.Sequence = $scope.accountData.Sequence;
+  };
   $scope.txLastLedgerSequence = function () {
     $scope.txJson.LastLedgerSequence = $scope.ledgerIndex;
   };
   $scope.txSetSecret = function () {
     $scope.txOptions.secret = remote.secrets[$scope.activeAccount];
+  };
+  $scope.txSetSignAs = function () {
+    $scope.txOptions.signAs = $scope.activeAccount;
   };
   $scope.txSetExpirationNow = function () {
     var now = Date.now();

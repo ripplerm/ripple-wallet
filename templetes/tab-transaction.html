@@ -10,13 +10,14 @@
               <td>Account:</td>
               <td>
                 <input type="text" size="50" name="Account" placeholder="Ripple Address" ng-model="txJson.Account" required> 
-                <button ng-click="txSetAccount()">wallet account</button>
+                <button type="button" ng-click="txSetAccount()">wallet account</button>
               </td>
             </tr>
             <tr>
               <td>Sequence:</td>
               <td>
                 <input type="number" size="10" name="Sequence" placeholder="Uint32" min="1" ng-model="txJson.Sequence" uint32 required> 
+                <button type="button" ng-click="txSetSequence()">wallet sequence</button>
               </td>
             </tr>
             <tr>
@@ -38,7 +39,7 @@
               </td>
               <td>
                 <input type="number" name="LastLedgerSequence" size="10" placeholder="Uint32" min="1" ng-model="txJson.LastLedgerSequence" ng-disabled="!txOptions.LastLedgerSequence" uint32 ng-required="txOptions.LastLedgerSequence">
-                <button ng-click="txLastLedgerSequence()" ng-disabled="!txOptions.LastLedgerSequence">Last-Closed-Ledger</button>
+                <button type="button" ng-click="txLastLedgerSequence()" ng-disabled="!txOptions.LastLedgerSequence">Last-Closed-Ledger</button>
               </td>
             </tr>
             <tr>
@@ -77,6 +78,7 @@
               <td> 
                 signAs: 
                 <input type="text" name="signAs" size="50" placeholder="signer Address" ng-model="txOptions.signAs" ng-disabled="!txOptions.isMultiSign" ng-required="txOptions.isMultiSign" ripple-valid-address> 
+                <button type="button" ng-click="txSetSignAs()" ng-disabled="!txOptions.isMultiSign">wallet account</button>
               </td>
             </tr>
             <tr>
@@ -84,7 +86,7 @@
               <td> 
                 secret: 
                 <input type="text" name="secret" size="50" placeholder="secret" ng-model="txOptions.secret" required ripple-valid-secret>
-                <button ng-click="txSetSecret()">wallet secret</button> 
+                <button type="button" ng-click="txSetSecret()">wallet secret</button> 
               </td>
             </tr>
           </table>
@@ -100,7 +102,7 @@
             <tr>
               <td style="word-wrap:break-word"> 
                 blob: 
-                  <button ng-click="txBlobSave()">Save to File</button>
+                  <button type="button" ng-click="txBlobSave()">Save to File</button>
                 <br>
                 {{txBlob}}
               </td>

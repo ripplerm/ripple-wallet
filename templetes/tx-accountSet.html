@@ -15,6 +15,7 @@
                   </td>
                   <td>
                     <input type="text" size="50" name="EmailHash" placeholder="Hash128" ng-model="txJson.EmailHash" ng-disabled="!txOptions.EmailHash"> 
+                    <button type="button" ng-disabled="!txOptions.EmailHash" ng-click="txJson.EmailHash='00000000000000000000000000000000'">null</button>
                   </td>
                 </tr>
                 <tr>
@@ -41,7 +42,15 @@
                     SetFlag:
                   </td>
                   <td>
-                    <input type="number" size="20" name="SetFlag" min="1" max="8" placeholder="UInt32" ng-model="txJson.SetFlag" uint32 ng-disabled="!txOptions.SetFlag"> 
+                    <input type="number" size="20" name="SetFlag" min="1" max="8" placeholder="UInt32" ng-model="txJson.SetFlag" uint32 ng-disabled="!txOptions.SetFlag">
+                    <span uib-dropdown uib-keyboard-nav>
+                      <button type="button" uib-dropdown-toggle ng-disabled="!txOptions.SetFlag"><span class="caret"></span></button>
+                      <ul class="uib-dropdown-menu">
+                        <li ng-repeat="(key, value) in scFlags">
+                          <a href="#" ng-click="txJson.SetFlag=value">{{key.slice(3)}}</a>
+                        </li>
+                      </ul>
+                    </span> 
                   </td>
                 </tr>
                 <tr>
@@ -51,6 +60,14 @@
                   </td>
                   <td>
                     <input type="number" size="20" name="ClearFlag" min="1" max="8" placeholder="UInt32" ng-model="txJson.ClearFlag" uint32 ng-disabled="!txOptions.ClearFlag"> 
+                    <span uib-dropdown uib-keyboard-nav>
+                      <button type="button" uib-dropdown-toggle ng-disabled="!txOptions.ClearFlag"><span class="caret"></span></button>
+                      <ul class="uib-dropdown-menu">
+                        <li ng-repeat="(key, value) in scFlags">
+                          <a href="#" ng-click="txJson.ClearFlag=value">{{key.slice(3)}}</a>
+                        </li>
+                      </ul>
+                    </span>
                   </td>
                 </tr>
               </table> 
