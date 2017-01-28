@@ -2,6 +2,7 @@ var walletApp = angular.module('walletApp', ['ui.bootstrap', 'jsonFormatter', 'n
 
 var Remote = ripple.Remote;
 var Seed = ripple.Seed;
+var KeyPair = ripple.KeyPair;
 var Utils = ripple.utils;
 var UInt160 = ripple.UInt160;
 var Amount = ripple.Amount;
@@ -307,7 +308,92 @@ walletApp.controller('walletCtrl', ['$scope', '$http', '$uibModal', '$localStora
   $scope.tools = [ 
     {title: 'Raw Txn', templete:'templetes/tab-transaction.html'},
     {title: 'Submit', templete:'templetes/tab-submit.html'},
+    {title: 'Account-Generator', templete:'templetes/tab-keys.html', select: function () {$scope.keysReset();} },
   ];
+
+  $scope.keys = {};
+  $scope.gkeys = {}
+
+  $scope.keysReset = function () {
+    $scope.keys = {
+      from: 'seed',
+      priformat: 'base58',
+      seedformat: 'base58',
+    }
+  }
+  $scope.keysRandom = function () {
+    switch ($scope.keys.from) {
+      case 'seed': 
+        $scope.keys.secret = Seed.getRandom().to_json();
+        break;
+      case 'private':
+        $scope.keys.secret = KeyPair.getRandom().to_pri_string();
+    }
+    $scope.keys.index = 0;
+    $scope.generateKeys();
+  }
+  $scope.generateKeys = function () {
+    if (!$scope.keys.index && $scope.keys.from != 'private') $scope.keys.index = 0;
+    $scope.gkeys = {};
+    $scope.keys.error = '';
+    var seed, g, key;
+    var index = $scope.keys.index;
+    switch ($scope.keys.from) {
+      case 'passphrase':
+        seed = new Seed().parse_passphrase($scope.keys.secret);
+        break;
+      case 'seed':
+        seed = Seed.from_json($scope.keys.secret);
+        if (!seed.is_valid()) $scope.keys.error = 'Invalid Secret!'
+        break;
+      case 'private':
+        key = KeyPair.from_json($scope.keys.secret);
+        if (!key.is_valid()) $scope.keys.error = 'Invalid PrivateKey!'
+    }
+
+    if (seed && seed.is_valid()) {
+      $scope.gkeys.seed = {
+        base58: seed.to_json(),
+        hex: seed.to_hex(),
+        rfc1751: seed.to_human(),
+      }
+      g = seed.get_generator();
+      $scope.gkeys.generator = {
+        pri_node: g.to_pri_node(),
+        pub_node: g.to_pub_node(),
+      }
+      key = g.get_child(index);
+    }
+  
+    if (key && key.is_valid()) {
+      $scope.gkeys.account = {
+        index: index,
+        prikey_hex: key.to_pri_hex(),
+        prikey_base58: key.to_pri_string(),
+        prikey_bitcoin: key.to_wif_bitcoin(),
+        prikey_rfc1751: key.to_human(),
+        pubkey_hex: key.to_pub_hex(),
+        address: key.to_address_string(),
+      }
+    }
+  }
+  $scope.generateChild = function () {
+    if (! $scope.gkeys.childIndex) $scope.gkeys.childIndex = 0;
+    var index = $scope.gkeys.childIndex;
+    var hardened = $scope.gkeys.childHardened;
+    var childkey = KeyPair.from_json($scope.gkeys.account.prikey_hex).get_child(index, hardened);
+    if (childkey.is_valid()) {
+      $scope.gkeys.child = {
+        index: index + (hardened? Math.pow(2,32) : 0),
+        prikey_hex: childkey.to_pri_hex(),
+        prikey_base58: childkey.to_pri_string(),
+        prikey_bitcoin: childkey.to_wif_bitcoin(),
+        prikey_rfc1751: childkey.to_human(),
+        pubkey_hex: childkey.to_pub_hex(),
+        address: childkey.to_address_string(),
+      }
+    }
+  }
 
   $scope.transactions = [ 
     { type: 'AccountSet', templete: 'templetes/tx-accountSet.html'},

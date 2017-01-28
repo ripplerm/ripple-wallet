@@ -1,0 +1,76 @@
+
+        <div id="tabSubmit">
+          <span style="font-weight:bold; font-size:14pt; padding-right:2em;">Generate Account: </span>
+          <br><br>
+          <form name="keyForm" id="keyForm" novalidate>
+            <input type="radio" name='from' ng-model="keys.from" value="passphrase"> passphrase &#8194
+            <input type="radio" name='from' ng-model="keys.from" value="seed"> seed &#8194
+            <input type="radio" name='from' ng-model="keys.from" value="private" ng-click="keys.index=undefined"> privatekey  &#8194
+            <br>
+            <input type="text" size="80" name="secret" placeholder="passphrase / secret / privatekey" ng-model="keys.secret" required>
+            <input type="number" size="10" name="index" placeholder="index" ng-model="keys.index" min="0" max="4294967295" uint32 ng-disabled="keys.from == 'private'">
+            <br>
+            <span style="color:red">{{keys.error}}</span>
+            <br>
+            <button type="submit" class="btn btn-info" ng-click="generateKeys()">Submit</button>
+            <button class="btn btn-warning" ng-disabled="keys.from=='passphrase'" ng-click="keysRandom()">Random</button>
+          </form>
+          <br><br>
+          <div ng-show="gkeys.seed">
+            <span style="font-weight:bold; font-size:12pt;" >Seed: &#8194</span>
+            <input type="radio" name='seedformat' ng-model="keys.seedformat" value="base58"> Base58 &#8194
+            <input type="radio" name='seedformat' ng-model="keys.seedformat" value="rfc1751"> RFC1751 &#8194
+            <input type="radio" name='seedformat' ng-model="keys.seedformat" value="hex"> Hex &#8194
+            <table class="table table-condensed">
+              <tr>
+                <td style="width:100px">Seed/Secret:</td>
+                <td>{{gkeys.seed[keys.seedformat]}}</td>
+              </tr>
+            </table>
+            <br>
+          </div>
+          <div ng-show="gkeys.account">
+            <span style="font-weight:bold; font-size:12pt;">Account #{{gkeys.account.index}} &#8194</span>
+            <input type="radio" name='priformat' ng-model="keys.priformat" value="base58"> Base58 &#8194
+            <input type="radio" name='priformat' ng-model="keys.priformat" value="rfc1751"> RFC1751 &#8194
+            <input type="radio" name='priformat' ng-model="keys.priformat" value="hex"> Hex &#8194
+            <table class="table table-condensed">
+              <tr>
+                <td style="width:100px">Private Key:</td>
+                <td>{{gkeys.account['prikey_' + keys.priformat]}}</td>
+              </tr>
+              <tr>
+                <td>Public Key:</td>
+                <td>{{gkeys.account.pubkey_hex}}</td>
+              </tr>
+              <tr>
+                <td>Address:</td>
+                <td>{{gkeys.account.address}}</td>
+              </tr>
+            </table>
+            <form>
+              <button ng-click="generateChild()">Generate Child Account</button>
+              <input type="number" size="5" name="childIndex" placeholder="index" ng-model="gkeys.childIndex" min="0" max="4294967295" uint32>
+              <input type="checkbox" name="hardened" ng-model="gkeys.childHardened">
+              Hardened
+            </form>
+          </div>
+          <div ng-show="gkeys.child">
+            <span style="font-weight:bold;">Child Account #{{gkeys.child.index}}</span>
+            <table class="table table-condensed">
+              <tr>
+                <td style="width:100px">Private Key:</td>
+                <td>{{gkeys.child['prikey_' + keys.priformat]}}</td>
+              </tr>
+              <tr>
+                <td>Public Key:</td>
+                <td>{{gkeys.child.pubkey_hex}}</td>
+              </tr>
+              <tr>
+                <td>Address:</td>
+                <td>{{gkeys.child.address}}</td>
+              </tr>
+            </table>
+          </div> 
+
+        </div>
