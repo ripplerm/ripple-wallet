@@ -14,8 +14,8 @@ var OrderBookUtils = ripple.OrderBookUtils;
 
 // ================= configuration & Global constant  ==================
 
-var CLIENT_VERSION = "rm-1.1.0"
-var INSERT_CLIENT_INFO = false;
+var CLIENT_VERSION = "rm-1.2.0"
+var INSERT_CLIENT_INFO = true;
 
 var DEFAULT_ACCOUNT = "rHb9CJAWyB4rj91VRWn96DkukG4bwdtyTh";
 var DEFAULT_SECRET = "snoPBrXtMeMyMHUVTgbuqAfg1SUTb";
@@ -34,7 +34,7 @@ var APPLY_INTEREST = false; // false: showing raw amount instead of demuraged fi
 
 var SERVERS_MAINNET = [
                       {
-                          host:    's2.ripple.com'
+                          host:    's1.ripple.com'
                           , port:    443
                           , secure:  true
                           , primary: true
