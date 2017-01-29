@@ -1707,6 +1707,82 @@ walletApp.controller('walletCtrl', ['$scope', '$http', '$uibModal', '$localStora
   }
 
   // ===================== Charting ===============================
+  $scope.drawMarketDepth = function () {
+    var currency = $scope.trading.baseCurrency;
+    var bids = $scope.trading.bidOffers;
+    var asks = $scope.trading.askOffers;
+
+    var data_bids = [];
+    var data_asks = [];
+
+    if (bids.length) {
+      var price_min = $scope.offerPriceToHuman(bids[0]) / 1.3;
+      for (var i = 0; i < bids.length; i++) {
+        var price = $scope.offerPriceToHuman(bids[i]);
+        if (price < price_min) break;
+        data_bids.push([price, $scope.offerPaysFundedToHuman(bids[i], true)])
+      }
+    }
+
+    if (asks.length) {
+      var price_max = $scope.offerPriceToHuman(asks[0], true) * 1.3;
+      for (var i = 0; i < asks.length; i++) {
+        var price = $scope.offerPriceToHuman(asks[i], true);
+        if (price > price_max) break;
+        data_asks.push([price, $scope.offerGetsFundedToHuman(asks[i], true)])
+      }
+    }
+
+    $scope.trading.mdchart = new Highcharts.Chart({
+      chart: {
+        type: 'area',
+        renderTo: 'container2',
+        animation: false,
+      },
+      title: {
+        text: null,
+        margin: 0
+      },
+      legend: {
+        enabled: false,
+      },
+      xAxis: {
+        type: 'logarithmic',
+        allowDecimals: true,
+        title: {
+          text: 'Price'
+        },
+      },
+      yAxis: {
+        title: {
+          text: 'Volume'
+        },
+        opposite: true,
+      },
+      tooltip: {
+        headerFormat: 'price: {point.x} <br>',
+        pointFormat: 'volume: {point.y} ' + currency,
+      },
+      plotOptions: {
+        area: {
+          marker: {
+            enabled: false,
+            symbol: 'circle',
+            radius: 2,
+            states: {
+              hover: {
+                enabled: true
+              }
+            }
+          }
+        },
+        series: {
+          animation: false,
+        }
+      },
+      series: [{ name: 'bids', data: data_bids, color:'#5cb85c' }, { name: 'asks', data: data_asks, color:'#d9534f' }]
+    });
+  }
 
   $scope.drawChart = function (){
 
@@ -1903,6 +1979,36 @@ walletApp.controller('walletCtrl', ['$scope', '$http', '$uibModal', '$localStora
     $scope.sellReset();
   }
 
+  $scope.tradingBalancesRefresh = function () {
+    if ($scope.trading.baseCurrency != 'XRP') {
+      $scope.getBalance({
+        currency: $scope.trading.baseCurrency,
+        issuer: $scope.trading.baseIssuer,
+      })
+    }
+    if ($scope.trading.tradeCurrency != 'XRP') {
+      $scope.getBalance({
+        currency: $scope.trading.tradeCurrency,
+        issuer: $scope.trading.tradeIssuer,
+      })
+    }
+  }
+
+  $scope.getBalance = function (opts) {
+    if (typeof opts != 'object') return;
+    if (!opts.currency || !opts.issuer) return;
+    opts.ledger = 'validated';
+    opts.account = $scope.activeAccount;
+    remote.requestRippleBalance(opts, function (err, res) {
+      if (opts.account != $scope.activeAccount) return;
+      if (err) {
+        $scope.accountBalances.IOU[opts.currency + '.' + opts.issuer] = 0;
+      } 
+      if (res && res.account_balance) {
+        $scope.accountBalances.IOU[opts.currency + '.' + opts.issuer] = res.account_balance.to_number();
+      }
+    })
+  }
 
   $scope.orderBooksReset = function (){
     $scope.trading.bidOffers = [];
@@ -1911,7 +2017,10 @@ walletApp.controller('walletCtrl', ['$scope', '$http', '$uibModal', '$localStora
     $scope.trading.ask_status = '';
     $scope.trading.chartPage = 0;
     $scope.trading.chartData = [];
-    try { $scope.trading.chart.destroy(); } catch (e) {};
+    try { 
+      $scope.trading.chart.destroy(); 
+      $scope.trading.mdchart.destroy();
+    } catch (e) {};
 
     $scope.loadOrderBooks();
     $scope.prepareChart();
@@ -1975,6 +2084,7 @@ walletApp.controller('walletCtrl', ['$scope', '$http', '$uibModal', '$localStora
     $scope.trading.tradeCurrency = trade.split('.')[0];
     $scope.trading.tradeIssuer = trade.split('.')[1];
 
+    $scope.tradingBalancesRefresh();
     $scope.orderBooksReset();
     $scope.tradingReset();     
   }
@@ -2032,16 +2142,16 @@ walletApp.controller('walletCtrl', ['$scope', '$http', '$uibModal', '$localStora
     return Number(value);
   }  
 
-  $scope.offerGetsFundedToHuman = function (offer) {
+  $scope.offerGetsFundedToHuman = function (offer, sum) {
     var tgets = offer.TakerGets || offer.taker_gets;
-    var funded = offer.taker_gets_funded;
+    var funded = sum ? offer.taker_gets_funded_sum : offer.taker_gets_funded;
     var value = (typeof tgets == 'object') ? funded : funded / 1000000
     return Number(value);
   }
 
-  $scope.offerPaysFundedToHuman = function (offer) {
+  $scope.offerPaysFundedToHuman = function (offer, sum) {
     var tpays = offer.TakerPays || offer.taker_pays;
-    var funded = offer.taker_pays_funded;
+    var funded = sum ? offer.taker_pays_funded_sum : offer.taker_pays_funded;
     var value = (typeof tpays == 'object') ? funded : funded / 1000000
     return Number(value);
   }  
@@ -2340,13 +2450,29 @@ walletApp.controller('walletCtrl', ['$scope', '$http', '$uibModal', '$localStora
 
     $scope.trading.bookAsk.on('model', function (offers){
       $scope.trading.ask_status = 'updated on ledger ' + (remote.getLedgerSequence() - 1);
+      $scope.offersCalculateSum(offers);
       $scope.trading.askOffers = offers;
+      $scope.drawMarketDepth();
     })
 
     $scope.trading.bookBid.on('model', function (offers){
       $scope.trading.bid_status = 'updated on ledger ' + (remote.getLedgerSequence() - 1);
+      $scope.offersCalculateSum(offers);
       $scope.trading.bidOffers = offers;
+      $scope.drawMarketDepth();
     })       
+  }
+
+  $scope.offersCalculateSum = function (offers) {
+    if (! Array.isArray(offers)) return;
+    sum_get = 0;
+    sum_pay = 0;
+    for (var i = 0, l = offers.length; i < l; i++) {
+      sum_get += Number(offers[i].taker_gets_funded);
+      sum_pay += Number(offers[i].taker_pays_funded);
+      offers[i].taker_gets_funded_sum = sum_get;
+      offers[i].taker_pays_funded_sum = sum_pay;
+    }
   }
 
   $scope.offerPageLoad = function () {
@@ -2422,6 +2548,9 @@ walletApp.controller('walletCtrl', ['$scope', '$http', '$uibModal', '$localStora
           case 'trust_change_balance':
             balance_effects.push(effect)
             break;
+        }
+        if (effect.type == 'trust_change_balance' && effect.balance) {
+          $scope.accountBalances.IOU[effect.currency + '.' + effect.counterparty] = effect.balance.to_number();
         }
       }
       //sort offer effects

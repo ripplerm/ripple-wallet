@@ -23,7 +23,7 @@
             <button ng-click="flipTradePair()"><span class="glyphicon glyphicon-transfer"></span> Flip</button> 
 		</div>
 		<hr>
-		<h4>Outstanding Orders: 
+		<h4>My Outstanding Orders: 
 			<button class="btn btn-warning" ng-click="getAccountOffers()"><span class="glyphicon glyphicon-refresh"></span> Refresh </button> 
 		</h4>
 		{{accountOffers.status ? accountOffers.status : '-'}}
@@ -64,7 +64,7 @@
 				</table>				
 			</div>					
 		</div>
-	</div>		
+	</div>
 </div>
 
 <div class="panel panel-info" ng-show="tradingLog.status">
@@ -72,82 +72,202 @@
 		<b>Tx Status:</b>[{{tradingLog.status}}{{tradingLog.status_code ? ', ' +  tradingLog.status_code : ''}}], <b>Result:</b> {{tradingLog.result}} {{tradingLog.tx_hash ? ', tx_hash: ' + tradingLog.tx_hash : ''}}
 	</div>
 </div>
-
 <h3> Place Order: </h3>
 <div class="row">
-	<div class="col-sm-6">
-		<div class='panel panel-success'>
-			<div class="panel-body bg-success">
-				<form>
-					Buy: 
-					<input type="text" size="15" name="buyQuantity" ng-model="trading.buyQuantity" placeholder="amount" positive-number>
-					{{trading.baseCurrency}}, 
-					at: 
-					<input type="text" size="15" name="buyPrice" ng-model="trading.buyPrice" placeholder="price in {{trading.tradeCurrency}}" positive-number>
-					<br><br>
-					<div align='right'>
-						<button class="btn btn-primary" type="submit" ng-click="prepareOfferCreate({type: 'buy'})" ng-disabled="!trading.buyQuantity || !trading.buyPrice">Buy</button>
-						<button class="btn btn-warning" type="button" ng-click="buyReset()">Reset</button>
-					</div>
-				</form>
+	<div class="col-sm-4">
+		<form>
+			<div class='panel panel-success'>
+				<div class="panel-heading bg-success">
+					<h4>BUY {{trading.baseCurrency}}</h4>
+				</div>
+
+
+				<table class="table">
+				  <tr>
+				  	<td>
+				  		Amount:
+				  	</td>
+				  	<td>
+				  		<input type="text" size="15" name="buyQuantity" ng-model="trading.buyQuantity" placeholder="amount" positive-number>
+					{{trading.baseCurrency}}
+				  	</td>
+				  </tr>
+				  <tr>
+				  	<td>
+				  		Price:
+				  	</td>
+				  	<td>
+				  		<input type="text" size="15" name="buyPrice" ng-model="trading.buyPrice" placeholder="price in {{trading.tradeCurrency}}" positive-number>
+				  		{{trading.tradeCurrency}}
+				  	</td>
+				  </tr>
+				  <tr>
+				  	<td>
+				  		Total:
+				  	</td>
+				  	<td>
+				  		{{(trading.buyQuantity * trading.buyPrice).toPrecision(6)}} 
+				  		{{trading.tradeCurrency}}
+				  	</td>
+				  </tr>
+				  <tr>
+				  	<td></td>
+				  	<td>
+				  	  <div align='right'>
+						<button class="btn btn-default" type="button" ng-click="buyReset()">Reset</button>
+				  		<button class="btn btn-success" type="submit" ng-click="prepareOfferCreate({type: 'buy'})" ng-disabled="!trading.buyQuantity || !trading.buyPrice">Buy</button>
+					  </div>
+				  	</td>
+				  </tr>
+				</table>
 			</div>
+		</form>
+	</div>
+
+	<div class="col-sm-4">
+		<div class='panel panel-info'>
+			<div class="panel-heading">
+				<h4>My Balances:</h4>
+			</div>
+			<table class="table">
+				<tr>
+				  	<td>
+				  		<b> {{trading.baseCurrency}} <br> {{gatewayName(trading.baseIssuer)}} </b>
+				  	</td>
+				  	<td style="vertical-align:middle" ng-click="trading.buyQuantity = trading.sellQuantity = trading.baseCurrency=='XRP' ? accountBalances.XRP: accountBalances.IOU[trading.baseCurrency + '.' + trading.baseIssuer]">
+				  		{{trading.baseCurrency=='XRP' ? accountBalances.XRP: accountBalances.IOU[trading.baseCurrency + '.' + trading.baseIssuer]}}
+				  	</td>
+				</tr>
+				<tr>
+				  	<td>
+				  		<b> {{trading.tradeCurrency}} <br> {{gatewayName(trading.tradeIssuer)}} </b>
+				  	</td>
+				  	<td style="vertical-align:middle" ng-click="trading.tradeAmount = trading.tradeCurrency=='XRP' ? accountBalances.XRP : accountBalances.IOU[trading.tradeCurrency + '.' + trading.tradeIssuer]; trading.buyQuantity = trading.buyPrice? (trading.tradeAmount/trading.buyPrice).toPrecision(6) : null; trading.sellQuantity = trading.sellPrice? (trading.tradeAmount/trading.sellPrice).toPrecision(6) : null;">
+						{{trading.tradeCurrency=='XRP' ? accountBalances.XRP : accountBalances.IOU[trading.tradeCurrency + '.' + trading.tradeIssuer]}}
+				  	</td>
+				</tr>
+				<tr>
+				  	<td></td>
+				  	<td>
+				  	  <div align='right'>
+						<button class="btn btn-default" type="button" ng-click="tradingBalancesRefresh()">Refresh</button>
+					  </div>
+				  	</td>
+				</tr>
+			</table>
 		</div>
 	</div>
-	<div class="col-sm-6">
-		<div class='panel panel-danger'>
-			<div class="panel-body bg-danger">
-				<form>
-					Sell: 
-					<input type="text" size="15" name="sellQuantity" ng-model="trading.sellQuantity" placeholder="amount" positive-number>
-					{{trading.baseCurrency}},
-					at: 
-					<input type="text" size="15" name="sellPrice" ng-model="trading.sellPrice" placeholder="price in {{trading.tradeCurrency}}" positive-number>
-					<br>
-					<br>
-					<div align='right'>
-						<button class="btn btn-danger" type="submit" ng-click="prepareOfferCreate({type: 'sell'})" ng-disabled="!trading.sellQuantity || !trading.sellPrice">Sell</button>
-						<button class="btn btn-warning" type="button" ng-click="sellReset()">Reset</button>
-					</div>
-				</form>
+	<div class="col-sm-4">
+		<form>
+			<div class='panel panel-danger'>
+				<div class="panel-heading bg-danger">
+					<h4>SELL {{trading.baseCurrency}}</h4>
+				</div>
+				<table class="table">
+				  <tr>
+				  	<td>
+				  		Amount:
+				  	</td>
+				  	<td>
+				  		<input type="text" size="15" name="sellQuantity" ng-model="trading.sellQuantity" placeholder="amount" positive-number>
+					{{trading.baseCurrency}}
+				  	</td>
+				  </tr>
+				  <tr>
+				  	<td>
+				  		Price:
+				  	</td>
+				  	<td>
+				  		<input type="text" size="15" name="sellPrice" ng-model="trading.sellPrice" placeholder="price in {{trading.tradeCurrency}}" positive-number>
+				  		{{trading.tradeCurrency}}
+				  	</td>
+				  </tr>
+				  <tr>
+				  	<td>
+				  		Total:
+				  	</td>
+				  	<td>
+				  		{{(trading.sellQuantity * trading.sellPrice).toPrecision(6)}} 
+				  		{{trading.tradeCurrency}}
+				  	</td>
+				  </tr>
+				  <tr>
+				  	<td></td>
+				  	<td>
+				  	  <div align='right'>
+						<button class="btn btn-default" type="button" ng-click="sellReset()">Reset</button>
+				  		<button class="btn btn-danger" type="submit" ng-click="prepareOfferCreate({type: 'sell'})" ng-disabled="!trading.sellQuantity || !trading.sellPrice">Sell</button>
+					  </div>
+				  	</td>
+				  </tr>
+				</table>
 			</div>
-		</div>
+		</form>
 	</div>
 </div>
 <h3>  
 	OrderBooks: 
 	<button class="btn btn-warning btn-sm" ng-click="loadOrderBooks()"><span class="glyphicon glyphicon-refresh"></span> Refresh </button>
 </h3> 
- 	<div class="row">
-	  <div class="col-sm-6">
-	  	BIDS: {{trading.bid_status}}
-  		<table class="table table-striped" style="text-align:center;">
-  	  		<tr>
-	  			<th style="text-align:center;">Volume</th>
-	  			<th style="text-align:center;">Price</th>
-	  		</tr>
-	  		<tr ng-repeat="offer in trading.bidOffers" style="color:{{offer.autobridged ? 'blue' : ''}};">
+
+<div class="row">
+    <div class="panel col-sm-6">
+	  	{{trading.bid_status}}
+		<table class="table table" style="text-align:center;">
+		  <thead>
+	  		<tr class="row bg-success">
+  	  			<th class="col-sm-4" style="text-align:center;">Sum({{trading.baseCurrency}})</th>
+	  			<th class="col-sm-4" style="text-align:center;">Volume({{trading.baseCurrency}})</th>
+	  			<th class="col-sm-4" style="text-align:center;">Bid Price</th>
+	  		</tr>		
+		  <thead>
+		</table>
+		<div style="width:100%; height: 400px; overflow: auto;">
+  		  <table class="table table-striped" style="text-align:center;">
+	  		<tr ng-repeat="offer in trading.bidOffers" style="color:{{offer.autobridged ? 'blue' : offer.Account == activeAccount ? 'green' : ''}};" ng-click="trading.buyPrice=trading.sellPrice=offerPriceToHuman(offer).toPrecision(6)">
+	  			<td ng-click="trading.sellQuantity=offerPaysFundedToHuman(offer, true).toPrecision(6)">
+	  				{{offerPaysFundedToHuman(offer, true).toPrecision(6)}}
+	  			</td>
 	  			<td>{{offerPaysFundedToHuman(offer).toPrecision(6)}}</td>
 	  			<td>
 	  				<span tooltip-animation="false" uib-tooltip="{{offer.autobridged ? 'autobridge' : offer.Account}}">{{offerPriceToHuman(offer).toPrecision(6)}} </span>
   				</td>
 	  		</tr>
-  		</table>	  			
-
-	  	
-	  </div>
-	  <div class="col-sm-6">
-	  	ASKS: {{trading.ask_status}}
-	  	<table class="table table-striped" style="text-align:center;">
-	  		<tr>
-	  			<th style="text-align:center;">Price</th>
-	  			<th style="text-align:center;">Volume</th>
-	  		</tr>
-	  		<tr ng-repeat="offer in trading.askOffers" style="color:{{offer.autobridged ? 'blue' : ''}};">
+  		  </table>	  			
+  		</div>
+	</div>
+	<div class="panel col-sm-6">
+	  	{{trading.ask_status}}
+		<table class="table table" style="text-align:center;">
+		  <thead>
+	  		<tr class="row bg-danger">
+	  			<th class="col-sm-4" style="text-align:center;">Ask Price</th>
+	  			<th class="col-sm-4" style="text-align:center;">Volume({{trading.baseCurrency}})</th>
+	  			<th class="col-sm-4" style="text-align:center;">Sum({{trading.baseCurrency}})</th>
+	  		</tr>		
+		  <thead>
+		</table>
+		<div style="width:100%; height: 400px; overflow: auto;">
+	  	  <table class="table table-striped" style="text-align:center;">
+	  		<tr ng-repeat="offer in trading.askOffers" style="color:{{offer.autobridged ? 'blue' : offer.Account == activeAccount ? 'green' :''}};" ng-click="trading.buyPrice=trading.sellPrice=offerPriceToHuman(offer, true).toPrecision(6)">
 	  			<td>
 	  				<span tooltip-animation="false" uib-tooltip="{{offer.autobridged ? 'autobridge' : offer.Account}}">{{offerPriceToHuman(offer, true).toPrecision(6)}}</span>
 	  			</td>
 	  			<td>{{offerGetsFundedToHuman(offer).toPrecision(6)}}</td>
+	  			<td ng-click="trading.buyQuantity=offerGetsFundedToHuman(offer, true).toPrecision(6)">
+	  				{{offerGetsFundedToHuman(offer, true).toPrecision(6)}}
+	  			</td>
 	  		</tr>
-	  	</table>	  	
-	  </div>
+	  	  </table>
+	  	</div>	  	
+    </div>
+</div>
+
+<div class="row">
+	<div class="col-sm-12">
+		<h4> Market Depth: </h4>
+		<div class="panel panel-info">
+			<div id="container2" style="height: 300px; min-width: 310px"></div>
+		</div>	
 	</div>
+</div>
