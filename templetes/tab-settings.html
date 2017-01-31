@@ -18,7 +18,7 @@
 			            	<td style="text-align: center">{{contact.dtag == undefined ? '-' : contact.dtag}}</td>
 							<td style="text-align: center">
 								<a href="#" ng-click="editContact(contact, $index)"><span class="glyphicon glyphicon-edit"></span></a>
-								<a href="#" ng-click="deleteContact($index)"><span class="glyphicon glyphicon-trash"></span></a>
+								<a href="#" ng-click="deleteContact(contact)"><span class="glyphicon glyphicon-trash"></span></a>
 							</td>			            	
 			            </tr>
 		    		</table>
@@ -39,7 +39,7 @@
 			            	<td style="text-align: center">{{gateway.currencies.join(', ')}}</td>
 							<td style="text-align: center">
 								<a href="#" ng-click="editGateway(gateway, $index)"><span class="glyphicon glyphicon-edit"></span></a>
-								<a href="#" ng-click="deleteGateway($index)"><span class="glyphicon glyphicon-trash"></span></a>
+								<a href="#" ng-click="deleteGateway(gateway)"><span class="glyphicon glyphicon-trash"></span></a>
 							</td>			            	
 			            </tr>
 		    		</table>

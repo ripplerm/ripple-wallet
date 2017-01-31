@@ -2700,7 +2700,10 @@ walletApp.controller('walletCtrl', ['$scope', '$http', '$uibModal', '$localStora
     $scope.addGateway(opts);
   }
 
-  $scope.deleteGateway = function (index) {
+  $scope.deleteGateway = function (gateway) {
+    var index = $scope.gateways.findIndex(function(g){
+      return g.address === gateway.address;
+    });
     $scope.gateways.splice(index, 1);
   }
 
@@ -2830,7 +2833,10 @@ walletApp.controller('walletCtrl', ['$scope', '$http', '$uibModal', '$localStora
     $scope.addContact(opts);
   }
 
-  $scope.deleteContact = function (index) {
+  $scope.deleteContact = function (contact) {
+    var index = $scope.contacts.findIndex(function(c){
+      return c.name === contact.name;
+    });
     $scope.contacts.splice(index, 1);
   }
 }]);  // main controller;
