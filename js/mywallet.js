@@ -1627,6 +1627,10 @@ walletApp.controller('walletCtrl', ['$scope', '$http', '$uibModal', '$localStora
       transaction.tx_json.MessageKey = settings.messageKey ? settings.messageKey : '';
     }
 
+    if (settings.editTickSize) {
+      transaction.tx_json.TickSize = settings.tickSize ? settings.tickSize : 0;
+    }
+
     if (settings.memos) transaction.tx_json.Memos = settings.memos;   
 
     $scope.accountSetLog = {};

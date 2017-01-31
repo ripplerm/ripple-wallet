@@ -20,26 +20,30 @@
               </tr>
               <tr>
                 <td>Transfer Rate</td><td>{{accountData.TransferRate ? ((accountData.TransferRate / 1000000000 - 1) * 100).toFixed(7) + ' %' : '-' }} </td>
-                <td width="90">Owner Count</td><td width="40" align="center">{{accountData.OwnerCount}}</td>              
+                <td width="90">Tick Size</td><td width="40" align="center">{{accountData.TickSize ? accountData.TickSize : '-'}}</td>              
               </tr>
 
               <tr>
                 <td>Regular Key</td><td>{{accountData.RegularKey ? accountData.RegularKey : '-'}}</td>
-                <td width="90">Next Sequence</td><td width="40" align="center">{{accountData.Sequence}}</td>
+                <td width="90">Owner Count</td><td width="40" align="center">{{accountData.OwnerCount}}</td>
               </tr>
               <tr>
                 <td style="vertical-align:middle">Signers</td>
                 <td style="vertical-align:middle">
-                  {{accountData['signers'] ? '' : '-'}}
+                  {{accountData['signers'] && accountData['signers'].length ? '' : '-'}}
                   <table border="1" cellpadding="5" cellspacing="0" style="cellpadding:5px; width:360px; table-layout:fixed" class="table table-bordered">
                     <tr ng-repeat="signer in accountData['signers']">
                       <td width="310">{{signer.address}}</td>
                       <td width="50" align="center">{{signer.weight}}</td>
                     </tr>
+                    <tr ng-hide="! accountData['quorum']">
+                      <td width="310" align="right">Quorum : </td>
+                      <td width="50" align="center">{{accountData['quorum'] ? accountData['quorum'] : '-'}}</td>
+                    </tr>
                   </table>
                 </td>
-                <td style="vertical-align:middle">Quorum</td>
-                <td align="center" style="vertical-align:middle">{{accountData['quorum'] ? accountData['quorum'] : '-'}}</td>
+                <td style="vertical-align:middle">Next Sequence</td>
+                <td align="center" style="vertical-align:middle">{{accountData.Sequence}}</td> 
               </tr>
               <tr>
                 <td>Message Key</td><td colspan="3">{{accountData.MessageKey ? accountData.MessageKey : '-'}}</td>

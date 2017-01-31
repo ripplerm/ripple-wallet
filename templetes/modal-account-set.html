@@ -15,6 +15,11 @@
                             <td> <input type="text" name="email" ng-model="options.email" size=50 ng-disabled="!options.editEmail" placeholder="e.g. abc@mydomain.com"> </td>
                           </tr>
                           <tr>
+                            <td> <input type="checkbox" ng-model='options.editTickSize' ng-click="options.tickSize='';"> </td>
+                            <td> Tick Size: </td>
+                            <td> <input type="number" name="tickSize" ng-model="options.tickSize" size=20 ng-disabled="!options.editTickSize" placeholder="0, 3-15" min=0 max=15><span style="color:red" ng-show="accountSetForm.tickSize.$invalid">Invalid value!</span></td>
+                          </tr>
+                          <tr>
                             <td> <input type="checkbox" ng-model='options.editTransferRate' ng-click="options.transferRateHumanPercentage='';"> </td>
                             <td> Transfer Rate: </td>
                             <td> <input type="number" name="transferRateHumanPercentage" ng-model="options.transferRateHumanPercentage" size=20 ng-disabled="!options.editTransferRate" placeholder="0-100" min=0 max=100> (%) <span style="color:red" ng-show="accountSetForm.transferRateHumanPercentage.$invalid">Invalid value!</span></td>
