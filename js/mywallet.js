@@ -616,6 +616,10 @@ walletApp.controller('walletCtrl', ['$scope', '$http', '$uibModal', '$localStora
     $scope.alerts.splice(index, 1);
   };
 
+  $scope.getFullContacts = function () {
+    return $scope.contacts.concat($scope.gateways);
+  }
+
   $scope.inGatewayList = function (account) {
     if (!account)  return false;
 
@@ -642,6 +646,10 @@ walletApp.controller('walletCtrl', ['$scope', '$http', '$uibModal', '$localStora
       if (account == contacts[i].address) return contacts[i].name;
     } 
     return '';
+  }
+
+  $scope.parseAddress = function (account) {
+    return $scope.contactName(account) || $scope.gatewayName(account);
   }
 
   $scope.accountInfoReset = function () {
@@ -1269,6 +1277,18 @@ walletApp.controller('walletCtrl', ['$scope', '$http', '$uibModal', '$localStora
     $scope.Payment.paths = paths;
   }
 
+  // ============= payment ==============================
+
+  $scope.getRecipientCurrencies = function () {
+    $scope.Payment.recipientCurrencies = ['XRP'];
+    var account = $scope.Payment.destination;
+    if (! account) return;
+    remote.requestAccountCurrencies({account: account}, function (err, res) {
+      if (account !== $scope.Payment.destination) return;
+      if (res) $scope.Payment.recipientCurrencies = $scope.Payment.recipientCurrencies.concat(res.receive_currencies);
+    }); 
+  }
+
   $scope.setSendmax = function (amount) {
     var multiplier = 1 + $scope.Payment.slipage / 100;
     if (amount.value) {
@@ -1339,6 +1359,11 @@ walletApp.controller('walletCtrl', ['$scope', '$http', '$uibModal', '$localStora
       if (payment.paths && payment.paths.length) transaction.tx_json.Paths = payment.paths;
     }
 
+    if (payment.memo) {
+      transaction.addMemo({
+        memoData: payment.memo
+      })
+    }
     if (payment.memos) {
       var memos = payment.memos;
       for (var i = 0; i < memos.length; i++)  {
@@ -1360,8 +1385,10 @@ walletApp.controller('walletCtrl', ['$scope', '$http', '$uibModal', '$localStora
   }
 
   $scope.paymentReset = function (){
+    var advanceMode = $scope.Payment.advanceMode;
     $scope.Payment = {
-      slipage: $localStorage.slipage
+      slipage: $localStorage.slipage,
+      advanceMode: advanceMode,
     };
   }
 

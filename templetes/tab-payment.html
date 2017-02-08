@@ -1,10 +1,66 @@
 
         <div id="tabPayment">
-          <span style="font-weight:bold; font-size:20pt; padding-right:2em;">Construct a Payment: </span> <br><br>
+          <span style="font-weight:bold; font-size:20pt; padding-right:2em;">Make Payment: </span> 
+          <span>
+            <input type="checkbox" ng-model="Payment.advanceMode" ng-click="paymentReset()"> Advance Mode
+          </span>
+          <br><br>
+          <div ng-hide="Payment.advanceMode">
+            <form name="paymentSimpleForm" novalidate>
+              <div>
+                <span style="font-weight:bold; font-size:12pt;">Recipient: </span> 
+                <br>
+                <input type="text" placeholder="Ripple address" ng-model="Payment.destination" name="recipient" size="50" required ripple-valid-address ng-change="getRecipientCurrencies()"  uib-typeahead="contact.address as contact.name for contact in getFullContacts() | filter:{name:$viewValue}">
+                <span style="padding-left:1em; color:red" ng-show="paymentSimpleForm.recipient.$dirty && paymentSimpleForm.recipient.$error.rippleValidAddress">Invalid Address!</span>
+                <span style="color:green">{{parseAddress(Payment.destination)}}</span>
+                <br><br>
+                <input type="number" placeholder="Destination Tag" min=0 max=4294967295 ng-model="Payment.destinationTag" size="20" ng-required="Payment.requireDestTag"> (optional)
+                <br><br>
+                Memo: <Br>
+                <input type="text" placeholder="memo (optional)" name="memo" ng-model="Payment.memo" size="50"> 
+              </div>
+              <br>
+              <div>
+                <span style="font-weight:bold; font-size:12pt;">Amount: </span> 
+                <br>
+                <input type="text" placeholder="Amount" name="amountValue" ng-model="Payment.amountValue" size="20" required positive-number ng-change="pathFindAutoStart()"> 
+                <span uib-dropdown uib-keyboard-nav>
+                  <input type="text" placeholder="Currency" name="amountCurrency" ng-model="Payment.amountCurrency" ng-change="(Payment.amountCurrency == 'XRP') ? Payment.amountIssuer = null : Payment.amountIssuer = Payment.destination; pathFindAutoStart()" size="6" uppercase-only required dropdown-append-to-body>
+                  <button type="button" uib-dropdown-toggle ><span class="caret"></span></button>
+                  <ul class="uib-dropdown-menu">
+                    <li ng-repeat="currency in Payment.recipientCurrencies"><a href="#" ng-click="Payment.amountCurrency = currency; Payment.amountIssuer = (currency == 'XRP') ? null : Payment.destination; pathFindAutoStart()">{{currency}}</a></li>
+                  </ul>
+                </span>
+              </div>
+              <br>
+              <div ng-show="Payment.pathFindStatus">
+                <span style="font-weight:bold; font-size:12pt;">Payment Options: </span> 
+                {{Payment.pathFindStatus}}
+                <br>
+                <div class="row">
+                  <div class="col-sm-4" ng-repeat="path in Payment.pathOpts" style="text-align:center" >
+                    <div class="panel">
+                      <div class="panel-body bg-info" ng-click="setSendmax(path.source_amount); setPaths(path.paths_computed);">
+                          {{ amountDisplay(path.source_amount, {value:true, currency:true, issuer: (path.source_amount.issuer != activeAccount), gatewayName: true, max_sig_digits: 5})}}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div>
+                  <span style="font-weight:bold; font-size:10pt;">
+                    SendMax: {{Payment.sendmaxValue}} {{Payment.sendmaxCurrency}}
+                  </span> 
+                </div>
+                <br>
+              </div>
+            </form>
+          </div>
+
+          <div ng-show="Payment.advanceMode">
           <form name="paymentForm" id="paymentForm" novalidate>
             <table class="table table-bordered" border="1" cellpadding="5" cellspacing="0" style="width:800px; table-layout:fixed">
               <tr>
-                <td width="120">Receipient:</td>
+                <td width="120">Recipient:</td>
                 <td>
                   <input type="checkbox" name="useFederation" ng-model="Payment.useFederation" ng-click="Payment.federationAddress=''; federationReset()"> Use RippleName / Federation Address.<br> 
                   <div ng-show="Payment.useFederation">
@@ -161,7 +217,6 @@
                 </td>
               </tr>
             </table>
-          </form>
             <table class="table table-bordered" border="1" style="width:800px; table-layout:fixed">
               <tr>
                 <td width="120">Memos:</td>
@@ -186,7 +241,8 @@
                 </td>
               </tr>            
             </table>
-
+          </form>
+          </div>
           <div class="panel panel-info" ng-show="paymentLog.status">
             <div class="panel-body {{paymentLog.status == 'FINAL' ? (paymentLog.status_code.slice(0,3) == 'tes' ? 'bg-success' : 'bg-danger') : 'bg-warning'}}">
               <b>Status:</b>[{{paymentLog.status}}{{paymentLog.status_code ? ', ' +  paymentLog.status_code : ''}}], <b>Result:</b> {{paymentLog.result}} {{paymentLog.tx_hash ? ', tx_hash: ' + paymentLog.tx_hash : ''}}
@@ -196,5 +252,4 @@
           <button class="btn btn-primary" type="submit" ng-disabled="paymentForm.$invalid" ng-click="submitPayment()"> Submit </button>
           <button class="btn btn-warning" form='paymentForm' ng-click="paymentReset()"> Reset </button>
           <br>
-
         </div>
