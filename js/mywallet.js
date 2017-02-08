@@ -9,7 +9,6 @@ var Amount = ripple.Amount;
 var Currency = ripple.Currency;
 var sjcl = ripple.utils.sjcl;
 var base58 = ripple.Base;
-var Wallet = ripple.Wallet;
 var OrderBookUtils = ripple.OrderBookUtils;
 
 // ================= configuration & Global constant  ==================
@@ -809,7 +808,7 @@ walletApp.controller('walletCtrl', ['$scope', '$http', '$uibModal', '$localStora
   }
 
   $scope.generateNewSecret = function () {
-    return  ripple.Wallet.getRandom().secret;
+    return  Seed.getRandom().to_json();
   }
 
   $scope.prepareGenerateAccount = function (options) {
