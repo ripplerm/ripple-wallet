@@ -56,11 +56,12 @@
               </tr>
             </table>
 
-            <div class="panel panel-info" ng-show="accountSetLog.status">
-              <div class="panel-body {{accountSetLog.status == 'FINAL' ? (accountSetLog.status_code.slice(0,3) == 'tes' ? 'bg-success' : 'bg-danger') : 'bg-warning'}}">
-                <b>Tx Status:</b>[{{accountSetLog.status}}{{accountSetLog.status_code ? ', ' +  accountSetLog.status_code : ''}}], <b>Result:</b> {{accountSetLog.result}} {{accountSetLog.tx_hash ? ', tx_hash: ' + accountSetLog.tx_hash : ''}}
-              </div>
-            </div>   
+            <div uib-alert ng-repeat="alert in alerts.account" class="alert-{{alert.status == 'FINAL' ? (alert.status_code.slice(0,3) == 'tes' ? 'success' : 'danger') : 'warning'}}" close="closeAlert('account', $index)" dismiss-on-timeout="30000">
+              {{alert.description}} <br>
+              <b>Status:</b>[{{alert.status}}{{alert.status_code ? ', ' +  alert.status_code : ''}}], 
+              <b>Result:</b> {{alert.result}} <br>
+              {{alert.tx_hash ? 'tx_hash: ' + alert.tx_hash : ''}}
+            </div>
                         
             <button type="button" class="btn btn-info" ng-click="prepareSetRegularKey()">Set RegularKey</button> 
             <button type="button" class="btn btn-info" ng-click="prepareSetSignerList()">Set Signer List</button>

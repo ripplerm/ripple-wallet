@@ -299,7 +299,13 @@ walletApp.controller('walletCtrl', ['$scope', '$http', '$uibModal', '$localStora
                   {title: 'Tools', templete:'templetes/tab-tools.html', select: function () {} },
                 ]
 
-  $scope.alerts = [];
+  $scope.alerts = {
+    account: [],
+    trustline: [],
+    payment: [],
+    trading: [],
+    offer: [],
+  }
 
   $scope.networks = ['MAIN', 'TEST'];
   $scope.network = 'MAIN';
@@ -612,8 +618,9 @@ walletApp.controller('walletCtrl', ['$scope', '$http', '$uibModal', '$localStora
     $scope.orderBooksReset();
   }
 
-  $scope.closeAlert = function(index) {
-    $scope.alerts.splice(index, 1);
+  $scope.closeAlert = function(type, index) {
+    if (!type) return;
+    $scope.alerts[type].splice(index, 1);
   };
 
   $scope.getFullContacts = function () {
@@ -1371,15 +1378,16 @@ walletApp.controller('walletCtrl', ['$scope', '$http', '$uibModal', '$localStora
       }
     }
 
-    $scope.paymentLog = {};
-    $scope.submitTransaction({transaction:transaction, log: $scope.paymentLog}, function (err, res){
+    var alert = {description: 'Sending ' + payment.amountValue + ' ' + payment.amountCurrency + ' to ' + payment.destination};
+    $scope.alerts.payment.push(alert);
+    $scope.submitTransaction({transaction:transaction, log: alert}, function (err, res){
       if (err && err.remote) {
-        $scope.paymentLog.result = err.remote.error + ': ' + err.remote.error_exception;
+        alert.result = err.remote.error + ': ' + err.remote.error_exception;
       }
       if (res && res.metadata) {
         var delivered = res.metadata.DeliveredAmount;
         if (!delivered) delivered = res.tx_json.Amount;
-        $scope.paymentLog.result += ', Delivered Amount = ' + $scope.amountDisplay(delivered, {value:true, currency:true});
+        alert.result += ', Delivered Amount = ' + $scope.amountDisplay(delivered, {value:true, currency:true});
       }
     });
   }
@@ -1519,8 +1527,10 @@ walletApp.controller('walletCtrl', ['$scope', '$http', '$uibModal', '$localStora
           transaction.addMemo(memos[i]); 
         }
       }
-      $scope.accountSetLog = {};
-      $scope.submitTransaction({transaction:transaction, log: $scope.accountSetLog});
+
+      var alert = {description: 'Set SignerList'};
+      $scope.alerts.account.push(alert);
+      $scope.submitTransaction({transaction:transaction, log: alert});
   }
 
   // =============  modal Set RegularKey =====================
@@ -1560,8 +1570,9 @@ walletApp.controller('walletCtrl', ['$scope', '$http', '$uibModal', '$localStora
           transaction.addMemo(memos[i]); 
         }
       }
-      $scope.accountSetLog = {};
-      $scope.submitTransaction({transaction:transaction, log: $scope.accountSetLog});
+      var alert = {description: 'Set RegularKey'};
+      $scope.alerts.account.push(alert);
+      $scope.submitTransaction({transaction:transaction, log: alert});
   }
    
   //  ================== Account Set ============================================
@@ -1660,8 +1671,9 @@ walletApp.controller('walletCtrl', ['$scope', '$http', '$uibModal', '$localStora
 
     if (settings.memos) transaction.tx_json.Memos = settings.memos;   
 
-    $scope.accountSetLog = {};
-    $scope.submitTransaction({transaction:transaction, log: $scope.accountSetLog});
+    var alert = {description: 'Account Set'};
+    $scope.alerts.account.push(alert);
+    $scope.submitTransaction({transaction:transaction, log: alert});
   }
 
   //  ================== Add or Edit Trustlines. ================================
@@ -1731,10 +1743,10 @@ walletApp.controller('walletCtrl', ['$scope', '$http', '$uibModal', '$localStora
 
     transaction.setFlags(flags);    
 
-    $scope.trustSetLog = {};
-    $scope.trustSetLog.tx_json = transaction.tx_json;
+    var alert = {description: 'Trustline setting for ' + settings.currency + '.' + settings.account};
+    $scope.alerts.trustline.push(alert);
     
-    $scope.submitTransaction({transaction:transaction, log: $scope.trustSetLog});
+    $scope.submitTransaction({transaction:transaction, log: alert});
   }
 
   // ===================== Charting ===============================
@@ -2337,8 +2349,10 @@ walletApp.controller('walletCtrl', ['$scope', '$http', '$uibModal', '$localStora
       offer_sequence: seq,
     });
 
-    $scope.tradingLog = {};     
-    $scope.submitTransaction({transaction:transaction, log: $scope.tradingLog});
+    var alert = {description: 'Deleting offer seq-' + seq};
+    $scope.alerts.trading.push(alert);
+    $scope.alerts.offer.push(alert);
+    $scope.submitTransaction({transaction:transaction, log: alert});
   }
 
   $scope.getMarketPrice = function () {
@@ -2450,8 +2464,10 @@ walletApp.controller('walletCtrl', ['$scope', '$http', '$uibModal', '$localStora
 
     if (options.type == 'sell') transaction.setFlags('Sell');
 
-    $scope.tradingLog = {};
-    $scope.submitTransaction({transaction:transaction, log: $scope.tradingLog});
+    var alert = {description: options.offer_sequence ? 'Modifying offer seq-' + options.offer_sequence : 'Creating new ' + options.type + ' offer'};
+    $scope.alerts.trading.push(alert);
+    $scope.alerts.offer.push(alert);
+    $scope.submitTransaction({transaction:transaction, log: alert});
   }
     
   $scope.loadOrderBooks = function (){

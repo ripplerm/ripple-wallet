@@ -243,12 +243,13 @@
             </table>
           </form>
           </div>
-          <div class="panel panel-info" ng-show="paymentLog.status">
-            <div class="panel-body {{paymentLog.status == 'FINAL' ? (paymentLog.status_code.slice(0,3) == 'tes' ? 'bg-success' : 'bg-danger') : 'bg-warning'}}">
-              <b>Status:</b>[{{paymentLog.status}}{{paymentLog.status_code ? ', ' +  paymentLog.status_code : ''}}], <b>Result:</b> {{paymentLog.result}} {{paymentLog.tx_hash ? ', tx_hash: ' + paymentLog.tx_hash : ''}}
-            </div>
-          </div>   
-          
+          <div uib-alert ng-repeat="alert in alerts.payment" class="alert-{{alert.status == 'FINAL' ? (alert.status_code.slice(0,3) == 'tes' ? 'success' : 'danger') : 'warning'}}" close="closeAlert('payment', $index)" dismiss-on-timeout="30000">
+            {{alert.description}} <br>
+            <b>Status:</b>[{{alert.status}}{{alert.status_code ? ', ' +  alert.status_code : ''}}], 
+            <b>Result:</b> {{alert.result}} <br>
+            {{alert.tx_hash ? 'tx_hash: ' + alert.tx_hash : ''}}
+          </div>
+
           <button class="btn btn-primary" type="submit" ng-disabled="paymentForm.$invalid" ng-click="submitPayment()"> Submit </button>
           <button class="btn btn-warning" form='paymentForm' ng-click="paymentReset()"> Reset </button>
           <br>

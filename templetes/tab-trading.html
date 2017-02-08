@@ -67,10 +67,11 @@
 	</div>
 </div>
 
-<div class="panel panel-info" ng-show="tradingLog.status">
-	<div class="panel-body {{tradingLog.status == 'FINAL' ? (tradingLog.status_code.slice(0,3) == 'tes' ? 'bg-success' : 'bg-danger') : 'bg-warning'}}">
-		<b>Tx Status:</b>[{{tradingLog.status}}{{tradingLog.status_code ? ', ' +  tradingLog.status_code : ''}}], <b>Result:</b> {{tradingLog.result}} {{tradingLog.tx_hash ? ', tx_hash: ' + tradingLog.tx_hash : ''}}
-	</div>
+<div uib-alert ng-repeat="alert in alerts.trading" class="alert-{{alert.status == 'FINAL' ? (alert.status_code.slice(0,3) == 'tes' ? 'success' : 'danger') : 'warning'}}" close="closeAlert('trading', $index)" dismiss-on-timeout="30000">
+	{{alert.description}} <br>
+	<b>Status:</b>[{{alert.status}}{{alert.status_code ? ', ' +  alert.status_code : ''}}], 
+	<b>Result:</b> {{alert.result}} <br>
+	{{alert.tx_hash ? 'tx_hash: ' + alert.tx_hash : ''}}
 </div>
 <h3> Place Order: </h3>
 <div class="row">
