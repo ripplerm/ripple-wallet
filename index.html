@@ -55,7 +55,7 @@
 
     <!-- Tabs -->
     <uib-tabset>
-      <uib-tab ng-repeat="tab in tabs" heading="{{tab.title}}" active="tab.active" disable="tab.disabled" select="tab.select()">
+      <uib-tab ng-repeat="tab in tabs" heading="{{tab.title}}" active="tabActive[tab.title]" disable="tab.disabled" select="tab.select()">
         <div ng-include="tab.templete"></div>
       </uib-tab>
     </uib-tabset>

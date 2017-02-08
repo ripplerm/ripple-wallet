@@ -298,6 +298,7 @@ walletApp.controller('walletCtrl', ['$scope', '$http', '$uibModal', '$localStora
                   {title: 'Settings', templete:'templetes/tab-settings.html', select: function () {} },
                   {title: 'Tools', templete:'templetes/tab-tools.html', select: function () {} },
                 ]
+  $scope.tabActive = {Info: true};
 
   $scope.alerts = {
     account: [],
@@ -1285,6 +1286,15 @@ walletApp.controller('walletCtrl', ['$scope', '$http', '$uibModal', '$localStora
   }
 
   // ============= payment ==============================
+  $scope.pay = function (opts) {
+    $scope.payto = {
+      destination: opts.destination || opts.account || opts.address,
+      destinationTag: opts.destinationTag || opts.dtag,
+      amountValue: opts.amount || opts.value || opts.amountValue,
+      amountCurrency: opts.currency || opts.amountCurrency,
+    };
+    $scope.tabActive['Payment'] = true;
+  }
 
   $scope.getRecipientCurrencies = function () {
     $scope.Payment.recipientCurrencies = ['XRP'];
@@ -1398,6 +1408,12 @@ walletApp.controller('walletCtrl', ['$scope', '$http', '$uibModal', '$localStora
       slipage: $localStorage.slipage,
       advanceMode: advanceMode,
     };
+    if ($scope.payto) {
+      Object.keys($scope.payto).forEach(function (key) {
+        $scope.Payment[key] = $scope.payto[key];  
+      })
+      $scope.payto = undefined;
+    }
   }
 
   // =================== transaction submission ===================================

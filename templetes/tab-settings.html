@@ -17,6 +17,7 @@
 			            	<td>{{contact.address}}</td>
 			            	<td style="text-align: center">{{contact.dtag == undefined ? '-' : contact.dtag}}</td>
 							<td style="text-align: center">
+								<button type="button" ng-click="pay(contact)">Pay</button>
 								<a href="#" ng-click="editContact(contact, $index)"><span class="glyphicon glyphicon-edit"></span></a>
 								<a href="#" ng-click="deleteContact(contact)"><span class="glyphicon glyphicon-trash"></span></a>
 							</td>			            	
