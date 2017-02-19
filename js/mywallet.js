@@ -1132,7 +1132,7 @@ walletApp.controller('walletCtrl', ['$scope', '$http', '$uibModal', '$localStora
         $http.get('https://' + subdomain[i] + domain + '/ripple.txt')
         .success(rippleTxtSuccess)
         .error(function() {
-          if (i < subdomain.length) return RippleTxt(i+1, callback);
+          if (i < subdomain.length - 1) return RippleTxt(i+1, callback);
           else rippleTxtFailed(); 
         });
     }
@@ -1179,6 +1179,30 @@ walletApp.controller('walletCtrl', ['$scope', '$http', '$uibModal', '$localStora
       }
     });     
 
+  }
+
+  $scope.setRecipient = function () {
+    $scope.federationReset();
+    var recipient = $scope.Payment.recipient;
+
+    function isFederation (str) {
+        // ripplename;
+        if (/^~[a-zA-Z0-9]([\-]?[a-zA-Z0-9]){0,19}$/.test(str)) return true;
+ 
+        // checking for email type address (e.g.xyz@domain.com)
+        var domain_split = str.search(/@([\w-]+\.)+[\w-]{2,}$/);       
+        if (domain_split <= 0) return false;
+        return true;      
+    }
+
+    if (UInt160.is_valid(recipient)) {
+      $scope.Payment.destination = recipient;
+      $scope.getRecipientCurrencies();
+    } 
+    if (isFederation(recipient)) {
+      $scope.Payment.federationAddress = recipient;
+      $scope.resolveFederation();
+    }
   }
 
   // =========== Path Finding ===============================
@@ -2931,6 +2955,30 @@ walletApp.controller('ModalCtrl', ['$scope', '$uibModalInstance', 'options', fun
 
 
 // ============== directive ============================
+
+walletApp.directive('rippleValidRecipient', function () {
+  return {
+    require: 'ngModel', 
+    link: function (scope, element, attr, ctrl) {
+      ctrl.$validators.rippleValidRecipient = function(modelValue, viewValue) {
+        if (ctrl.$isEmpty(modelValue)) {
+          return true;
+        }
+        // ripple address
+        if (UInt160.is_valid(modelValue)) return true;
+
+        // ripplename;
+        var ripplename_regex = /^~[a-zA-Z0-9]([\-]?[a-zA-Z0-9]){0,19}$/;
+        if (modelValue.length > 1 && modelValue[0] =='~') return ripplename_regex.test(modelValue);
+ 
+        // checking for email type address (e.g.xyz@domain.com)
+        var domain_split = modelValue.search(/@([\w-]+\.)+[\w-]{2,}$/);       
+        if (domain_split <= 0) return false;
+        return true;
+      }
+    }
+  }
+});
 
 walletApp.directive('rippleValidAddress', function () {
   return {

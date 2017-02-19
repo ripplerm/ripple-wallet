@@ -10,22 +10,51 @@
               <div>
                 <span style="font-weight:bold; font-size:12pt;">Recipient: </span> 
                 <br>
-                <input type="text" placeholder="Ripple address" ng-model="Payment.destination" name="recipient" size="50" required ripple-valid-address ng-change="getRecipientCurrencies()"  uib-typeahead="contact.address as contact.name for contact in getFullContacts() | filter:{name:$viewValue}">
-                <span style="padding-left:1em; color:red" ng-show="paymentSimpleForm.recipient.$dirty && paymentSimpleForm.recipient.$error.rippleValidAddress">Invalid Address!</span>
+                <input type="text" placeholder="Ripple Address or Federation (abc@domain.com)" ng-model="Payment.recipient" name="recipient" size="60" required ripple-valid-recipient ng-change="setRecipient()"  uib-typeahead="contact.address as contact.name for contact in getFullContacts() | filter:{name:$viewValue}" typeahead-on-select="setRecipient()" ng-model-options="{ debounce: 500 }">
+                {{Payment.federation.status}}
+                <span style="padding-left:1em; color:red" ng-show="paymentSimpleForm.recipient.$dirty && paymentSimpleForm.recipient.$error.rippleValidRecipient">Invalid Recipient!</span>
+                <br>
                 <span style="color:green">{{parseAddress(Payment.destination)}}</span>
-                <br><br>
-                <input type="number" placeholder="Destination Tag" min=0 max=4294967295 ng-model="Payment.destinationTag" size="20" ng-required="Payment.requireDestTag"> (optional)
+                <br>
+                <div class='panel panel-info' ng-form="simpleQuoteForm" ng-show="Payment.federation.quoteRequired">
+                  <div class="panel-heading">
+                    Quotation Required:
+                  </div>
+                  <table class="table">
+                    <tr ng-repeat="field in Payment.federation.extraFields">
+                      <td style="word-wrap:break-word; cellpadding:5">
+                        {{field.label}}: <span style="color:red"> {{field.required ? '*' : ''}}</span>
+                      </td>
+                      <td><input type="text" size="80" placeholder="{{field.hint}}" ng-model="field.value" name="{{field.name}}" ng-required="field.required" ng-change="federationQuoteReset()"> </td>
+                    </tr>
+                    <tr>
+                      <td>Quote Amount: <span style="color:red"> *</span></td>
+                      <td><input type="text" size="15" ng-model="Payment.federation.quoteAmount" name="amount" ng-change="federationQuoteReset(); pathFindAutoStart()" required>  
+                        <select ng-model="Payment.federation.quoteCurrency">
+                          <option ng-repeat="currency in Payment.federation.quoteCurrencies" value="{{currency.currency}}">{{currency.currency}}</option>
+                        </select>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td><button class="btn btn-default" type="button" ng-click="federationQuote()" ng-disabled="simpleQuoteForm.$pristine || simpleQuoteForm.$invalid">Submit Quote</button></td>
+                      <td>{{Payment.federation.quoteStatus}}</td>
+                    </tr>
+                  </table>           
+                </div>
+                <br>
+                Destination Tag: <br>
+                <input type="number" placeholder="Uint32" min=0 max=4294967295 ng-model="Payment.destinationTag" size="20" ng-required="Payment.requireDestTag" ng-disabled="Payment.federation.quoteRequired"> (optional)
                 <br><br>
                 Memo: <Br>
-                <input type="text" placeholder="memo (optional)" name="memo" ng-model="Payment.memo" size="50"> 
+                <input type="text" placeholder="memo (optional)" name="memo" ng-model="Payment.memo" size="60"> 
               </div>
               <br>
               <div>
                 <span style="font-weight:bold; font-size:12pt;">Amount: </span> 
                 <br>
-                <input type="text" placeholder="Amount" name="amountValue" ng-model="Payment.amountValue" size="20" required positive-number ng-change="pathFindAutoStart()"> 
+                <input type="text" placeholder="Amount" name="amountValue" ng-model="Payment.amountValue" size="20" required positive-number ng-change="pathFindAutoStart()" ng-disabled="Payment.federation.quoteRequired"> 
                 <span uib-dropdown uib-keyboard-nav>
-                  <input type="text" placeholder="Currency" name="amountCurrency" ng-model="Payment.amountCurrency" ng-change="(Payment.amountCurrency == 'XRP') ? Payment.amountIssuer = null : Payment.amountIssuer = Payment.destination; pathFindAutoStart()" size="6" uppercase-only required dropdown-append-to-body>
+                  <input type="text" placeholder="Currency" name="amountCurrency" ng-model="Payment.amountCurrency" ng-change="(Payment.amountCurrency == 'XRP') ? Payment.amountIssuer = null : Payment.amountIssuer = Payment.destination; pathFindAutoStart()" size="6" uppercase-only required dropdown-append-to-body ng-disabled="Payment.federation.quoteRequired">
                   <button type="button" uib-dropdown-toggle ><span class="caret"></span></button>
                   <ul class="uib-dropdown-menu">
                     <li ng-repeat="currency in Payment.recipientCurrencies"><a href="#" ng-click="Payment.amountCurrency = currency; Payment.amountIssuer = (currency == 'XRP') ? null : Payment.destination; pathFindAutoStart()">{{currency}}</a></li>
