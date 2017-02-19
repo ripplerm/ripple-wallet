@@ -429,14 +429,13 @@ var JsonRewriter = {
 
           // New trust line
           if (node.diffType === "CreatedNode") {
-            effect.limit = ripple.Amount.from_json(high.value > 0 ? high : low);
-            effect.limit_peer = ripple.Amount.from_json(high.value > 0 ? low : high);
-
-            if ((high.value > 0 && high.issuer === account)
-                || (low.value > 0 && low.issuer === account)) {
-              effect.type = "trust_create_local";
+            if (node.fields.Balance.value === '0') {
+              effect.type = tx.Account === account ? "trust_create_local" : "trust_create_remote";
             } else {
-              effect.type = "trust_create_remote";
+              effect.type = "trust_change_balance";
+              effect.amount = effect.balance;
+              obj.balance_changer = effect.balance_changer = true;
+              affected_currencies.push(high.currency.toUpperCase());
             }
           }
 
@@ -468,53 +467,43 @@ var JsonRewriter = {
 
             // Trust Limit change
             else if (highPrev || lowPrev) {
-              if (high.issuer === account) {
-                effect.limit = ripple.Amount.from_json(high);
-                effect.limit_peer = ripple.Amount.from_json(low);
-              } else {
-                effect.limit = ripple.Amount.from_json(low);
-                effect.limit_peer = ripple.Amount.from_json(high);
-              }
+              effect.type = tx.Account === account ? "trust_change_local" : "trust_change_remote";
+              if (highPrev) effect.prevLimit = ripple.Amount.from_json(highPrev);
+              else if (lowPrev) effect.prevLimit = ripple.Amount.from_json(lowPrev);
+            } 
 
-              if (highPrev) {
-                effect.prevLimit = ripple.Amount.from_json(highPrev);
-                effect.type = high.issuer === account ? "trust_change_local" : "trust_change_remote";
-              }
-              else if (lowPrev) {
-                effect.prevLimit = ripple.Amount.from_json(lowPrev);
-                effect.type = high.issuer === account ? "trust_change_remote" : "trust_change_local";
-              }
-            }
-
-            // Trust flag change (effect gets this type only if nothing else but flags has been changed)
-            else if (node.fieldsPrev.Flags) {
-              if (
-                // Account set a noRipple flag
-                (node.fields.Flags & ripple.Remote.flags.state[noRippleFlag] &&
-                  !(node.fieldsPrev.Flags & ripple.Remote.flags.state[noRippleFlag]))
-                ||
-                // Account removed the noRipple flag
-                (node.fieldsPrev.Flags & ripple.Remote.flags.state[noRippleFlag] &&
-                  !(node.fields.Flags & ripple.Remote.flags.state[noRippleFlag]))
-                ||
-                // Account set a freeze flag
-                (node.fields.Flags & ripple.Remote.flags.state[freezeFlag] &&
-                  !(node.fieldsPrev.Flags & ripple.Remote.flags.state[freezeFlag]))
-                ||
-                // Account removed the freeze flag
-                (node.fieldsPrev.Flags & ripple.Remote.flags.state[freezeFlag] &&
-                  !(node.fields.Flags & ripple.Remote.flags.state[freezeFlag]))
-                ||
-                // Account set an auth flag
-                (node.fields.Flags & ripple.Remote.flags.state[authFlag] &&
-                  !(node.fieldsPrev.Flags & ripple.Remote.flags.state[authFlag]))
-              )
-              {
+            if (node.diffType === "ModifiedNode" && node.fieldsPrev.Flags && node.fieldsPrev.Flags !== node.fields.Flags) {
+              if (! effect.type) {
+                // effect gets this type only if nothing else but flags has been changed
                 effect.type = "trust_change_flags";
               }
 
-              if (effect.type)
-                effect.flags = node.fields.Flags;
+              effect.flags_changed = [];
+              var isHigh = (high.issuer === account);
+              ['NoRipple', 'Freeze', 'Auth'].forEach(function (f) {
+                ['High', 'Low'].forEach(function (h) {
+                  var flag = h + f;
+                  var action = undefined;
+                  if (node.fields.Flags & ripple.Remote.flags.state[flag] &&
+                    !(node.fieldsPrev.Flags & ripple.Remote.flags.state[flag])) {
+                    action = '_set';
+                  } else if (node.fieldsPrev.Flags & ripple.Remote.flags.state[flag] &&
+                  !(node.fields.Flags & ripple.Remote.flags.state[flag])) {
+                    action = '_removed';
+                  }
+                  if (!action) return;
+                  var eff = f.toLowerCase() + action;
+                  if ((h == 'High' && !isHigh) || (h == 'Low' && isHigh)) {
+                    eff = eff + '_peer';
+                  };
+                  effect.flags_changed.push(eff);
+                });
+              });
+            }
+
+            // Trustline deleted
+            if (node.diffType === "DeletedNode") {
+              effect.deleted = true;
             }
           }
 
@@ -524,25 +513,20 @@ var JsonRewriter = {
             effect.balance = high.issuer === account
                 ? ripple.Amount.from_json(node.fields.Balance).negate(true)
                 : ripple.Amount.from_json(node.fields.Balance);
+            effect.limit = ripple.Amount.from_json(high.issuer === account ? high : low);
+            effect.limit_peer = ripple.Amount.from_json(high.issuer === account ? low : high);
 
-            if (obj.transaction && obj.transaction.type === "trust_change_balance") {
-              obj.transaction.balance = effect.balance;
-            }
+            var isHigh = (high.issuer === account);
+            var flags = effect.flags = node.fields.Flags;
+            var Flags = ripple.Remote.flags['state'];
 
-            // noRipple flag
-            if (node.fields.Flags & ripple.Remote.flags.state[noRippleFlag]) {
-              effect.noRipple = true;
-            }
+            effect.authorized = isHigh? Flags['HighAuth'] & flags : Flags['LowAuth'] & flags;
+            effect.peer_authorized = isHigh? Flags['LowAuth'] & flags : Flags['HighAuth'] & flags;
+            effect.freeze = isHigh? Flags['HighFreeze'] & flags : Flags['LowFreeze'] & flags;
+            effect.freeze_peer = isHigh? Flags['LowFreeze'] & flags : Flags['HighFreeze'] & flags;
+            effect.no_ripple = isHigh? Flags['HighNoRipple'] & flags : Flags['LowNoRipple'] & flags;
+            effect.no_ripple_peer = isHigh? Flags['LowNoRipple'] & flags : Flags['HighNoRipple'] & flags;
 
-            // freeze flag
-            if (node.fields.Flags & ripple.Remote.flags.state[freezeFlag]) {
-              effect.freeze = true;
-            }
-
-            // auth flag
-            if (node.fields.Flags & ripple.Remote.flags.state[authFlag]) {
-              effect.auth = true;
-            }
           }
         }
 
