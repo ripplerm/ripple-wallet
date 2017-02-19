@@ -282,7 +282,10 @@ walletApp.controller('walletCtrl', ['$scope', '$http', '$uibModal', '$localStora
   })
   remote.on('ledger_closed', function(msg, server){
     $scope.ledgerIndex = msg.ledger_index; 
-    $scope.server = remote.getServer()._url;
+    var server = remote.getServer();
+    if (!server) return;
+    $scope.server = server._opts.host;
+    $scope.fee = server._fee;
     try {$scope.$apply();} catch (e) {};
   })
   remote.connect();
