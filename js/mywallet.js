@@ -737,11 +737,19 @@ walletApp.controller('walletCtrl', ['$scope', '$http', '$uibModal', '$localStora
   }
 
   $scope.trustlinesPageLoad = function () {
-    if ($scope.inGatewayList($scope.activeAccount)) return;
-    if (!$scope.trustlines) $scope.accountLines();
+    if (!$scope.walletAccount) return;
+    $scope.trustlines = $scope.walletAccount._lines;
+    if ($scope.trustlines) {
+      $scope.accountLinesStatus = 'updated @ ledger: ' + $scope.walletAccount._lines_updated;
+      $scope.linesStats();
+    } else {
+      if ($scope.inGatewayList($scope.activeAccount)) return; // do not auto-request trustlines for gateway issuer.
+      if (!$scope.trustlines) $scope.accountLines();
+    }
   }
 
   $scope.accountLines = function (callback) {
+    if (!remote.isConnected()) return;
     if (typeof callback != 'function') callback = function (){};
     $scope.accountLinesStatus = 'refreshing...';
     var LINES = [];
@@ -779,6 +787,8 @@ walletApp.controller('walletCtrl', ['$scope', '$http', '$uibModal', '$localStora
         $scope.accountLinesStatus = 'Updated @ ledger:' + ledger_index;
 
         $scope.trustlines = LINES;
+        $scope.walletAccount._lines = LINES;
+        $scope.walletAccount._lines_updated = ledger_index;
         $scope.linesStats();
       }
       callback(err, res);
@@ -894,7 +904,7 @@ walletApp.controller('walletCtrl', ['$scope', '$http', '$uibModal', '$localStora
 
       $scope.addAccountHistory($scope.activeAccount);      
       $scope.accountInfo();
-      //$scope.getAccountOffers();
+      $scope.trustlinesPageLoad();
 
       $scope.walletAccount.on('entry', $scope.updateAccountInfo);
       $scope.walletAccount.on('transaction', $scope.handleTransaction);
@@ -1478,9 +1488,7 @@ walletApp.controller('walletCtrl', ['$scope', '$http', '$uibModal', '$localStora
       tx_log.summary = transaction.summary();
       tx_log.result = tx_log.summary.result.engine_result;
       tx_log.tx_hash = tx_log.summary.result.transaction_hash;
-
       callback(err, res)
-      $scope.$apply();
     });
    
   }
@@ -2706,6 +2714,69 @@ walletApp.controller('walletCtrl', ['$scope', '$http', '$uibModal', '$localStora
     })
   }
 
+  $scope.updateLines = function (tx) {
+    if (! $scope.trustlines) return;
+
+    var settings = [
+      'freeze', 'freeze_peer', 
+      'no_ripple', 'no_ripple_peer',
+      'authorized', 'peer_authorized',
+    ]
+
+    function modifyLine (effect) {
+      var newFields = {
+        balance: effect.balance.to_text(),
+        limit: effect.limit.to_text(),
+        limit_peer: effect.limit_peer.to_text(),
+      }
+      settings.forEach(function (s) {
+        newFields[s] = effect[s];
+      })
+      var line = $scope.trustlines.find(function (line){
+        return line.account === effect.counterparty && line.currency === effect.currency;
+      });
+      if (line) Object.assign(line, newFields); 
+    }
+
+    function deleteLine (effect) {
+        var i = $scope.trustlines.findIndex(function (line) {
+          return line.account === effect.counterparty && line.currency === effect.currency;
+        })
+        if (i >= 0) $scope.trustlines.splice(i, 1);
+    }
+
+    function addLine (effect) {
+      var line = {
+        account: effect.counterparty,
+        currency: effect.currency,
+        balance: effect.balance.to_text(),
+        limit: effect.limit.to_text(),
+        limit_peer: effect.limit_peer.to_text(),
+      };
+      settings.forEach(function (s) {
+        line[s] = effect[s];
+      })
+      $scope.trustlines.push(line)
+    }
+
+    tx.effects.forEach(function (effect){
+      if (effect.deleted) return deleteLine(effect);
+
+      switch(effect.type) {
+        case 'trust_create_local':
+        case 'trust_create_remote':
+          addLine(effect)
+          break;
+        case 'trust_change_balance':
+        case 'trust_change_remote':
+        case 'trust_change_local':
+        case 'trust_change_flags':
+          modifyLine(effect);
+      }
+    })
+  }
+
+
   $scope.handleTransaction = function (tx) {
     if (! tx.validated) return;
     if (! $scope.walletAccount.history) $scope.walletAccount.history = [];
@@ -2715,6 +2786,7 @@ walletApp.controller('walletCtrl', ['$scope', '$http', '$uibModal', '$localStora
 
     $scope.walletAccount.history.unshift(tx);
     $scope.updateOffers(tx);
+    $scope.updateLines(tx);
   }
 
   $scope.editTradePair = function (pair, index) {
