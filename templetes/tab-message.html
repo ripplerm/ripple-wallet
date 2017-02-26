@@ -1,0 +1,22 @@
+
+        <div id="tabMessage">
+          <span style="font-weight:bold; font-size:14pt; padding-right:2em;">Send Message: </span>
+          <br><br>
+          <form name="messageForm" id="messageForm" novalidate>
+            <input type="text" size="50" name="to" placeholder="Ripple Address" ng-model="message.to" required ripple-valid-address typeahead="contact.address as contact.name for contact in contacts | filter:{name:$viewValue}" typeahead-on-select="setMessageRecipient($item)" ng-change="setMessageRecipient()" ng-model-options="{ debounce: 250 }">
+            <span style="color:green">{{parseAddress(message.to, message.dtag)}}</span>
+            <br><br>
+            <textarea form="messageForm" name="data" placeholder="message" ng-model="message.data" cols=100 rows=5 maxlength="900" required></textarea>
+            <br><br>
+            <button type="button" class="btn btn-info" ng-disabled="messageForm.$invalid" ng-click="sendMessage()">Submit</button>
+          </form>
+          <div class="panel panel-info" ng-show="messageLog.status">
+            <div class="panel-body {{messageLog.status == 'FINAL' ? (messageLog.status_code.slice(0,3) == 'tes' ? 'bg-success' : 'bg-danger') : 'bg-warning'}}">
+              [{{messageLog.status}}]: 
+              {{messageLog.status_code || messageLog.result}}
+              {{messageLog.tx_hash ? ', tx_hash: ' + messageLog.tx_hash : ''}}
+              <a href="https://charts.ripple.com/#/transactions/{{messageLog.tx_hash}}" target="_blank" ng-show="messageLog.tx_hash"><span class="glyphicon glyphicon-new-window"></span> </a>
+            </div>
+          </div> 
+        </div>
+        

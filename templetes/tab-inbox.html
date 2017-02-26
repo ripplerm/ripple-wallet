@@ -1,0 +1,35 @@
+
+        <div id="tabInbox">
+          <span style="font-weight:bold; font-size:14pt; padding-right:2em;">Inbox: </span>
+          <button class="btn btn-warning" ng-click="transactionHistory(true);" ng-disabled="!activeAccount"><span class="glyphicon glyphicon-refresh"></span> Refresh </button>
+          <span style="padding-left:1em;" ng-show="transactionHistoryStatus == 'Full' || transactionHistoryStatus == 'Loaded'">
+            {{txInbox.length === 0 ? ' == No Messages == ' : ''}}
+          </span>
+          <br>
+          <br>
+          <div class="panel panel-default" ng-repeat="tx in walletAccount.history | filter:inboxFilter as txInbox">
+            <div class="panel-heading" ng-click="tx.showMessage = !tx.showMessage">
+              <span style="padding-left:1em; padding-right:1em"> 
+                {{tx.date | date:'yyyy-MM-dd, HH:mm:ss'}} 
+              </span>
+              <span style="padding-left:1em; padding-right:1em"> 
+                From: 
+                <span style="color:green">{{parseAddress(tx.raw.Account)}}</span>
+              </span>
+              Tx: 
+              <a href="https://charts.ripple.com/#/transactions/{{tx.hash}}" target="_blank" ng-show="network=='MAIN'"><span class="glyphicon glyphicon-new-window"></span></a>
+            </div>
+            <div class="panel-body" ng-show="tx.showMessage">
+              <div ng-repeat="memo in tx.memos | filter:messageFilter">
+                <pre>{{memo.memoData}}</pre>
+              </div>
+            </div>
+          </div>
+          <div class="panel panel-default" ng-show="transactionHistoryStatus">
+            <div class="panel-heading" ng-click="transactionHistoryStatus == 'Loaded' ? transactionHistory() : null" align="center">
+              {{transactionHistoryStatus == 'Full' ? 'No more Messages' : 
+                transactionHistoryStatus == 'Loaded' ? 'Load More' : 'Loading...'
+              }}
+            </div>
+          </div>
+        </div>

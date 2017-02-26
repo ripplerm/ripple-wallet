@@ -318,6 +318,8 @@ walletApp.controller('walletCtrl', ['$scope', '$http', '$uibModal', '$localStora
     {title: 'Raw Txn', templete:'templetes/tab-transaction.html'},
     {title: 'Submit', templete:'templetes/tab-submit.html'},
     {title: 'Account-Generator', templete:'templetes/tab-keys.html', select: function () {$scope.keysReset();} },
+    {title: 'Message', templete:'templetes/tab-message.html', select: function () {$scope.messageReset();} },
+    {title: 'Inbox', templete:'templetes/tab-inbox.html', select: function () {} },
   ];
 
   $scope.keys = {};
@@ -403,6 +405,67 @@ walletApp.controller('walletCtrl', ['$scope', '$http', '$uibModal', '$localStora
       }
     }
   }
+
+  $scope.messageReset = function () {
+    $scope.message = {
+      to: '',
+      data: '',
+      dtag: undefined,
+    };
+  };
+
+  $scope.setMessageRecipient = function (contact) {
+    $scope.message.dtag = undefined;
+    if (contact && typeof contact.dtag == 'number') $scope.message.dtag = contact.dtag;
+  };
+
+  $scope.sendMessage = function () {
+    var transaction = remote.transaction();
+    transaction.payment({
+      to: $scope.message.to,
+      from: $scope.activeAccount,
+      amount: '1',
+    });
+    var memo = {
+      memoType: 'message',
+      memoFormat: 'text',
+      memoData: $scope.message.data,
+    }
+    transaction.addMemo(memo);
+    if (typeof $scope.message.dtag == 'number') {
+      transaction.tx_json.DestinationTag = $scope.message.dtag;
+    }
+    $scope.messageLog = {};
+    $scope.submitTransaction({transaction:transaction, log: $scope.messageLog});
+  };
+
+  $scope.inboxFilter = function (tx) {
+    if (! tx.memos) return false;
+    if (tx.raw.TransactionType == 'Payment'){
+      if (! $scope.messageSettings.Payment) return false;
+      if (tx.raw.Destination != $scope.activeAccount) return false;
+    }
+    if (tx.raw.TransactionType == 'TrustSet'){
+      if (! $scope.messageSettings.TrustSet) return false;
+      if (tx.raw.LimitAmount.issuer != $scope.activeAccount) return false;
+    }
+    var gotMessage = false;
+    tx.memos.forEach(function (m) {
+      if ($scope.messageFilter(m) && m.memoData) gotMessage = true;;
+    })
+    return gotMessage;
+  }
+
+  $scope.messageFilter = function (m) {
+    if (m.memoType && $scope.messageSettings.ignoreTypes.indexOf(m.memoType) >= 0) return false;
+    return true;
+  }
+
+  $scope.messageSettings = {
+    Payment: true,
+    TrustSet: true,
+    ignoreTypes: ['client'],
+  };
 
   $scope.transactions = [ 
     { type: 'AccountSet', templete: 'templetes/tx-accountSet.html'},
@@ -2591,7 +2654,7 @@ walletApp.controller('walletCtrl', ['$scope', '$http', '$uibModal', '$localStora
       account: account,
       ledger_index_min: -1,
       ledger_index_max: -1,
-      limit: 10,
+      limit: 20,
       binary: false,
       marker: refresh ? undefined : $scope.walletAccount.tx_marker 
     };
@@ -2781,7 +2844,6 @@ walletApp.controller('walletCtrl', ['$scope', '$http', '$uibModal', '$localStora
       }
     })
   }
-
 
   $scope.handleTransaction = function (tx) {
     if (! tx.validated) return;
