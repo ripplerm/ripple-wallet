@@ -423,10 +423,6 @@ var JsonRewriter = {
           var high = node.fields.HighLimit;
           var low = node.fields.LowLimit;
 
-          var noRippleFlag = high.issuer === account ? 'HighNoRipple' : 'LowNoRipple';
-          var freezeFlag = high.issuer === account ? 'HighFreeze' : 'LowFreeze';
-          var authFlag = high.issuer === account ? 'HighAuth' : 'LowAuth';
-
           // New trust line
           if (node.diffType === "CreatedNode") {
             if (node.fields.Balance.value === '0') {
@@ -470,7 +466,7 @@ var JsonRewriter = {
               effect.type = tx.Account === account ? "trust_change_local" : "trust_change_remote";
               if (highPrev) effect.prevLimit = ripple.Amount.from_json(highPrev);
               else if (lowPrev) effect.prevLimit = ripple.Amount.from_json(lowPrev);
-            } 
+            }
 
             if (node.diffType === "ModifiedNode" && node.fieldsPrev.Flags && node.fieldsPrev.Flags !== node.fields.Flags) {
               if (! effect.type) {
@@ -527,6 +523,12 @@ var JsonRewriter = {
             effect.no_ripple = isHigh? Flags['HighNoRipple'] & flags : Flags['LowNoRipple'] & flags;
             effect.no_ripple_peer = isHigh? Flags['LowNoRipple'] & flags : Flags['HighNoRipple'] & flags;
 
+            effect.quality_in = isHigh ? 
+                                  node.fieldsNew['HighQualityIn'] || node.fieldsFinal['HighQualityIn'] : 
+                                  node.fieldsNew['LowQualityIn'] || node.fieldsFinal['LowQualityIn']; 
+            effect.quality_out = isHigh ? 
+                                  node.fieldsNew['HighQualityOut'] || node.fieldsFinal['HighQualityOut'] : 
+                                  node.fieldsNew['LowQualityOut'] || node.fieldsFinal['LowQualityOut']; 
           }
         }
 

@@ -2728,6 +2728,8 @@ walletApp.controller('walletCtrl', ['$scope', '$http', '$uibModal', '$localStora
         balance: effect.balance.to_text(),
         limit: effect.limit.to_text(),
         limit_peer: effect.limit_peer.to_text(),
+        quality_in: effect.quality_in,
+        quality_out: effect.quality_out,
       }
       settings.forEach(function (s) {
         newFields[s] = effect[s];
@@ -2752,6 +2754,8 @@ walletApp.controller('walletCtrl', ['$scope', '$http', '$uibModal', '$localStora
         balance: effect.balance.to_text(),
         limit: effect.limit.to_text(),
         limit_peer: effect.limit_peer.to_text(),
+        quality_in: effect.quality_in,
+        quality_out: effect.quality_out,
       };
       settings.forEach(function (s) {
         line[s] = effect[s];
