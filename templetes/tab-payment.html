@@ -10,11 +10,11 @@
               <div>
                 <span style="font-weight:bold; font-size:12pt;">Recipient: </span> 
                 <br>
-                <input type="text" placeholder="Ripple Address or Federation (abc@domain.com)" ng-model="Payment.recipient" name="recipient" size="60" required ripple-valid-recipient ng-change="setRecipient()"  uib-typeahead="contact.address as contact.name for contact in getFullContacts() | filter:{name:$viewValue}" typeahead-on-select="setRecipient()" ng-model-options="{ debounce: 500 }">
+                <input type="text" placeholder="Ripple Address or Federation (abc@domain.com)" ng-model="Payment.recipient" name="recipient" size="60" required ripple-valid-recipient ng-change="setRecipient()"  uib-typeahead="contact.address as contact.name for contact in getFullContacts() | filter:{name:$viewValue}" typeahead-on-select="setRecipient($item)" ng-model-options="{ debounce: 500 }">
                 {{Payment.federation.status}}
                 <span style="padding-left:1em; color:red" ng-show="paymentSimpleForm.recipient.$dirty && paymentSimpleForm.recipient.$error.rippleValidRecipient">Invalid Recipient!</span>
                 <br>
-                <span style="color:green">{{parseAddress(Payment.destination)}}</span>
+                <span style="color:green">{{parseAddress(Payment.destination, Payment.destinationTag)}}</span>
                 <br>
                 <div class='panel panel-info' ng-form="simpleQuoteForm" ng-show="Payment.federation.quoteRequired">
                   <div class="panel-heading">

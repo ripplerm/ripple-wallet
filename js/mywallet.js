@@ -649,17 +649,17 @@ walletApp.controller('walletCtrl', ['$scope', '$http', '$uibModal', '$localStora
     return account;
   }
 
-  $scope.contactName = function (account) {
+  $scope.contactName = function (account, dtag) {
     if (!account) { return ''; }
     var contacts = $scope.contacts;
     for (var i=0, l=contacts.length; i<l; i++) {
-      if (account == contacts[i].address) return contacts[i].name;
+      if (account === contacts[i].address && dtag === contacts[i].dtag) return contacts[i].name;
     } 
     return '';
   }
 
-  $scope.parseAddress = function (account) {
-    return $scope.contactName(account) || $scope.gatewayName(account);
+  $scope.parseAddress = function (account, dtag) {
+    return $scope.contactName(account, dtag) || $scope.gatewayName(account);
   }
 
   $scope.accountInfoReset = function () {
@@ -1191,8 +1191,9 @@ walletApp.controller('walletCtrl', ['$scope', '$http', '$uibModal', '$localStora
 
   }
 
-  $scope.setRecipient = function () {
+  $scope.setRecipient = function (contact) {
     $scope.federationReset();
+    $scope.Payment.destinationTag = undefined;
     var recipient = $scope.Payment.recipient;
 
     function isFederation (str) {
@@ -1207,6 +1208,7 @@ walletApp.controller('walletCtrl', ['$scope', '$http', '$uibModal', '$localStora
 
     if (UInt160.is_valid(recipient)) {
       $scope.Payment.destination = recipient;
+      if (contact.dtag !== undefined) $scope.Payment.destinationTag = contact.dtag;
       $scope.getRecipientCurrencies();
     } 
     if (isFederation(recipient)) {
