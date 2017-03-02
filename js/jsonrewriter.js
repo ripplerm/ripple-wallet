@@ -1,4 +1,9 @@
 
+function convertHexToString(hexString) {
+  var bits = ripple.sjcl.codec.hex.toBits(hexString);
+  return ripple.sjcl.codec.utf8String.fromBits(bits);
+}
+
 var isEmptyObject = function (obj) {
   return Object.keys(obj).length === 0;
 }
@@ -656,6 +661,25 @@ var JsonRewriter = {
         obj.transaction = {};
       }
       obj.transaction.type = 'rippling';
+    }
+
+    // parse memos
+    if (tx.Memos) {
+      obj.memos = [];
+      tx.Memos.forEach(function (m) {
+        var memo = {};
+        if (m.Memo.MemoType) memo.memoType = convertHexToString(m.Memo.MemoType);
+        if (m.Memo.MemoFormat) memo.memoFormat = convertHexToString(m.Memo.MemoFormat);
+        if (m.Memo.MemoData) {
+          if (memo.memoFormat === 'hex') {
+            // retain original hex data
+            memo.memoData = m.Memo.MemoData;
+          } else {
+            memo.memoData = convertHexToString(m.Memo.MemoData);
+          }
+        }
+        obj.memos.push(memo);
+      })
     }
 
     obj.tx_type = tx.TransactionType;

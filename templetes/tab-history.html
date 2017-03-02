@@ -151,6 +151,8 @@
 	            </ul>
 	        </div>
 	        <div class="panel-body" ng-show="tx.showDetail">
+	        	<b>Hash:</b> {{tx.hash}} <a href="https://charts.ripple.com/#/transactions/{{tx.hash}}" target="_blank" ng-show="network=='MAIN'"><span class="glyphicon glyphicon-new-window"></span> </a>
+	        	<br><br>
 	            <table class="table" ng-show="tx.balanceEffects && tx.balanceEffects.length">
 		          <tr style="text-align: center">
 		            <th>Currency</th>
@@ -165,9 +167,18 @@
 		          	<td>{{amountDisplay(effect.balance, {value:1, max_sig_digits:6})}}</td>
 		          </tr>
 	        	</table>
-	        	<b>Hash:</b> {{tx.hash}} <a href="https://charts.ripple.com/#/transactions/{{tx.hash}}" target="_blank" ng-show="network=='MAIN'"><span class="glyphicon glyphicon-new-window"></span> </a>
-	        	<br>
-	            <br>
+	            <table class="table" ng-show="tx.memos && tx.memos.length">
+		          <tr style="text-align: center">
+		            <th>MemoType</th>
+		            <th>MemoFormat</th>
+		            <th>MemoData</th>
+		          </tr>
+		          <tr ng-repeat="memo in tx.memos">
+		          	<td>{{memo.memoType || '-'}}</td>
+		          	<td>{{memo.memoFormat || '-'}}</td>
+		          	<td>{{memo.memoData || '-'}}</td>
+		          </tr>
+	        	</table>
               	<b>Raw Tx: </b>
    				<json-formatter json="tx.raw" open="1"></json-formatter>        	
               	<br>
