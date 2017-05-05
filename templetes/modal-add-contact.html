@@ -11,14 +11,14 @@
                           <tr>
                             <td>Address: </td>
                             <td>
-                                <input type="text" name="address" ng-model="options.address" size="50" ripple-valid-address required>
-                                <span style="color:red" ng-show="contactForm.address.$dirty && contactForm.address.$error.rippleValidAddress">Invalid Address!</span> 
+                                <input type="text" name="address" ng-model="options.address" size="50" ripple-valid-recipient required>
+                                <span style="color:red" ng-show="contactForm.address.$dirty && contactForm.address.$error.rippleValidRecipient">Invalid Address!</span> 
                             </td>
                           </tr>
                           <tr>
                             <td>Destination Tag: <br>(optional)</td>
                             <td>
-                                <input type="number" name="dtag" ng-model="options.dtag" size="10" uint32>
+                                <input type="number" name="dtag" ng-model="options.dtag" size="10" uint32 ng-disabled='!(isValidAddress(options.address))'>
                                 <span style="color:red" ng-show="contactForm.dtag.$invalid">Invalid Number!</span>
                             </td>
                           </tr>

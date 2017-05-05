@@ -1269,15 +1269,30 @@ walletApp.controller('walletCtrl', ['$scope', '$http', '$uibModal', '$localStora
         return true;      
     }
 
-    if (UInt160.is_valid(recipient)) {
+    if ($scope.isValidAddress(recipient)) {
       $scope.Payment.destination = recipient;
-      if (contact.dtag !== undefined) $scope.Payment.destinationTag = contact.dtag;
+      if (contact && (contact.destinationTag !== undefined || contact.dtag !== undefined) ) {
+         $scope.Payment.destinationTag = contact.destinationTag || contact.dtag;
+      }
       $scope.getRecipientCurrencies();
     } 
     if (isFederation(recipient)) {
       $scope.Payment.federationAddress = recipient;
       $scope.resolveFederation();
     }
+  }
+
+  $scope.isValidAddress = function (address) {
+    return UInt160.is_valid(address);
+  }
+
+  $scope.isRipplename = function (address) {
+    return /^~[a-zA-Z0-9]([\-]?[a-zA-Z0-9]){0,19}$/.test(address);
+  }
+
+  $scope.isFederation = function (address) {
+    // checking for email type address (e.g.xyz@domain.com)
+    return address.search(/@([\w-]+\.)+[\w-]{2,}$/) > 0;  
   }
 
   // =========== Path Finding ===============================
@@ -1390,7 +1405,7 @@ walletApp.controller('walletCtrl', ['$scope', '$http', '$uibModal', '$localStora
   $scope.pay = function (opts) {
     $scope.payto = {
       destination: opts.destination || opts.account || opts.address,
-      destinationTag: opts.destinationTag || opts.dtag,
+      destinationTag: (typeof opts.destinationTag == 'number') ? opts.destinationTag : opts.dtag,
       amountValue: opts.amount || opts.value || opts.amountValue,
       amountCurrency: opts.currency || opts.amountCurrency,
     };
@@ -1513,6 +1528,10 @@ walletApp.controller('walletCtrl', ['$scope', '$http', '$uibModal', '$localStora
       Object.keys($scope.payto).forEach(function (key) {
         $scope.Payment[key] = $scope.payto[key];  
       })
+      if (!advanceMode) {
+        $scope.Payment.recipient = $scope.Payment.destination;
+        $scope.setRecipient($scope.payto);
+      }
       $scope.payto = undefined;
     }
   }

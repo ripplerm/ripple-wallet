@@ -10,7 +10,7 @@
               <div>
                 <span style="font-weight:bold; font-size:12pt;">Recipient: </span> 
                 <br>
-                <input type="text" placeholder="Ripple Address or Federation (abc@domain.com)" ng-model="Payment.recipient" name="recipient" size="60" required ripple-valid-recipient ng-change="setRecipient()"  uib-typeahead="contact.address as contact.name for contact in getFullContacts() | filter:{name:$viewValue}" typeahead-on-select="setRecipient($item)" ng-model-options="{ debounce: 500 }">
+                <input type="text" placeholder="Ripple Address or Federation (abc@domain.com)" ng-model="Payment.recipient" name="recipient" size="60" required ripple-valid-recipient ng-change="setRecipient()"  uib-typeahead="contact.address as contact.name for contact in getFullContacts() | filter:{name:$viewValue}" typeahead-on-select="setRecipient($item)" ng-model-options="{ debounce: 200 }">
                 {{Payment.federation.status}}
                 <span style="padding-left:1em; color:red" ng-show="paymentSimpleForm.recipient.$dirty && paymentSimpleForm.recipient.$error.rippleValidRecipient">Invalid Recipient!</span>
                 <br>
@@ -43,7 +43,7 @@
                 </div>
                 <br>
                 Destination Tag: <br>
-                <input type="number" placeholder="Uint32" min=0 max=4294967295 ng-model="Payment.destinationTag" size="20" ng-required="Payment.requireDestTag" ng-disabled="Payment.federation.quoteRequired"> (optional)
+                <input type="number" placeholder="Uint32" min=0 max=4294967295 ng-model="Payment.destinationTag" size="20" ng-required="Payment.requireDestTag" ng-disabled="isFederation(Payment.recipient)"> (optional)
                 <br><br>
                 Memo: <Br>
                 <input type="text" placeholder="memo (optional)" name="memo" ng-model="Payment.memo" size="60"> 
