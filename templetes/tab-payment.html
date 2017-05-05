@@ -70,7 +70,7 @@
                   <div class="col-sm-4" ng-repeat="path in Payment.pathOpts" style="text-align:center" >
                     <div class="panel">
                       <div class="panel-body bg-info" ng-click="setSendmax(path.source_amount); setPaths(path.paths_computed);">
-                          {{ amountDisplay(path.source_amount, {value:true, currency:true, issuer: (path.source_amount.issuer != activeAccount), gatewayName: true, max_sig_digits: 5})}}
+                          {{ amountDisplay(path.source_amount, {value:true, currency:true, issuer: (path.source_amount.issuer != activeAccount), gatewayName: true, sliced:true, max_sig_digits: 5})}}
                       </div>
                     </div>
                   </div>

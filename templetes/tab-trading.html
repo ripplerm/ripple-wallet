@@ -13,7 +13,7 @@
 	<div class="col-sm-4">
 		<div uib-dropdown uib-keyboard-nav>
 			<span style="font-weight:bold; font-size:14pt; color:green">
-				{{pairName(trading.pair)}}</span>
+				{{pairName(trading.pair, true)}}</span>
 			</span>
 	        <button type="button" uib-dropdown-toggle ><span class="caret"></span></button>
             <ul class="uib-dropdown-menu">
@@ -133,7 +133,7 @@
 			<table class="table">
 				<tr>
 				  	<td>
-				  		<b> {{trading.baseCurrency}} <br> {{gatewayName(trading.baseIssuer)}} </b>
+				  		<b> {{trading.baseCurrency}} <br> {{gatewayName(trading.baseIssuer, true)}} </b>
 				  	</td>
 				  	<td style="vertical-align:middle" ng-click="trading.buyQuantity = trading.sellQuantity = trading.baseCurrency=='XRP' ? accountBalances.XRP: accountBalances.IOU[trading.baseCurrency + '.' + trading.baseIssuer]">
 				  		{{trading.baseCurrency=='XRP' ? accountBalances.XRP: accountBalances.IOU[trading.baseCurrency + '.' + trading.baseIssuer]}}
@@ -141,7 +141,7 @@
 				</tr>
 				<tr>
 				  	<td>
-				  		<b> {{trading.tradeCurrency}} <br> {{gatewayName(trading.tradeIssuer)}} </b>
+				  		<b> {{trading.tradeCurrency}} <br> {{gatewayName(trading.tradeIssuer, true)}} </b>
 				  	</td>
 				  	<td style="vertical-align:middle" ng-click="trading.tradeAmount = trading.tradeCurrency=='XRP' ? accountBalances.XRP : accountBalances.IOU[trading.tradeCurrency + '.' + trading.tradeIssuer]; trading.buyQuantity = trading.buyPrice? (trading.tradeAmount/trading.buyPrice).toPrecision(6) : null; trading.sellQuantity = trading.sellPrice? (trading.tradeAmount/trading.sellPrice).toPrecision(6) : null;">
 						{{trading.tradeCurrency=='XRP' ? accountBalances.XRP : accountBalances.IOU[trading.tradeCurrency + '.' + trading.tradeIssuer]}}

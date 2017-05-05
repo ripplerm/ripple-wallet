@@ -187,6 +187,11 @@ var GATEWAYS = [
         address: "rB3gZey7VWHYRqJHLoHDEJXJ2pEPNieKiS",
         currencies: ['JPY', 'USD', 'BTC', 'LTC', 'DOG', 'STR']
       },
+      {
+        name: "Steemiex",
+        address: "rKYyUDK7N4Wd685xjfMeXM9G8xEe5ciVkC",
+        currencies: ['STM', 'USD']
+      },
     ];
 
 var TRADE_PAIRS = [
@@ -199,6 +204,7 @@ var TRADE_PAIRS = [
   'MXN.rG6FZ31hDHN1K5Dkbma3PSB5uVCuVVRzfn/XRP',
   'EUR.rhub8VRN55s94qWKDv6jmDy1pUykJzF3wq/XRP',
   'ETH.rcA8X3TVMST1n3CJeAdGk1RdRCHii7N2h/XRP',
+  'STM.rKYyUDK7N4Wd685xjfMeXM9G8xEe5ciVkC/XRP',
 ]
 
 var GATEWAYS_TEST = [
@@ -703,13 +709,14 @@ walletApp.controller('walletCtrl', ['$scope', '$http', '$uibModal', '$localStora
     return false;   
   }
 
-  $scope.gatewayName = function (account) {
+  $scope.gatewayName = function (account, sliced) {
     if (!account) { return ''; }
     var gateways = $scope.gateways;
     for (var i=0; i < gateways.length; i++) {
       if (account == gateways[i].address) return gateways[i].name;
     } 
-    return account;
+
+    return sliced ? [account.slice(0,4), account.slice(-4)].join('....') : account;
   }
 
   $scope.contactName = function (account, dtag) {
@@ -1034,8 +1041,7 @@ walletApp.controller('walletCtrl', ['$scope', '$http', '$uibModal', '$localStora
     var currency = amount[1];
     var issuer = amount[2];
 
-    //if (opts.precision) value = Number(value).toPrecision(opts.precision);
-    if (opts.issuer && opts.gatewayName) issuer = $scope.gatewayName(issuer);
+    if (opts.issuer && opts.gatewayName) issuer = $scope.gatewayName(issuer, opts.sliced);
 
     var result = '';
 
@@ -2208,7 +2214,7 @@ walletApp.controller('walletCtrl', ['$scope', '$http', '$uibModal', '$localStora
     if (!$scope.accountOffers.offers) $scope.getAccountOffers();
   };
 
-  $scope.pairName = function (pair) {
+  $scope.pairName = function (pair, sliced) {
     var base = pair.split('/')[0]; 
     var trade = pair.split('/')[1];
 
@@ -2217,8 +2223,8 @@ walletApp.controller('walletCtrl', ['$scope', '$http', '$uibModal', '$localStora
     var tradeCurrency = trade.split('.')[0];
     var tradeIssuer = trade.split('.')[1];
 
-    var pairname = baseCurrency + (baseIssuer ? '.' + $scope.gatewayName(baseIssuer) : '') + '/' +
-                     tradeCurrency + (tradeIssuer ? '.' + $scope.gatewayName(tradeIssuer) : '');
+    var pairname = baseCurrency + (baseIssuer ? '.' + $scope.gatewayName(baseIssuer, sliced) : '') + '/' +
+                     tradeCurrency + (tradeIssuer ? '.' + $scope.gatewayName(tradeIssuer, sliced) : '');
     return pairname;                     
   }
 
