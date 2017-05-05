@@ -10,17 +10,17 @@
                             <br>
                             <table class="table">
                                 <tr>
-                                  <th style="width:345px">Address</th>
-                                  <th>Weight (Integer)</th>
+                                  <th>Address</th>
+                                  <th style="text-align: center">Weight (Integer)</th>
                                   <th></th>
                                 </tr>
                                 <tr ng-repeat = "signer in options.signers">
                                   <td>
-                                    <input type="text" ng-model="options.signers[$index].address" name="signerAddress{{$index}}" size="50" ripple-valid-address required>
+                                    <input type="text" ng-model="options.signers[$index].address" name="signerAddress{{$index}}" size="45" ripple-valid-address required>
                                     <span style="color:red" ng-show="setSignerListForm.signerAddress{{$index}}.$error.rippleValidAddress">Invalid Address!</span>
                                   </td>
-                                  <td>
-                                    <input type="number" min=1 ng-model="options.signers[$index].weight" size="5" name="signerWeight{{$index}}" uint32 required>
+                                  <td style="text-align: center">
+                                    <input type="text" min=1 ng-model="options.signers[$index].weight" size="5" name="signerWeight{{$index}}" uint32 required>
                                     <span style="color:red" ng-show="setSignerListForm.signerWeight{{$index}}.$dirty && setSignerListForm.signerWeight{{$index}}.$invalid">Invalid Value!</span>
                                   </td>
                                   <td><button class="btn btn-link" ng-click="options.signers.splice($index,1)"><span class="glyphicon glyphicon-trash"></span></button></td>                      

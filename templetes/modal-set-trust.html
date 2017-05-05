@@ -6,27 +6,27 @@
                         <table class="table table-condensed">
                           <tr>
                             <td>Currency:</td>
-                            <td><input type="text" name="currency" ng-model="options.currency" size="50" required ng-disabled="options.edit" uppercase-only></td>
+                            <td><input type="text" name="currency" ng-model="options.currency" size="45" required ng-disabled="options.edit" uppercase-only></td>
                           </tr>
                           <tr>
                             <td>Issuer: </td>
                             <td>
-                              <input type="text" name="issuer" ng-model="options.account" size="50" ripple-valid-address required ng-disabled="options.edit" uib-typeahead="gateway.address as gateway.name for gateway in gateways | filter: {name: $viewValue, currencies: options.currency}">
+                              <input type="text" name="issuer" ng-model="options.account" size="45" ripple-valid-address required ng-disabled="options.edit" uib-typeahead="gateway.address as gateway.name for gateway in gateways | filter: {name: $viewValue, currencies: options.currency}">
                               <span style="color:red" ng-show="editTrustlineForm.issuer.$dirty && editTrustlineForm.issuer.$error.rippleValidAddress">Invalid Address!</span>
                               <span style="color:green" ng-hide="gatewayName(options.account) == options.account">{{gatewayName(options.account)}}</span> 
                             </td>
                           </tr>                         
                           <tr>
                             <td>Limit:</td>
-                            <td><input type="text" name="limit" ng-model="options.limit" size="50" required></td>
+                            <td><input type="text" name="limit" ng-model="options.limit" size="45" required></td>
                           </tr>
                           <tr>
                             <td>Input Quality:</td>
-                            <td><input type="text" name="quality_in" ng-model="options.quality_in_human" size="50">(1 = 100%)</td>
+                            <td><input type="text" name="quality_in" ng-model="options.quality_in_human" size="45">(1 = 100%)</td>
                           </tr>
                           <tr>
                             <td>Output Quality:</td>
-                            <td><input type="text" name="quality_out" ng-model="options.quality_out_human" size="50">(1 = 100%)</td>
+                            <td><input type="text" name="quality_out" ng-model="options.quality_out_human" size="45">(1 = 100%)</td>
                           </tr>
                           <tr>
                             <td>Others:</td>
