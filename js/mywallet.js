@@ -18,7 +18,7 @@ var INSERT_CLIENT_INFO = true;
 
 var DEFAULT_ACCOUNT = "rHb9CJAWyB4rj91VRWn96DkukG4bwdtyTh";
 var DEFAULT_SECRET = "snoPBrXtMeMyMHUVTgbuqAfg1SUTb";
-var HISTORY_MAX = 5;
+var HISTORY_MAX = 10;
 
 var PATHFIND_MAX = 10; // stop pathfinding after reaching PATHFIND_MAX
 var SLIPAGE = 1;  // 1%, for calculating sendMax
@@ -1017,7 +1017,9 @@ walletApp.controller('walletCtrl', ['$scope', '$http', '$uibModal', '$localStora
   }
 
   $scope.addAccountHistory = function (address) {
-    if ($scope.accountHistory.indexOf(address) < 0) $scope.accountHistory.unshift(address);
+    var i = $scope.accountHistory.indexOf(address);
+    if (i >= 0) $scope.accountHistory.splice(i, 1);
+    $scope.accountHistory.unshift(address);
     if ($scope.accountHistory.length > HISTORY_MAX) $scope.accountHistory.splice(HISTORY_MAX);
   }
 
@@ -2247,8 +2249,6 @@ walletApp.controller('walletCtrl', ['$scope', '$http', '$uibModal', '$localStora
       var pair = options.baseCurrency + (options.baseIssuer ? '.' + options.baseIssuer : '') + '/' + options.tradeCurrency + (options.tradeIssuer ? '.' + options.tradeIssuer : '');
       if (options.edit && (typeof options.index === 'number')) {
         $scope.tradepairs[options.index] = pair;
-      } else if ($scope.tradepairs.indexOf(pair) < 0) {
-        $scope.tradepairs.unshift(pair);
       }
       if (options.set && pair != $scope.trading.pair) $scope.setTradePair(pair);
     }, function () {
@@ -2258,6 +2258,11 @@ walletApp.controller('walletCtrl', ['$scope', '$http', '$uibModal', '$localStora
 
   $scope.setTradePair = function (pair){
     $scope.trading.pair = pair;
+
+    // swap position to the top of tradepairs-list.
+    var i = $scope.tradepairs.indexOf(pair);
+    if (i >= 0) $scope.deleteTradePair(i);
+    $scope.tradepairs.unshift(pair);
 
     var base = pair.split('/')[0]; 
     var trade = pair.split('/')[1];
