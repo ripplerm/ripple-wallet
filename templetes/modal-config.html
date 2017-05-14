@@ -23,6 +23,10 @@
                             <td>Max Fee: </td>
                             <td><input type="number" ng-model="options.max_fee" size="5" min="0.00001" max="1000" required> XRP</td>
                           </tr>
+                          <tr>
+                            <td>Last-ledger Offset: </td>
+                            <td><input type="number" ng-model="options.last_ledger_offset" size="5" min="1" required></td>
+                          </tr>
                         </table>
                         <span style="color:red" ng-show="options.fee_cushion * 0.00001 > options.max_fee">MaxFee Must higher than (0.000010 x FeeCushion)!</span> 
                       </div>
