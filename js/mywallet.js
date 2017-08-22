@@ -571,7 +571,11 @@ walletApp.controller('walletCtrl', ['$scope', '$http', '$uibModal', '$localStora
     })
     tx._setFixedFee = true;
     tx.tx_json = $scope.txJson;
-    tx._secret = $scope.txOptions.secret;
+
+    $scope.setSecret({
+      account: $scope.txOptions.isMultiSign ? $scope.txOptions.signAs : $scope.txJson.Account,
+      secret: $scope.txOptions.secret
+    })
 
     // Removing existing signature    
     delete tx.tx_json.SigningPubKey;
@@ -1006,8 +1010,14 @@ walletApp.controller('walletCtrl', ['$scope', '$http', '$uibModal', '$localStora
 
   $scope.secrets = {};
   $scope.setWalletSecret = function (options) {
+    if (!options || !options.secret) return;
+    options.account = $scope.activeAccount;
+    $scope.setSecret(options);
+  }
+
+  $scope.setSecret = function (options) {
     var secret = options.secret;
-    var account = $scope.activeAccount;
+    var account = options.account;
     if (Seed.is_valid(secret)) {
       remote.setSecret(account, secret);
     } else if (KeyPair.is_valid(secret)) {
