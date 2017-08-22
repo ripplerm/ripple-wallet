@@ -239,6 +239,7 @@ var DEFAULT = {
   slipage: SLIPAGE,
   max_fee: 120,
   fee_cushion: 1.2,
+  orderbook_limit: 50,
   last_ledger_offset: 3,
   servers: SERVERS_MAINNET,
   gateways: GATEWAYS,
@@ -262,6 +263,7 @@ walletApp.controller('walletCtrl', ['$scope', '$http', '$uibModal', '$localStora
       fee_cushion:    $localStorage.fee_cushion,
       max_fee:        $localStorage.max_fee,
       servers:        $localStorage.servers,
+      orderbook_limit: $localStorage.orderbook_limit,
       last_ledger_offset: $localStorage.last_ledger_offset,
   });
   $scope.gateways = $localStorage.gateways;
@@ -3024,6 +3026,7 @@ walletApp.controller('walletCtrl', ['$scope', '$http', '$uibModal', '$localStora
     var options = {
       slipage: $localStorage.slipage,
       fee_cushion: $localStorage.fee_cushion,
+      orderbook_limit: $localStorage.orderbook_limit,
       last_ledger_offset: $localStorage.last_ledger_offset,
       max_fee: ($localStorage.max_fee) / 1000000,
       address: $localStorage.account.address,
@@ -3045,6 +3048,7 @@ walletApp.controller('walletCtrl', ['$scope', '$http', '$uibModal', '$localStora
       $localStorage.account = {address: options.address};
       $localStorage.max_fee = Math.ceil(options.max_fee * 1000000);
       $localStorage.last_ledger_offset = options.last_ledger_offset;
+      $localStorage.orderbook_limit = options.orderbook_limit;
       $localStorage.fee_cushion = options.fee_cushion;
       $localStorage.slipage = options.slipage;
     }, function () {
