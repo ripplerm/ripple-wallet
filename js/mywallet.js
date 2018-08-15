@@ -651,9 +651,6 @@ walletApp.controller('walletCtrl', ['$scope', '$http', '$uibModal', '$localStora
         }
     );
     getTxRequest.once('success', function (res) {
-      console.log(res);
-      //$scope.getTxResponse = res.engine_result + ': ' + res.engine_result_message;
-      //$scope.getTxResponse = JSON.stringify(res, undefined, 4);
       $scope.getTxResponse = res;
     });
     getTxRequest.broadcast().request();
