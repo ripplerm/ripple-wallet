@@ -1,0 +1,16 @@
+  
+         <div id="tabTx">
+           <span style="font-weight:bold; font-size:14pt; padding-right:2em;">Get Transaction info: </span>
+           <br><br>
+           <form name="GetTxForm" id="GetTxForm" novalidate>
+             <p>This is a debug tool for printing raw information by a transaction hash.</p>
+             <input type="text" size="100" name="tx_id" placeholder="tx_id" ng-model="getTx.txid" required>
+             <br><Br>
+             <button type="button" class="btn btn-info" ng-disabled="GetTxForm.$invalid" ng-click="getTx()">Get Tx</button>
+                 <div >
+                 <b>Raw Tx: </b>
+                     <json-formatter json="getTxResponse" open="4"></json-formatter>
+                </div>
+                 <br>
+           </form>
+         </div>
