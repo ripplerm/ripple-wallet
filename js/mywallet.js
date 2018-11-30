@@ -493,7 +493,7 @@ walletApp.controller('walletCtrl', ['$scope', '$http', '$uibModal', '$localStora
       return {
         SignerEntry: {
           Account: signer.address,
-          SignerWeight: signer.weight
+          SignerWeight: parseInt(signer.weight)
         }      
       }      
     }
