@@ -20,7 +20,7 @@
                                     <span style="color:red" ng-show="setSignerListForm.signerAddress{{$index}}.$error.rippleValidAddress">Invalid Address!</span>
                                   </td>
                                   <td style="text-align: center">
-                                    <input type="text" min=1 ng-model="options.signers[$index].weight" size="5" name="signerWeight{{$index}}" uint32 required>
+                                    <input type="number" min=1 ng-model="options.signers[$index].weight" size="5" name="signerWeight{{$index}}" uint32 required>
                                     <span style="color:red" ng-show="setSignerListForm.signerWeight{{$index}}.$dirty && setSignerListForm.signerWeight{{$index}}.$invalid">Invalid Value!</span>
                                   </td>
                                   <td><button class="btn btn-link" ng-click="options.signers.splice($index,1)"><span class="glyphicon glyphicon-trash"></span></button></td>                      
