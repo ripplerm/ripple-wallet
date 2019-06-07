@@ -13,7 +13,7 @@ Clone/download/fork the codes, and deploy onto a web server.
 Or, simply open the index.html in browser for local usage.
 
 ### Demo
-[http://ripplerm.github.io/ripple-wallet/](http://ripplerm.github.io/ripple-wallet/)
+[https://ripplerm.github.io/ripple-wallet/](http://ripplerm.github.io/ripple-wallet/)
 
 ### License
 MIT  
