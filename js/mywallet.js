@@ -494,7 +494,7 @@ walletApp.controller('walletCtrl', ['$scope', '$http', '$uibModal', '$localStora
       return {
         SignerEntry: {
           Account: signer.address,
-          SignerWeight: signer.weight
+          SignerWeight: parseInt(signer.weight)
         }
       }
     }
@@ -1329,6 +1329,9 @@ walletApp.controller('walletCtrl', ['$scope', '$http', '$uibModal', '$localStora
 
   $scope.isFederation = function (address) {
     // checking for email type address (e.g.xyz@domain.com)
+    if (typeof address === 'undefined') {
+        return true;
+    }
     return address.search(/@([\w-]+\.)+[\w-]{2,}$/) > 0;
   }
 
