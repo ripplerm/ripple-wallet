@@ -13,7 +13,7 @@ var OrderBookUtils = ripple.OrderBookUtils;
 
 // ================= configuration & Global constant  ==================
 
-var CLIENT_VERSION = "rm-1.2.4"
+var CLIENT_VERSION = "rm-1.2.5"
 var INSERT_CLIENT_INFO = true;
 
 var DEFAULT_ACCOUNT = "rHb9CJAWyB4rj91VRWn96DkukG4bwdtyTh";
@@ -331,6 +331,7 @@ walletApp.controller('walletCtrl', ['$scope', '$http', '$uibModal', '$localStora
     {title: 'Message', templete:'templetes/tab-message.html', select: function () {$scope.messageReset();} },
     {title: 'Inbox', templete:'templetes/tab-inbox.html', select: function () {} },
     {title: 'Tx', templete:'templetes/tab-tx.html', select: function () {} },
+    {title: 'AccountDelete', templete:'templetes/tab-account-delete.html', select: function () {} },
   ];
 
   $scope.keys = {};
@@ -1574,6 +1575,45 @@ walletApp.controller('walletCtrl', ['$scope', '$http', '$uibModal', '$localStora
       }
       $scope.payto = undefined;
     }
+  }
+  //Account Delete
+  $scope.submitAccountDelete = function () {
+    var payment = $scope.Payment;
+    var transaction = remote.transaction();
+
+    transaction.accountDelete({
+      to: payment.destination,
+      from: $scope.activeAccount,
+      fee: 5000000,
+    });
+
+    if (payment.destinationTag != undefined) transaction.tx_json.DestinationTag = Number(payment.destinationTag);
+    if (payment.sourceTag != undefined) transaction.tx_json.SourceTag = Number(payment.sourceTag);
+
+    if (payment.memo) {
+      transaction.addMemo({
+        memoData: payment.memo
+      })
+    }
+    if (payment.memos) {
+      var memos = payment.memos;
+      for (var i = 0; i < memos.length; i++)  {
+        transaction.addMemo(memos[i]);
+      }
+    }
+
+    var alert = {description: 'Account Deleting ' + ' send remaining XRP to ' + payment.destination};
+    $scope.alerts.payment.push(alert);
+    $scope.submitTransaction({transaction:transaction, log: alert}, function (err, res){
+      if (err && err.remote) {
+        alert.result = err.remote.error + ': ' + err.remote.error_exception;
+      }
+      if (res && res.metadata) {
+        var delivered = res.metadata.DeliveredAmount;
+        if (!delivered) delivered = res.tx_json.Amount;
+        alert.result += ', Delivered Amount = ' + $scope.amountDisplay(delivered, {value:true, currency:true});
+      }
+    });
   }
 
   // =================== transaction submission ===================================

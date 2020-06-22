@@ -2,7 +2,7 @@
 
 A single page wallet app developed on ripplelib, angularjs.
 
-GUI for accessing advanced features (e.g. regularKey, account settings, trustline-quality, sending memos, etc.) of Ripple-Consensus-Ledger network.
+GUI for accessing advanced features (e.g. regularKey, account settings, trustline-quality, sending memos, account delete etc.) of Ripple-Consensus-Ledger network.
 
 Testnet access available.
 

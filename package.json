@@ -1,6 +1,6 @@
 {
   "name": "ripple-wallet",
-  "version": "1.2.4",
+  "version": "1.2.5",
   "license": "MIT",  
   "description": "A single page Angularjs app for interacting with Ripple networks.",
   "dependencies": {
