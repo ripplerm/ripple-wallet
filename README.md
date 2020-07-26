@@ -13,7 +13,7 @@ Clone/download/fork the codes, and deploy onto a web server.
 Or, simply open the index.html in browser for local usage.
 
 ### Demo
-[https://ripplerm.github.io/ripple-wallet/](https://passionofvc.github.io/ripple-wallet/)
+[https://passionofvc.github.io/ripple-wallet/](https://passionofvc.github.io/ripple-wallet/)
 
 ### License
 MIT  
@@ -23,5 +23,6 @@ MIT
 ---
 
 ### Donation
-Ripple: rfmMjAXq65hpAxEf1RLNQq6RgYTSVkQUW5[tag:112061357] 
+Ripple: rfmMjAXq65hpAxEf1RLNQq6RgYTSVkQUW5[tag:112061357]
+
 Bitcoin: bc1qafeuz5f45w9c2aw4fant8kq5hwux6wuz4wwv8j
