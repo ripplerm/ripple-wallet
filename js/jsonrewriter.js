@@ -344,6 +344,10 @@ var JsonRewriter = {
             transaction.type = 'signerlistset';
             break;
 
+          case 'AccountDelete':
+            transaction.type = 'accountDelete';
+            break;
+
           default:
             console.log('Unknown transaction type: "' + tx.TransactionType + '"', tx);
         }

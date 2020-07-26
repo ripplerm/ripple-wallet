@@ -1,0 +1,41 @@
+
+        <div id="tabAccountDelete">
+            <span style="font-weight:bold; font-size:20pt; padding-right:2em;">Account Delete: </span>
+            <div>The account's remaining XRP will be send to a specified destination account(the default Fee is 5 XRP)</div>
+            <br><br>
+            <div ng-hide="Payment.advanceMode">
+              <form name="paymentSimpleForm" novalidate>
+                <div>
+                  <span style="font-weight:bold; font-size:12pt;">Recipient: </span> 
+                  <br>
+                  <input type="text" placeholder="Ripple Address or Federation (abc@domain.com)" ng-model="Payment.recipient" name="recipient" size="60" required ripple-valid-recipient ng-change="setRecipient()"  uib-typeahead="contact.address as contact.name for contact in getFullContacts() | filter:{name:$viewValue}" typeahead-on-select="setRecipient($item)" ng-model-options="{ debounce: 200 }">
+                  {{Payment.federation.status}}
+                  <span style="padding-left:1em; color:red" ng-show="paymentSimpleForm.recipient.$dirty && paymentSimpleForm.recipient.$error.rippleValidRecipient">Invalid Recipient!</span>
+                  <br>
+                  <span style="color:green">{{parseAddress(Payment.destination, Payment.destinationTag)}}</span>
+                  <br>
+                  <br>
+                  Destination Tag: <br>
+                  <input type="number" placeholder="Uint32" min=0 max=4294967295 ng-model="Payment.destinationTag" size="20" ng-required="Payment.requireDestTag" ng-disabled="isFederation(Payment.recipient)"> (optional)
+                  <br><br>
+                  Memo: <Br>
+                  <input type="text" placeholder="memo (optional)" name="memo" ng-model="Payment.memo" size="60"> 
+                </div>
+                <br>
+                <div>
+                </div>
+                <br>
+              </form>
+            </div>
+  
+            <div uib-alert ng-repeat="alert in alerts.payment" class="alert-{{alert.status == 'FINAL' ? (alert.status_code.slice(0,3) == 'tes' ? 'success' : 'danger') : 'warning'}}" close="closeAlert('payment', $index)" dismiss-on-timeout="30000">
+              {{alert.description}} <br>
+              <b>Status:</b>[{{alert.status}}{{alert.status_code ? ', ' +  alert.status_code : ''}}], 
+              <b>Result:</b> {{alert.result}} <br>
+              {{alert.tx_hash ? 'tx_hash: ' + alert.tx_hash : ''}}
+            </div>
+  
+            <button class="btn btn-primary" type="submit" ng-disabled="paymentForm.$invalid" ng-click="submitAccountDelete()"> Submit </button>
+            <button class="btn btn-warning" form='paymentForm' ng-click="paymentReset()"> Reset </button>
+            <br>
+          </div>

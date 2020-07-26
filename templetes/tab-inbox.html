@@ -17,7 +17,7 @@
                 <span style="color:green">{{parseAddress(tx.raw.Account)}}</span>
               </span>
               Tx: 
-              <a href="https://charts.ripple.com/#/transactions/{{tx.hash}}" target="_blank" ng-show="network=='MAIN'"><span class="glyphicon glyphicon-new-window"></span></a>
+              <a href="https://livenet.xrpl.org/transactions/{{tx.hash}}" target="_blank" ng-show="network=='MAIN'"><span class="glyphicon glyphicon-new-window"></span></a>
             </div>
             <div class="panel-body" ng-show="tx.showMessage">
               <div ng-repeat="memo in tx.memos | filter:messageFilter">

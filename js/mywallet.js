@@ -13,7 +13,7 @@ var OrderBookUtils = ripple.OrderBookUtils;
 
 // ================= configuration & Global constant  ==================
 
-var CLIENT_VERSION = "rm-1.2.4"
+var CLIENT_VERSION = "rm-1.2.5"
 var INSERT_CLIENT_INFO = true;
 
 var DEFAULT_ACCOUNT = "rHb9CJAWyB4rj91VRWn96DkukG4bwdtyTh";
@@ -23,7 +23,7 @@ var HISTORY_MAX = 10;
 var PATHFIND_MAX = 10; // stop pathfinding after reaching PATHFIND_MAX
 var SLIPAGE = 1;  // 1%, for calculating sendMax
 
-var RIPPLE_DATA_URL = 'https://data.ripple.com'; 
+var RIPPLE_DATA_URL = 'https://data.ripple.com';
 var CHART_INTERVAL = '1hour'; // 1minute, 15minute, 30minute, 1hour, 1day...
 var CHART_MAX_PAGE = 1; // max pages for repeated queries to data.ripple.com;
 var CHART_LIMIT = 1000; // limit number for single query;
@@ -47,7 +47,7 @@ var SERVERS_MAINNET = [
                           host:    's-west.ripple.com'
                           , port:    443
                           , secure:  true
-                      }                    
+                      }
                    ];
 
 var SERVERS_TESTNET = [{
@@ -60,57 +60,57 @@ var GATEWAYS = [
       {
         name: "BitStamp",
         address: "rvYAfWj5gh67oV6fW32ZzP3Aw4Eubs59B",
-        currencies: ['USD', 'BTC'] 
+        currencies: ['USD', 'BTC']
       },
       {
         name: "SnapSwap",
         address: "rMwjYedjc7qqtKYVLiAccJSmCwih4LnE2q",
-        currencies: ['USD', 'BTC', 'EUR'] 
+        currencies: ['USD', 'BTC', 'EUR']
       },
       {
         name: "RippleChina",
         address: "razqQKzJRdB4UxFPWf5NEpEG3WMkmwgcXA",
-        currencies: ['CNY', 'BTC', 'LTC']   
+        currencies: ['CNY', 'BTC', 'LTC']
       },
       {
         name: "RippleCN",
         address: "rnuF96W4SZoCJmbHYBFoJZpR8eCaxNvekK",
-        currencies: ['CNY', 'BTC']  
+        currencies: ['CNY', 'BTC']
       },
       {
         name: "RippleFox",
         address: "rKiCet8SdvWxPXnAgYarFUXMh1zCPz432Y",
-        currencies: ['CNY', 'FMM', 'STR', 'XLM']  
+        currencies: ['CNY', 'FMM', 'STR', 'XLM']
       },
       {
         name: "TheRock",
         address: "rLEsXccBGNR3UPuPu2hUXPjziKC3qKSBun",
-        currencies: ['BTC', 'LTC','NMC', 'PPC', 'DOG', 'USD ', 'EUR', 'GBP']  
+        currencies: ['BTC', 'LTC','NMC', 'PPC', 'DOG', 'USD ', 'EUR', 'GBP']
       },
       {
         name: "DividendRippler",
         address: "rfYv1TXnwgDDK4WQNbFALykYuEBnrR4pDX",
-        currencies: ['BTC', 'LTC', 'NMC', 'TRC', 'STR']      
+        currencies: ['BTC', 'LTC', 'NMC', 'TRC', 'STR']
       },
       {
         name: "PayRoutes",
         address: "rNPRNzBB92BVpAhhZr4iXDTveCgV5Pofm9",
-        currencies: ['USD', 'ILS', 'BTC', 'LTC', 'NMC', 'PPC']  
+        currencies: ['USD', 'ILS', 'BTC', 'LTC', 'NMC', 'PPC']
       },
       {
         name: "RippleUnion",
         address: "r3ADD8kXSUKHd6zTCKfnKT3zV9EZHjzp1S",
-        currencies: ['CAD']    
+        currencies: ['CAD']
       },
       {
         name: "Bitso",
         address: "rG6FZ31hDHN1K5Dkbma3PSB5uVCuVVRzfn",
-        currencies: ['BTC', 'MXN']      
+        currencies: ['BTC', 'MXN']
       },
       {
         name: "RippleTradeJapan",
         address: "rMAz5ZnK73nyNUL4foAvaxdreczCkG3vA6",
-        currencies: ['JPY']      
+        currencies: ['JPY']
       },
       {
         name: "RippleExchangeTokyo",
@@ -120,67 +120,67 @@ var GATEWAYS = [
       {
         name: "DigitalGateJP",
         address: "rJRi8WW24gt9X85PHAxfWNPCizMMhqUQwg",
-        currencies: ['JPY'] 
+        currencies: ['JPY']
       },
       {
         name: "TokyoJPY",
         address: "r94s8px6kSw1uZ1MV98dhSRTvc6VMPoPcN",
-        currencies: ['JPY']  
+        currencies: ['JPY']
       },
       {
         name: "Ripula",
         address: "rBycsjqxD8RVZP5zrrndiVtJwht7Z457A8",
-        currencies: ['BTC', 'EUR', 'GBP', 'USD']  
-      },     
+        currencies: ['BTC', 'EUR', 'GBP', 'USD']
+      },
       {
         name: "Gatehub",
         address: "rhub8VRN55s94qWKDv6jmDy1pUykJzF3wq",
-        currencies: ['EUR', 'USD']  
+        currencies: ['EUR', 'USD']
       },
       {
         name: "GatehubFifthBTC",
         address: "rchGBxcD1A1C2tdxF6papQYZ8kjRKMYcL",
-        currencies: ['BTC']  
+        currencies: ['BTC']
       },
       {
         name: "GatehubFifthETH",
         address: "rcA8X3TVMST1n3CJeAdGk1RdRCHii7N2h",
-        currencies: ['ETH']  
+        currencies: ['ETH']
       },
       {
         name: "GatehubFifthETC",
         address: "rDAN8tzydyNfnNf2bfUQY6iR96UbpvNsze",
-        currencies: ['ETC']  
+        currencies: ['ETC']
       },
       {
         name: "GatehubFifthREP",
         address: "rckzVpTnKpP4TJ1puQe827bV3X4oYtdTP",
-        currencies: ['REP']  
+        currencies: ['REP']
       },
       {
         name: "BPG",
         address: "rcoef87SYMJ58NAFx7fNM5frVknmvHsvJ",
-        currencies: ['XAU']  
+        currencies: ['XAU']
       },
       {
         name: "Bluzelle",
         address: "raBDVR7JFq3Yho2jf7mcx36sjTwpRJJrGU",
-        currencies: ['CAD']  
+        currencies: ['CAD']
       },
       {
         name: "eXRP",
         address: "rPxU6acYni7FcXzPCMeaPSwKcuS2GTtNVN",
-        currencies: ['KRW']    
+        currencies: ['KRW']
       },
       {
         name: "Rippex",
         address: "rfNZPxoZ5Uaamdp339U9dCLWz2T73nZJZH",
-        currencies: ['BRL']  
+        currencies: ['BRL']
       },
       {
         name: "RippexBridge",
         address: "rKxKhXZCeSDsbkyB8DVgxpjy5AHubFkMFe",
-        currencies: ['BTC']  
+        currencies: ['BTC']
       },
       {
         name: "MrRipple",
@@ -211,12 +211,12 @@ var GATEWAYS_TEST = [
       {
         name: "GateOne",
         address: "r9U9DDht72oMx7nrqsS7uELXNvfsYL4USm",
-        currencies: ['USD', 'BTC'] 
+        currencies: ['USD', 'BTC']
       },
       {
         name: "GateTwo",
         address: "rH6C28kDJURagNz1Mt6oX9PEyFtJqxyTwo",
-        currencies: ['CNY', 'JPY'] 
+        currencies: ['CNY', 'JPY']
       },
     ];
 
@@ -277,21 +277,21 @@ walletApp.controller('walletCtrl', ['$scope', '$http', '$uibModal', '$localStora
     slipage: $localStorage.slipage
   };
 
-  $scope.trading = { 
+  $scope.trading = {
                       pair: $scope.tradepairs[0]
-                   };                    
+                   };
 
   $scope.flags = Remote.flags;
   $scope.txFlags = ripple.Transaction.flags;
   $scope.scFlags = ripple.Transaction.set_clear_flags.AccountSet;
 
   $scope.remote = remote;
-  
+
   remote.on('state', function(state){
     $scope.state = state;
   })
   remote.on('ledger_closed', function(msg, server){
-    $scope.ledgerIndex = msg.ledger_index; 
+    $scope.ledgerIndex = msg.ledger_index;
     var server = remote.getServer();
     if (!server) return;
     $scope.server = server._opts.host;
@@ -324,12 +324,14 @@ walletApp.controller('walletCtrl', ['$scope', '$http', '$uibModal', '$localStora
   $scope.network = 'MAIN';
   $scope.state = 'offline'
 
-  $scope.tools = [ 
+  $scope.tools = [
     {title: 'Raw Txn', templete:'templetes/tab-transaction.html'},
     {title: 'Submit', templete:'templetes/tab-submit.html'},
     {title: 'Account-Generator', templete:'templetes/tab-keys.html', select: function () {$scope.keysReset();} },
     {title: 'Message', templete:'templetes/tab-message.html', select: function () {$scope.messageReset();} },
     {title: 'Inbox', templete:'templetes/tab-inbox.html', select: function () {} },
+    {title: 'Tx', templete:'templetes/tab-tx.html', select: function () {} },
+    {title: 'AccountDelete', templete:'templetes/tab-account-delete.html', select: function () {} },
   ];
 
   $scope.keys = {};
@@ -344,7 +346,7 @@ walletApp.controller('walletCtrl', ['$scope', '$http', '$uibModal', '$localStora
   }
   $scope.keysRandom = function () {
     switch ($scope.keys.from) {
-      case 'seed': 
+      case 'seed':
         $scope.keys.secret = Seed.getRandom().to_json();
         break;
       case 'private':
@@ -385,7 +387,7 @@ walletApp.controller('walletCtrl', ['$scope', '$http', '$uibModal', '$localStora
       }
       key = g.get_child(index);
     }
-  
+
     if (key && key.is_valid()) {
       $scope.gkeys.account = {
         index: index,
@@ -477,7 +479,7 @@ walletApp.controller('walletCtrl', ['$scope', '$http', '$uibModal', '$localStora
     ignoreTypes: ['client'],
   };
 
-  $scope.transactions = [ 
+  $scope.transactions = [
     { type: 'AccountSet', templete: 'templetes/tx-accountSet.html'},
     { type: 'SetRegularKey', templete: 'templetes/tx-setRegularKey.html'},
     { type: 'SignerListSet', templete: 'templetes/tx-signerListSet.html'},
@@ -493,16 +495,16 @@ walletApp.controller('walletCtrl', ['$scope', '$http', '$uibModal', '$localStora
       return {
         SignerEntry: {
           Account: signer.address,
-          SignerWeight: signer.weight
-        }      
-      }      
+          SignerWeight: parseInt(signer.weight)
+        }
+      }
     }
     $scope.prepareSetSignerList(function (options){
       $scope.txJson.SignerQuorum = options.quorum;
       if (options.quorum) {
         $scope.txJson.SignerEntries = options.signers.map(formatSignerEntry);
       } else {
-        delete $scope.txJson.SignerEntries; 
+        delete $scope.txJson.SignerEntries;
       }
     })
   };
@@ -579,7 +581,7 @@ walletApp.controller('walletCtrl', ['$scope', '$http', '$uibModal', '$localStora
       secret: $scope.txOptions.secret
     })
 
-    // Removing existing signature    
+    // Removing existing signature
     delete tx.tx_json.SigningPubKey;
     delete tx.tx_json.TxnSignature;
 
@@ -596,7 +598,7 @@ walletApp.controller('walletCtrl', ['$scope', '$http', '$uibModal', '$localStora
       delete tx.tx_json.Signers;
     }
 
-    if (! tx.complete())  return; 
+    if (! tx.complete())  return;
 
     if (! tx._multiSign) tx.sign();
     else tx.multiSignFor(signAs);
@@ -640,6 +642,20 @@ walletApp.controller('walletCtrl', ['$scope', '$http', '$uibModal', '$localStora
     });
     submitRequest.broadcast().request();
   }
+  $scope.getTxResponse= {};
+  $scope.getTx = function () {
+    $scope.getTxResponse = 'processing tx...';
+    var getTxRequest = remote.requestTransaction(
+        {
+           hash: $scope.getTx.txid,
+           binary: true
+        }
+    );
+    getTxRequest.once('success', function (res) {
+      $scope.getTxResponse = res;
+    });
+    getTxRequest.broadcast().request();
+  }
 
   $scope.filename = 'ripple-wallet-profile.txt';
   $scope.exportProfile = function () {
@@ -655,7 +671,7 @@ walletApp.controller('walletCtrl', ['$scope', '$http', '$uibModal', '$localStora
       var result;
       try {result = JSON.parse(reader.result)} catch (e) {};
       $scope.uploaded = result ? 'Load Success, please refresh the browser.' : 'Failed parsing data.';
-      Object.assign($localStorage, result); 
+      Object.assign($localStorage, result);
       $scope.$apply();
     };
     reader.readAsText(file);
@@ -713,8 +729,8 @@ walletApp.controller('walletCtrl', ['$scope', '$http', '$uibModal', '$localStora
     var gateways = $scope.gateways;
     for (var i=0; i < gateways.length; i++) {
       if (account == gateways[i].address) return true;
-    } 
-    return false;   
+    }
+    return false;
   }
 
   $scope.gatewayName = function (account, sliced) {
@@ -722,7 +738,7 @@ walletApp.controller('walletCtrl', ['$scope', '$http', '$uibModal', '$localStora
     var gateways = $scope.gateways;
     for (var i=0; i < gateways.length; i++) {
       if (account == gateways[i].address) return gateways[i].name;
-    } 
+    }
 
     return sliced ? [account.slice(0,4), account.slice(-4)].join('....') : account;
   }
@@ -732,7 +748,7 @@ walletApp.controller('walletCtrl', ['$scope', '$http', '$uibModal', '$localStora
     var contacts = $scope.contacts;
     for (var i=0, l=contacts.length; i<l; i++) {
       if (account === contacts[i].address && dtag === contacts[i].dtag) return contacts[i].name;
-    } 
+    }
     return '';
   }
 
@@ -764,13 +780,13 @@ walletApp.controller('walletCtrl', ['$scope', '$http', '$uibModal', '$localStora
 
     if (accountData.signer_lists && accountData.signer_lists[0]) {
       var slist = accountData.signer_lists[0];
-      accountData.quorum = slist.SignerQuorum;  
+      accountData.quorum = slist.SignerQuorum;
       accountData.signers = slist.SignerEntries.map(function (signer) {
         return {
           address: signer.SignerEntry.Account,
           weight: signer.SignerEntry.SignerWeight,
         }
-      });      
+      });
     } else {
       accountData.signers = [];
       accountData.quorum = 0;
@@ -793,7 +809,7 @@ walletApp.controller('walletCtrl', ['$scope', '$http', '$uibModal', '$localStora
         if (err.remote) {
           var account = err.remote.account || err.remote.request.account;
           if (account != $scope.walletAccount._account_id) return;
-          if (err.remote.error) $scope.accountInfoStatus = err.remote.error; 
+          if (err.remote.error) $scope.accountInfoStatus = err.remote.error;
         } else { $scope.accountInfoStatus = err.error;}
       }
     })
@@ -809,9 +825,9 @@ walletApp.controller('walletCtrl', ['$scope', '$http', '$uibModal', '$localStora
   $scope.trustlinesReset = function () {
     $scope.accountBalances.IOU = {};
     $scope.trustlines = null;
-    $scope.trustlinesStats = null;    
+    $scope.trustlinesStats = null;
     $scope.totalTrustlines = 0;
-    $scope.accountLinesStatus = '';      
+    $scope.accountLinesStatus = '';
   }
 
   $scope.trustlinesPageLoad = function () {
@@ -838,22 +854,22 @@ walletApp.controller('walletCtrl', ['$scope', '$http', '$uibModal', '$localStora
     var request = remote.requestAccountLines({account: $scope.activeAccount, ledger: ledger_index});
     request.callback(function handle_message(err, res) {
       var self = this;
-      
+
       if (err) {
         if (err.remote) {
           var account = err.remote.account || err.remote.request.account;
           if (account != $scope.walletAccount._account_id) return;
-          if (err.remote.error) $scope.accountLinesStatus = err.remote.error; 
-        } else { $scope.accountLinesStatus = err.error;}          
+          if (err.remote.error) $scope.accountLinesStatus = err.remote.error;
+        } else { $scope.accountLinesStatus = err.error;}
       }
-      if (res) { 
+      if (res) {
         if (res.account != $scope.activeAccount) return;
         var account = res.account;
         var lines = res.lines;
         LINES = LINES.concat(lines);
 
         page++;
-        
+
         if (res.marker) {
           $scope.accountLinesStatus = 'requesting page #' + (page + 1) + ' ...';
           self.message.marker = res.marker;
@@ -870,17 +886,17 @@ walletApp.controller('walletCtrl', ['$scope', '$http', '$uibModal', '$localStora
         $scope.linesStats();
       }
       callback(err, res);
-      $scope.$apply();          
+      $scope.$apply();
     });
   }
-  
+
   $scope.lineBalanceFloat = function (line){
     return parseFloat(line.balance);
   }
 
   $scope.linesStats = function () {
     $scope.trustlinesStats = null;
-    
+
     var lines = $scope.trustlines;
     var total = 0;
 
@@ -924,7 +940,7 @@ walletApp.controller('walletCtrl', ['$scope', '$http', '$uibModal', '$localStora
         var key = undefined;
         var seed = Seed.from_json(secret);
         if (seed.is_valid()) {
-          key = seed.get_key(index);  
+          key = seed.get_key(index);
         } else {
           key = KeyPair.from_json(secret);
         }
@@ -933,10 +949,10 @@ walletApp.controller('walletCtrl', ['$scope', '$http', '$uibModal', '$localStora
         options.index = index;
         options.address = key.to_address_string();
       }
-      
+
     }, function () {
-      // do nothing; 
-    });    
+      // do nothing;
+    });
   }
 
   $scope.prepareSetWalletAccount = function (options) {
@@ -950,14 +966,14 @@ walletApp.controller('walletCtrl', ['$scope', '$http', '$uibModal', '$localStora
         options: function () {
           return options;
         }
-      }      
+      }
     });
 
     modalInstance.result.then(function (options) {
       $scope.setWalletAccount(options);
     }, function () {
-      // do nothing; 
-    });    
+      // do nothing;
+    });
   }
 
   $scope.setWalletAccount = function (options) {
@@ -973,14 +989,14 @@ walletApp.controller('walletCtrl', ['$scope', '$http', '$uibModal', '$localStora
       }
       $scope.accountInfoReset();
       $scope.trustlinesReset();
-      $scope.accountOffers = {};      
+      $scope.accountOffers = {};
       $scope.transactionHistoryStatus = '';
 
       $scope.activeAccount = account;
       $scope.walletAccount = $scope.remote.account(account);
       if (secret) $scope.setWalletSecret({secret: secret});
 
-      $scope.addAccountHistory($scope.activeAccount);      
+      $scope.addAccountHistory($scope.activeAccount);
       $scope.accountInfo();
       $scope.trustlinesPageLoad();
 
@@ -1000,14 +1016,14 @@ walletApp.controller('walletCtrl', ['$scope', '$http', '$uibModal', '$localStora
         options: function () {
           return options;
         }
-      }      
+      }
     });
 
     modalInstance.result.then(function (options) {
       $scope.setWalletSecret(options);
     }, function () {
-      // do nothing; 
-    });    
+      // do nothing;
+    });
   }
 
   $scope.secrets = {};
@@ -1040,14 +1056,14 @@ walletApp.controller('walletCtrl', ['$scope', '$http', '$uibModal', '$localStora
   $scope.currencyName = function (currency) {
     return Currency.from_json(currency).to_human();
   }
- 
+
   $scope.amountDisplay = function (amount, opts) {
     if (!opts) opts = { value: true, currency: true, issuer: true, gatewayName: true};
 
     var options = {max_sig_digits: opts.max_sig_digits || 6};
 
     if (APPLY_INTEREST) {
-      options.reference_date = new Date();  
+      options.reference_date = new Date();
     }
 
     if (!(amount instanceof Amount)) amount = Amount.from_json(amount);
@@ -1061,8 +1077,8 @@ walletApp.controller('walletCtrl', ['$scope', '$http', '$uibModal', '$localStora
 
     var result = '';
 
-    result += opts.value ? value : ''; 
-    result += opts.currency ? ' ' + currency : ''; 
+    result += opts.value ? value : '';
+    result += opts.currency ? ' ' + currency : '';
     result += opts.issuer ? (issuer ? '.' + issuer : '') : '';
 
     return result;
@@ -1098,7 +1114,7 @@ walletApp.controller('walletCtrl', ['$scope', '$http', '$uibModal', '$localStora
 
     function format_params (params) {
       var str = '';
-      
+
       for (var key in params) {
         if (!params[key]) continue;
         if (str.length > 0) str += '&';
@@ -1113,17 +1129,17 @@ walletApp.controller('walletCtrl', ['$scope', '$http', '$uibModal', '$localStora
       destination: destination,
       amount: amount,
       source: $scope.activeAccount
-    } 
+    }
 
     var fields = $scope.Payment.federation.extraFields;
     if (fields) {
       for (var i=0; i<fields.length; i++) {
         data[fields[i].name] = fields[i].value;
-      }  
+      }
     }
 
     $scope.Payment.federation.quoteStatus = 'Quoting...';
-    
+
     $http.get(quote_url + '?' + format_params(data))
     .success(function(res){
       if (fed_address != $scope.Payment.federationAddress) return;
@@ -1133,7 +1149,7 @@ walletApp.controller('walletCtrl', ['$scope', '$http', '$uibModal', '$localStora
         $scope.Payment.federation.quoteStatus = 'Success!... This quotation is valid till: ' + expires.toLocaleString() ;
         $scope.Payment.destination = res.quote.destination_address || res.quote.address;
         $scope.Payment.destinationTag = res.quote.destination_tag;
-        $scope.Payment.invoiceID = res.quote.invoice_id; 
+        $scope.Payment.invoiceID = res.quote.invoice_id;
         $scope.Payment.amountCurrency = res.quote.send[0].currency;
         $scope.Payment.amountValue = res.quote.send[0].value;
         $scope.Payment.amountIssuer = res.quote.send[0].issuer;
@@ -1156,11 +1172,11 @@ walletApp.controller('walletCtrl', ['$scope', '$http', '$uibModal', '$localStora
     .success(function(res){
       if (ripplename != $scope.Payment.federationAddress) return;
       $scope.Payment.federation.status = res;
-      
+
       if (res.exists) {
         $scope.Payment.destination = res.address;
-        $scope.Payment.federation.status = 'Done.';          
-      } 
+        $scope.Payment.federation.status = 'Done.';
+      }
       else $scope.Payment.federation.status = 'ripplename not exists.';
     }).error(function(err){
       if (ripplename != $scope.Payment.federationAddress) return;
@@ -1176,9 +1192,9 @@ walletApp.controller('walletCtrl', ['$scope', '$http', '$uibModal', '$localStora
     $scope.Payment.federation.status = 'resolving...';
     var fed_address = $scope.Payment.federationAddress;
 
-    if (fed_address[0] == '~') return $scope.resolveRippleName(fed_address); 
+    if (fed_address[0] == '~') return $scope.resolveRippleName(fed_address);
 
-    var domain_split = fed_address.search(/@([\w-]+\.)+[\w-]{2,}$/);       
+    var domain_split = fed_address.search(/@([\w-]+\.)+[\w-]{2,}$/);
     if (domain_split <= 0) return federation_end('Invalid Address.');
     var domain = $scope.Payment.federation.domain = fed_address.slice(domain_split + 1);
     var destination = $scope.Payment.federation.destination = fed_address.slice(0, domain_split)
@@ -1187,7 +1203,7 @@ walletApp.controller('walletCtrl', ['$scope', '$http', '$uibModal', '$localStora
       txt = txt.replace('\r\n', '\n');
       txt = txt.replace('\r', '\n');
       txt = txt.split('\n');
-  
+
       var currentSection = "", sections = {};
 
       for (var i = 0, l = txt.length; i < l; i++) {
@@ -1211,7 +1227,7 @@ walletApp.controller('walletCtrl', ['$scope', '$http', '$uibModal', '$localStora
 
     function federation_end (message) {
       if (fed_address != $scope.Payment.federationAddress) return;
-      $scope.Payment.federation.status = message;       
+      $scope.Payment.federation.status = message;
       $scope.Payment.federation.resolving = false;
     }
 
@@ -1228,14 +1244,14 @@ walletApp.controller('walletCtrl', ['$scope', '$http', '$uibModal', '$localStora
         .success(rippleTxtSuccess)
         .error(function() {
           if (i < subdomain.length - 1) return RippleTxt(i+1, callback);
-          else rippleTxtFailed(); 
+          else rippleTxtFailed();
         });
     }
 
     function federation_check (fed_url) {
         $http.get(fed_url + '?type=federation&destination=' + destination + '&domain=' + domain)
         .success(function (res){
-          if (fed_address != $scope.Payment.federationAddress) return; 
+          if (fed_address != $scope.Payment.federationAddress) return;
           if (res.federation_json) {
             var fedjson = res.federation_json;
             if (fedjson.destination_address) {
@@ -1246,9 +1262,9 @@ walletApp.controller('walletCtrl', ['$scope', '$http', '$uibModal', '$localStora
             } else if (fedjson.quote_url){
               $scope.Payment.federation.status = 'Quotation Required.';
               $scope.Payment.federation.quoteUrl = fedjson.quote_url;
-              $scope.Payment.federation.quoteRequired = true; 
+              $scope.Payment.federation.quoteRequired = true;
 
-              var currencies = fedjson.currencies;               
+              var currencies = fedjson.currencies;
               if (currencies && currencies[0]){
                 $scope.Payment.federation.quoteCurrencies = currencies;
                 $scope.Payment.federation.quoteCurrency = currencies[0].currency;
@@ -1269,10 +1285,10 @@ walletApp.controller('walletCtrl', ['$scope', '$http', '$uibModal', '$localStora
       if (txt['federation_url'] && txt['federation_url'][0]) {
         var fed_url = txt['federation_url'][0];
         federation_check(fed_url);
-      } else { 
+      } else {
         federation_end('Federation Service Not Found.')
       }
-    });     
+    });
 
   }
 
@@ -1284,11 +1300,11 @@ walletApp.controller('walletCtrl', ['$scope', '$http', '$uibModal', '$localStora
     function isFederation (str) {
         // ripplename;
         if (/^~[a-zA-Z0-9]([\-]?[a-zA-Z0-9]){0,19}$/.test(str)) return true;
- 
+
         // checking for email type address (e.g.xyz@domain.com)
-        var domain_split = str.search(/@([\w-]+\.)+[\w-]{2,}$/);       
+        var domain_split = str.search(/@([\w-]+\.)+[\w-]{2,}$/);
         if (domain_split <= 0) return false;
-        return true;      
+        return true;
     }
 
     if ($scope.isValidAddress(recipient)) {
@@ -1297,7 +1313,7 @@ walletApp.controller('walletCtrl', ['$scope', '$http', '$uibModal', '$localStora
          $scope.Payment.destinationTag = contact.destinationTag || contact.dtag;
       }
       $scope.getRecipientCurrencies();
-    } 
+    }
     if (isFederation(recipient)) {
       $scope.Payment.federationAddress = recipient;
       $scope.resolveFederation();
@@ -1314,7 +1330,10 @@ walletApp.controller('walletCtrl', ['$scope', '$http', '$uibModal', '$localStora
 
   $scope.isFederation = function (address) {
     // checking for email type address (e.g.xyz@domain.com)
-    return address.search(/@([\w-]+\.)+[\w-]{2,}$/) > 0;  
+    if (typeof address === 'undefined') {
+        return true;
+    }
+    return address.search(/@([\w-]+\.)+[\w-]{2,}$/) > 0;
   }
 
   // =========== Path Finding ===============================
@@ -1329,9 +1348,9 @@ walletApp.controller('walletCtrl', ['$scope', '$http', '$uibModal', '$localStora
 
     var shouldStart = ($scope.Payment.destination &&
                         $scope.Payment.amountValue &&
-                        $scope.Payment.amountCurrency && 
+                        $scope.Payment.amountCurrency &&
                         ($scope.Payment.amountIssuer || $scope.Payment.amountCurrency == 'XRP')
-                      ); 
+                      );
 
     if (shouldStart) $scope.pathFindStart();
   }
@@ -1364,18 +1383,18 @@ walletApp.controller('walletCtrl', ['$scope', '$http', '$uibModal', '$localStora
           $scope.accountLines(function (){
             $scope.pathFindStart({lines_updated: true});
           });
-          return;          
-        } 
-      }     
+          return;
+        }
+      }
     }
 
-    var AMOUNT = payment.amountCurrency == 'XRP'? 
+    var AMOUNT = payment.amountCurrency == 'XRP'?
                    String(Math.round(Number(payment.amountValue) * 1e6)) :
-                   { 
+                   {
                      value: payment.amountValue,
                      currency: payment.amountCurrency,
-                     issuer: payment.amountIssuer  
-                   } 
+                     issuer: payment.amountIssuer
+                   }
 
     $scope.sourceCurrencies = sourceCurrencies;
     var counter = 0;
@@ -1386,16 +1405,16 @@ walletApp.controller('walletCtrl', ['$scope', '$http', '$uibModal', '$localStora
       src_currencies: sourceCurrencies.length ? sourceCurrencies : undefined
     })
 
-    pathfind.on('error', function(msg){ 
+    pathfind.on('error', function(msg){
       if (payment != $scope.Payment) return pathfind.close();
       $scope.Payment.pathFindStatus = 'Error: ' + msg.error;
     });
 
     pathfind.on("update", function(msg) {
-      if (payment != $scope.Payment) return pathfind.close();         
+      if (payment != $scope.Payment) return pathfind.close();
       var path_opts = msg.alternatives;
       if (!path_opts || !path_opts.length) $scope.Payment.pathFindStatus = 'No Path Found!';
-      else { 
+      else {
         try { path_opts = JSON.parse(path_opts)} catch (e) {};
         $scope.Payment.pathFindRes = path_opts;
         $scope.Payment.pathFindStatus = 'Path_Finding Response:' + counter++;
@@ -1441,7 +1460,7 @@ walletApp.controller('walletCtrl', ['$scope', '$http', '$uibModal', '$localStora
     remote.requestAccountCurrencies({account: account}, function (err, res) {
       if (account !== $scope.Payment.destination) return;
       if (res) $scope.Payment.recipientCurrencies = $scope.Payment.recipientCurrencies.concat(res.receive_currencies);
-    }); 
+    });
   }
 
   $scope.setSendmax = function (amount) {
@@ -1465,21 +1484,21 @@ walletApp.controller('walletCtrl', ['$scope', '$http', '$uibModal', '$localStora
 
     var xrp_to_xrp = payment.amountCurrency == 'XRP' && (!payment.sendmaxCurrency || payment.sendmaxCurrency == 'XRP');
 
-    var AMOUNT = payment.amountCurrency == 'XRP'? 
+    var AMOUNT = payment.amountCurrency == 'XRP'?
                    Math.round(Number(payment.amountValue) * 1e6) :
-                   { 
+                   {
                      value: payment.amountValue,
                      currency: payment.amountCurrency,
-                     issuer: payment.amountIssuer  
-                   }               
+                     issuer: payment.amountIssuer
+                   }
 
     var SENDMAX = (payment.sendmaxCurrency == 'XRP') ?
                    Math.round(Number(payment.sendmaxValue) * 1e6) :
-                   { 
+                   {
                      value: payment.sendmaxValue,
                      currency: payment.sendmaxCurrency,
-                     issuer: payment.sendmaxIssuer  
-                   }               
+                     issuer: payment.sendmaxIssuer
+                   }
 
     var transaction = remote.transaction();
 
@@ -1494,19 +1513,19 @@ walletApp.controller('walletCtrl', ['$scope', '$http', '$uibModal', '$localStora
     if (payment.destinationTag != undefined) transaction.tx_json.DestinationTag = Number(payment.destinationTag);
     if (payment.sourceTag != undefined) transaction.tx_json.SourceTag = Number(payment.sourceTag);
     if (payment.invoiceID) transaction.tx_json.InvoiceID = payment.invoiceID;
-    
+
     if (!xrp_to_xrp) {
       if (payment.tfNoDirectRipple) transaction.setFlags('NoRippleDirect');
       if (payment.tfLimitQuality) transaction.setFlags('LimitQuality');
       if (payment.tfPartialPayment) {
         transaction.setFlags('PartialPayment');
         if (payment.deliverMin) {
-          transaction.tx_json.DeliverMin = payment.amountCurrency == 'XRP'? 
+          transaction.tx_json.DeliverMin = payment.amountCurrency == 'XRP'?
                      Math.round(Number(payment.deliverMin) * 1e6) :
-                     { 
+                     {
                        value: payment.deliverMin,
                        currency: payment.amountCurrency,
-                       issuer: payment.amountIssuer  
+                       issuer: payment.amountIssuer
                      }
         }
       }
@@ -1522,7 +1541,7 @@ walletApp.controller('walletCtrl', ['$scope', '$http', '$uibModal', '$localStora
     if (payment.memos) {
       var memos = payment.memos;
       for (var i = 0; i < memos.length; i++)  {
-        transaction.addMemo(memos[i]); 
+        transaction.addMemo(memos[i]);
       }
     }
 
@@ -1548,7 +1567,7 @@ walletApp.controller('walletCtrl', ['$scope', '$http', '$uibModal', '$localStora
     };
     if ($scope.payto) {
       Object.keys($scope.payto).forEach(function (key) {
-        $scope.Payment[key] = $scope.payto[key];  
+        $scope.Payment[key] = $scope.payto[key];
       })
       if (!advanceMode) {
         $scope.Payment.recipient = $scope.Payment.destination;
@@ -1557,6 +1576,45 @@ walletApp.controller('walletCtrl', ['$scope', '$http', '$uibModal', '$localStora
       $scope.payto = undefined;
     }
   }
+  //Account Delete
+  $scope.submitAccountDelete = function () {
+    var payment = $scope.Payment;
+    var transaction = remote.transaction();
+
+    transaction.accountDelete({
+      to: payment.destination,
+      from: $scope.activeAccount,
+      fee: 5000000,
+    });
+
+    if (payment.destinationTag != undefined) transaction.tx_json.DestinationTag = Number(payment.destinationTag);
+    if (payment.sourceTag != undefined) transaction.tx_json.SourceTag = Number(payment.sourceTag);
+
+    if (payment.memo) {
+      transaction.addMemo({
+        memoData: payment.memo
+      })
+    }
+    if (payment.memos) {
+      var memos = payment.memos;
+      for (var i = 0; i < memos.length; i++)  {
+        transaction.addMemo(memos[i]);
+      }
+    }
+
+    var alert = {description: 'Account Deleting ' + ' send remaining XRP to ' + payment.destination};
+    $scope.alerts.payment.push(alert);
+    $scope.submitTransaction({transaction:transaction, log: alert}, function (err, res){
+      if (err && err.remote) {
+        alert.result = err.remote.error + ': ' + err.remote.error_exception;
+      }
+      if (res && res.metadata) {
+        var delivered = res.metadata.DeliveredAmount;
+        if (!delivered) delivered = res.tx_json.Amount;
+        alert.result += ', Delivered Amount = ' + $scope.amountDisplay(delivered, {value:true, currency:true});
+      }
+    });
+  }
 
   // =================== transaction submission ===================================
 
@@ -1564,19 +1622,19 @@ walletApp.controller('walletCtrl', ['$scope', '$http', '$uibModal', '$localStora
     if (typeof callback != 'function') callback = function (){};
 
     var transaction = options.transaction;
-    var tx_log = options.log; 
-    
+    var tx_log = options.log;
+
     tx_log.status = '';
     tx_log.result = '';
     tx_log.summary = '';
     tx_log.tx_hash = '';
 
-    transaction.on('submitted', function (msg) {    
+    transaction.on('submitted', function (msg) {
       tx_log.status = 'PRELIMINARY';
       tx_log.result = msg.engine_result + ': ' + msg.engine_result_message;
-      $scope.$apply();          
+      $scope.$apply();
     })
-    
+
     transaction.on('presubmit', function (msg) {
       if (!transaction.attempts) tx_log.status  = 'submitting...';
       else tx_log.status  = 'resubmitting...';
@@ -1596,7 +1654,7 @@ walletApp.controller('walletCtrl', ['$scope', '$http', '$uibModal', '$localStora
       tx_log.tx_hash = tx_log.summary.result.transaction_hash;
       callback(err, res)
     });
-   
+
   }
 
   // =========== Adding Memos ==================================
@@ -1631,7 +1689,7 @@ walletApp.controller('walletCtrl', ['$scope', '$http', '$uibModal', '$localStora
       if (!tx.hasOwnProperty('memos')) tx.memos = [];
       tx.memos.push(memo);
     }, function () {
-      // do nothing; 
+      // do nothing;
     });
   };
 
@@ -1657,20 +1715,20 @@ walletApp.controller('walletCtrl', ['$scope', '$http', '$uibModal', '$localStora
       resolve: {
         options: function () {
           return options;
-        }       
-      }       
+        }
+      }
     });
 
     modalInstance.result.then(function (options) {
       if (typeof callback == 'function') return callback(options);
       $scope.setSignerList(options);
     }, function () {
-      // do nothing; 
+      // do nothing;
     });
   };
 
   $scope.setSignerList = function (options) {
-      var transaction = remote.transaction();    
+      var transaction = remote.transaction();
       transaction.signerListSet({
         account: $scope.activeAccount,
         signers: options.signers,
@@ -1680,7 +1738,7 @@ walletApp.controller('walletCtrl', ['$scope', '$http', '$uibModal', '$localStora
       if (options.memos) {
         var memos = options.memos;
         for (var i = 0; i < memos.length; i++)  {
-          transaction.addMemo(memos[i]); 
+          transaction.addMemo(memos[i]);
         }
       }
 
@@ -1703,18 +1761,18 @@ walletApp.controller('walletCtrl', ['$scope', '$http', '$uibModal', '$localStora
         options: function () {
           return options;
         }
-      }       
+      }
     });
 
     modalInstance.result.then(function (options) {
       $scope.setRegularKey(options);
     }, function () {
-      // do nothing; 
+      // do nothing;
     });
   };
 
   $scope.setRegularKey = function (options) {
-      var transaction = remote.transaction();    
+      var transaction = remote.transaction();
       transaction.setRegularKey({
         account: $scope.activeAccount,
         regular_key: options.regularKey
@@ -1723,14 +1781,14 @@ walletApp.controller('walletCtrl', ['$scope', '$http', '$uibModal', '$localStora
       if (options.memos) {
         var memos = options.memos;
         for (var i = 0; i < memos.length; i++)  {
-          transaction.addMemo(memos[i]); 
+          transaction.addMemo(memos[i]);
         }
       }
       var alert = {description: 'Set RegularKey'};
       $scope.alerts.account.push(alert);
       $scope.submitTransaction({transaction:transaction, log: alert});
   }
-   
+
   //  ================== Account Set ============================================
 
   $scope.prepareAccountSet = function (options) {
@@ -1762,7 +1820,7 @@ walletApp.controller('walletCtrl', ['$scope', '$http', '$uibModal', '$localStora
         options: function () {
           return options;
         }
-      }      
+      }
     });
 
     modalInstance.result.then(function (newSettings) {
@@ -1788,7 +1846,7 @@ walletApp.controller('walletCtrl', ['$scope', '$http', '$uibModal', '$localStora
 
     if (settings.editTransferRate) {
       var rate = settings.transferRateHumanPercentage ? Number(settings.transferRateHumanPercentage) : 0;
-      if (rate > 0) rate = Math.round(rate / 100 * 1e9 + 1e9); 
+      if (rate > 0) rate = Math.round(rate / 100 * 1e9 + 1e9);
       transaction.setTransferRate(rate);
     }
 
@@ -1799,8 +1857,8 @@ walletApp.controller('walletCtrl', ['$scope', '$http', '$uibModal', '$localStora
         domain = domain.trim();
         domain = domain.toLowerCase();
         domain_hex = ripple.utils.stringToHex(domain);
-      } 
-      
+      }
+
       transaction.tx_json.Domain = domain_hex;
     }
 
@@ -1825,7 +1883,7 @@ walletApp.controller('walletCtrl', ['$scope', '$http', '$uibModal', '$localStora
       transaction.tx_json.TickSize = settings.tickSize ? settings.tickSize : 0;
     }
 
-    if (settings.memos) transaction.tx_json.Memos = settings.memos;   
+    if (settings.memos) transaction.tx_json.Memos = settings.memos;
 
     var alert = {description: 'Account Set'};
     $scope.alerts.account.push(alert);
@@ -1852,7 +1910,7 @@ walletApp.controller('walletCtrl', ['$scope', '$http', '$uibModal', '$localStora
     }
     $scope.prepareSetTrust(settings);
   }
-  
+
   $scope.prepareSetTrust = function (options) {
     var modalInstance = $uibModal.open({
       animation: false,
@@ -1883,8 +1941,8 @@ walletApp.controller('walletCtrl', ['$scope', '$http', '$uibModal', '$localStora
         issuer: settings.account,
         value: settings.limit
       },
-      quality_in: Math.round(settings.quality_in_human * 1e9),   
-      quality_out: Math.round(settings.quality_out_human * 1e9)     
+      quality_in: Math.round(settings.quality_in_human * 1e9),
+      quality_out: Math.round(settings.quality_out_human * 1e9)
     }
 
     var transaction = remote.transaction();
@@ -1892,16 +1950,16 @@ walletApp.controller('walletCtrl', ['$scope', '$http', '$uibModal', '$localStora
 
     var flags = [];
     if (settings.setAuth) flags.push('SetAuth');
-    if (settings.no_ripple) flags.push('SetNoRipple'); 
+    if (settings.no_ripple) flags.push('SetNoRipple');
       else flags.push('ClearNoRipple');
     if (settings.freeze) flags.push('SetFreeze');
       else flags.push('ClearFreeze');
 
-    transaction.setFlags(flags);    
+    transaction.setFlags(flags);
 
     var alert = {description: 'Trustline setting for ' + settings.currency + '.' + settings.account};
     $scope.alerts.trustline.push(alert);
-    
+
     $scope.submitTransaction({transaction:transaction, log: alert});
   }
 
@@ -1990,7 +2048,7 @@ walletApp.controller('walletCtrl', ['$scope', '$http', '$uibModal', '$localStora
     var ohlc = [],
         volume = [],
         dataLength = data.length;
-        
+
     for (var i = 0; i < dataLength; i += 1) {
         ohlc.push([
           Date.parse(data[i]['start']),
@@ -2010,17 +2068,17 @@ walletApp.controller('walletCtrl', ['$scope', '$http', '$uibModal', '$localStora
 
     // set the allowed units for data grouping
     var groupingUnits = [[
-            'minute',         
-            [15, 30]  
+            'minute',
+            [15, 30]
         ], [
-            'hour',               
-            [1, 2, 4, 8, 12]            
+            'hour',
+            [1, 2, 4, 8, 12]
         ], [
-            'day',                        
-            [1, 3,]                             
+            'day',
+            [1, 3,]
         ], [
             'week',
-            [1, 2]  
+            [1, 2]
         ], [
             'month',
             [1]
@@ -2036,7 +2094,7 @@ walletApp.controller('walletCtrl', ['$scope', '$http', '$uibModal', '$localStora
             chart: {
                   renderTo: 'container'
                },
-               
+
             rangeSelector: {
                 selected: 1,
                 buttons: [{
@@ -2078,7 +2136,7 @@ walletApp.controller('walletCtrl', ['$scope', '$http', '$uibModal', '$localStora
                 type: 'logarithmic',
                 crosshair: {
                   snap: false
-                },                
+                },
                 labels: {
                     align: 'right',
                     x: -3
@@ -2089,7 +2147,7 @@ walletApp.controller('walletCtrl', ['$scope', '$http', '$uibModal', '$localStora
                 height: '73%',
                 lineWidth: 1
             }, {
-                type: 'linear',                
+                type: 'linear',
                 labels: {
                     align: 'right',
                     x: -3
@@ -2129,16 +2187,16 @@ walletApp.controller('walletCtrl', ['$scope', '$http', '$uibModal', '$localStora
 
     $scope.trading.chartStatus = 'Loading data from ' + RIPPLE_DATA_URL + ' ......';
 
-    var data_url = RIPPLE_DATA_URL + '/v2/exchanges/' + 
-                      $scope.trading.baseCurrency + 
+    var data_url = RIPPLE_DATA_URL + '/v2/exchanges/' +
+                      $scope.trading.baseCurrency +
                       ($scope.trading.baseIssuer ? '+' + $scope.trading.baseIssuer : '') + '/' +
-                      $scope.trading.tradeCurrency + 
-                      ($scope.trading.tradeIssuer ? '+' + $scope.trading.tradeIssuer : '') + 
-                      '?descending=true&result=tesSUCCESS' + 
-                      '&interval=' + CHART_INTERVAL + 
-                      '&limit=' + CHART_LIMIT + 
+                      $scope.trading.tradeCurrency +
+                      ($scope.trading.tradeIssuer ? '+' + $scope.trading.tradeIssuer : '') +
+                      '?descending=true&result=tesSUCCESS' +
+                      '&interval=' + CHART_INTERVAL +
+                      '&limit=' + CHART_LIMIT +
                       ((options && options.marker) ? '&marker=' + options.marker : '');
-                     
+
     $http.get(data_url)
     .success(function(res){
       if (pair != $scope.trading.pair || $scope.network != 'MAIN') return;
@@ -2149,9 +2207,9 @@ walletApp.controller('walletCtrl', ['$scope', '$http', '$uibModal', '$localStora
       if ($scope.trading.chartPage == 0) $scope.drawChart();
 
       $scope.trading.chartPage++;
-      
+
       if (res.marker && $scope.trading.chartPage < CHART_MAX_PAGE) $scope.prepareChart({marker: res.marker});
-      else if ($scope.trading.chartPage > 1) $scope.drawChart(); 
+      else if ($scope.trading.chartPage > 1) $scope.drawChart();
 
       $scope.trading.chartStatus = '';
 
@@ -2202,7 +2260,7 @@ walletApp.controller('walletCtrl', ['$scope', '$http', '$uibModal', '$localStora
       if (opts.account != $scope.activeAccount) return;
       if (err) {
         $scope.accountBalances.IOU[opts.currency + '.' + opts.issuer] = 0;
-      } 
+      }
       if (res && res.account_balance) {
         $scope.accountBalances.IOU[opts.currency + '.' + opts.issuer] = res.account_balance.to_number();
       }
@@ -2216,8 +2274,8 @@ walletApp.controller('walletCtrl', ['$scope', '$http', '$uibModal', '$localStora
     $scope.trading.ask_status = '';
     $scope.trading.chartPage = 0;
     $scope.trading.chartData = [];
-    try { 
-      $scope.trading.chart.destroy(); 
+    try {
+      $scope.trading.chart.destroy();
       $scope.trading.mdchart.destroy();
     } catch (e) {};
 
@@ -2231,7 +2289,7 @@ walletApp.controller('walletCtrl', ['$scope', '$http', '$uibModal', '$localStora
   };
 
   $scope.pairName = function (pair, sliced) {
-    var base = pair.split('/')[0]; 
+    var base = pair.split('/')[0];
     var trade = pair.split('/')[1];
 
     var baseCurrency = base.split('.')[0];
@@ -2241,7 +2299,7 @@ walletApp.controller('walletCtrl', ['$scope', '$http', '$uibModal', '$localStora
 
     var pairname = baseCurrency + (baseIssuer ? '.' + $scope.gatewayName(baseIssuer, sliced) : '') + '/' +
                      tradeCurrency + (tradeIssuer ? '.' + $scope.gatewayName(tradeIssuer, sliced) : '');
-    return pairname;                     
+    return pairname;
   }
 
   $scope.prepareTradePair = function (options) {
@@ -2259,7 +2317,7 @@ walletApp.controller('walletCtrl', ['$scope', '$http', '$uibModal', '$localStora
       }
     });
 
-    modalInstance.result.then(function (options) {     
+    modalInstance.result.then(function (options) {
       var pair = options.baseCurrency + (options.baseIssuer ? '.' + options.baseIssuer : '') + '/' + options.tradeCurrency + (options.tradeIssuer ? '.' + options.tradeIssuer : '');
       if (options.edit && (typeof options.index === 'number')) {
         $scope.tradepairs[options.index] = pair;
@@ -2278,7 +2336,7 @@ walletApp.controller('walletCtrl', ['$scope', '$http', '$uibModal', '$localStora
     if (i >= 0) $scope.deleteTradePair(i);
     $scope.tradepairs.unshift(pair);
 
-    var base = pair.split('/')[0]; 
+    var base = pair.split('/')[0];
     var trade = pair.split('/')[1];
 
     $scope.trading.baseCurrency = base.split('.')[0];
@@ -2288,11 +2346,11 @@ walletApp.controller('walletCtrl', ['$scope', '$http', '$uibModal', '$localStora
 
     $scope.tradingBalancesRefresh();
     $scope.orderBooksReset();
-    $scope.tradingReset();     
+    $scope.tradingReset();
   }
 
   $scope.flipTradePair = function (){
-    var currencies = $scope.trading.pair.split('/'); 
+    var currencies = $scope.trading.pair.split('/');
     $scope.setTradePair(currencies[1] + '/' + currencies[0]);
   }
 
@@ -2322,7 +2380,7 @@ walletApp.controller('walletCtrl', ['$scope', '$http', '$uibModal', '$localStora
   $scope.offerPaysCurrency = function (offer) {
     var tpays = offer.TakerPays || offer.taker_pays;
     return (typeof tpays == 'object') ? tpays.currency : 'XRP';
-  }    
+  }
   $scope.offerGetsIssuer = function (offer) {
     var tgets = offer.TakerGets || offer.taker_gets;
     return (typeof tgets == 'object') ? tgets.issuer : null;
@@ -2342,7 +2400,7 @@ walletApp.controller('walletCtrl', ['$scope', '$http', '$uibModal', '$localStora
     var tpays = offer.TakerPays || offer.taker_pays;
     var value = tpays.value ? tpays.value : tpays / 1000000
     return Number(value);
-  }  
+  }
 
   $scope.offerGetsFundedToHuman = function (offer, sum) {
     var tgets = offer.TakerGets || offer.taker_gets;
@@ -2356,12 +2414,12 @@ walletApp.controller('walletCtrl', ['$scope', '$http', '$uibModal', '$localStora
     var funded = sum ? offer.taker_pays_funded_sum : offer.taker_pays_funded;
     var value = (typeof tpays == 'object') ? funded : funded / 1000000
     return Number(value);
-  }  
+  }
 
   $scope.offerExpireHour = function (offer){
     if (!offer || !offer.expiration) return;
-    var now = Date.now();    
-    return (Utils.toTimestamp(offer.expiration) - now) / (60 * 60 * 1000);  // hours remaining.    
+    var now = Date.now();
+    return (Utils.toTimestamp(offer.expiration) - now) / (60 * 60 * 1000);  // hours remaining.
   }
 
   $scope.bidFilter = function (offer) {
@@ -2397,7 +2455,7 @@ walletApp.controller('walletCtrl', ['$scope', '$http', '$uibModal', '$localStora
           var account = err.remote.account || err.remote.request.account;
           if (account != $scope.walletAccount._account_id) return;
           if (err.remote.error) {
-            $scope.accountOffers.status = err.remote.error; 
+            $scope.accountOffers.status = err.remote.error;
           }
         } else { $scope.accountOffers.status = err.error; }
       }
@@ -2473,7 +2531,7 @@ walletApp.controller('walletCtrl', ['$scope', '$http', '$uibModal', '$localStora
       var tgets = $scope.offerGetsCurrency(offer);
       var tpays = $scope.offerPaysCurrency(offer);
       options.baseCurrency = (options.type == 'sell') ? tgets : tpays;
-      options.tradeCurrency = (options.type == 'sell') ? tpays : tgets; 
+      options.tradeCurrency = (options.type == 'sell') ? tpays : tgets;
     } else {
       options.baseCurrency = $scope.trading.baseCurrency;
       options.tradeCurrency = $scope.trading.tradeCurrency;
@@ -2533,7 +2591,7 @@ walletApp.controller('walletCtrl', ['$scope', '$http', '$uibModal', '$localStora
 
   $scope.prepareOfferCreate = function (options) {
     if (typeof options != 'object' || !options.type) return;
-    
+
     if (options.type == 'sell') {
       options.qty = $scope.trading.sellQuantity;
       options.price = $scope.trading.sellPrice;
@@ -2569,7 +2627,7 @@ walletApp.controller('walletCtrl', ['$scope', '$http', '$uibModal', '$localStora
       } else if (options.type == 'buy') {
         $scope.trading.buyQuantity = null;
         $scope.trading.buyPrice = null;
-      }      
+      }
     }, function () {
       // do nothing
     });
@@ -2588,7 +2646,7 @@ walletApp.controller('walletCtrl', ['$scope', '$http', '$uibModal', '$localStora
     var tradeCurrency = options.tradeCurrency;
     var tradeIssuer = options.tradeIssuer;
 
-    var base_amount = (baseCurrency == 'XRP') ? 
+    var base_amount = (baseCurrency == 'XRP') ?
                         String(Math.round(qty * 1000000)) :
                         {
                           "currency": baseCurrency,
@@ -2596,7 +2654,7 @@ walletApp.controller('walletCtrl', ['$scope', '$http', '$uibModal', '$localStora
                           "value": String(qty)
                         }
 
-    var trade_amount = (tradeCurrency == 'XRP') ? 
+    var trade_amount = (tradeCurrency == 'XRP') ?
                         String(Math.round(qty * price* 1000000)) :
                         {
                           "currency": tradeCurrency,
@@ -2616,10 +2674,10 @@ walletApp.controller('walletCtrl', ['$scope', '$http', '$uibModal', '$localStora
     transaction.offer_create({
       account: $scope.activeAccount,
       taker_pays: (options.type == 'sell') ? trade_amount : base_amount,
-      taker_gets: (options.type == 'sell') ? base_amount : trade_amount, 
+      taker_gets: (options.type == 'sell') ? base_amount : trade_amount,
       expiration: expiration,
       offer_sequence: options.offer_sequence,
-    }); 
+    });
 
     if (options.type == 'sell') transaction.setFlags('Sell');
 
@@ -2628,7 +2686,7 @@ walletApp.controller('walletCtrl', ['$scope', '$http', '$uibModal', '$localStora
     $scope.alerts.offer.push(alert);
     $scope.submitTransaction({transaction:transaction, log: alert});
   }
-    
+
   $scope.loadOrderBooks = function (){
     if ($scope.trading.bookAsk) $scope.trading.bookAsk.destroy();
     if ($scope.trading.bookBid) $scope.trading.bookBid.destroy();
@@ -2666,7 +2724,7 @@ walletApp.controller('walletCtrl', ['$scope', '$http', '$uibModal', '$localStora
       $scope.offersCalculateSum(offers);
       $scope.trading.bidOffers = offers;
       $scope.drawMarketDepth();
-    })       
+    })
   }
 
   $scope.offersCalculateSum = function (offers) {
@@ -2700,7 +2758,7 @@ walletApp.controller('walletCtrl', ['$scope', '$http', '$uibModal', '$localStora
       ledger_index_max: -1,
       limit: 20,
       binary: false,
-      marker: refresh ? undefined : $scope.walletAccount.tx_marker 
+      marker: refresh ? undefined : $scope.walletAccount.tx_marker
     };
 
     $scope.transactionHistoryStatus = 'Loading...';
@@ -2719,7 +2777,7 @@ walletApp.controller('walletCtrl', ['$scope', '$http', '$uibModal', '$localStora
       } else {
         $scope.transactionHistoryStatus = 'Full';
       }
-      
+
       $scope.walletAccount.history = history;
       $scope.$apply();
     }).request();
@@ -2783,7 +2841,7 @@ walletApp.controller('walletCtrl', ['$scope', '$http', '$uibModal', '$localStora
     function modifyOffer (effect) {
       var newFields = {
         taker_gets: effect.gets,
-        taker_pays: effect.pays        
+        taker_pays: effect.pays
       }
       var offer = offers.find(function (offer){return offer.seq == effect.seq;});
       if (offer) Object.assign(offer, newFields);
@@ -2801,7 +2859,7 @@ walletApp.controller('walletCtrl', ['$scope', '$http', '$uibModal', '$localStora
         seq: effect.seq,
         taker_gets: effect.gets.to_json(),
         taker_pays: effect.pays.to_json(),
-        quality: effect.pays.divide(effect.gets).to_text()        
+        quality: effect.pays.divide(effect.gets).to_text()
       });
     }
 
@@ -2827,7 +2885,7 @@ walletApp.controller('walletCtrl', ['$scope', '$http', '$uibModal', '$localStora
     if (! $scope.trustlines) return;
 
     var settings = [
-      'freeze', 'freeze_peer', 
+      'freeze', 'freeze_peer',
       'no_ripple', 'no_ripple_peer',
       'authorized', 'peer_authorized',
     ]
@@ -2846,7 +2904,7 @@ walletApp.controller('walletCtrl', ['$scope', '$http', '$uibModal', '$localStora
       var line = $scope.trustlines.find(function (line){
         return line.account === effect.counterparty && line.currency === effect.currency;
       });
-      if (line) Object.assign(line, newFields); 
+      if (line) Object.assign(line, newFields);
     }
 
     function deleteLine (effect) {
@@ -2956,7 +3014,7 @@ walletApp.controller('walletCtrl', ['$scope', '$http', '$uibModal', '$localStora
       var g = gateways[i];
       if (g.name === gateway.name || g.address === gateway.address) return true;
     }
-    return false; 
+    return false;
   }
 
   $scope.editGateway = function (gateway, index) {
@@ -3094,7 +3152,7 @@ walletApp.controller('walletCtrl', ['$scope', '$http', '$uibModal', '$localStora
       if (c.name === contact.name) return true;
       if (c.address === contact.address && c.dtag == contact.dtag) return true;
     }
-    return false; 
+    return false;
   }
 
   $scope.editContact = function (contact, index) {
@@ -3130,7 +3188,7 @@ walletApp.controller('ModalAddMemoCtrl', ['$scope', '$uibModalInstance', functio
 
 
 walletApp.controller('ModalCtrl', ['$scope', '$uibModalInstance', 'options', function ($scope, $uibModalInstance, options) {
-  if (typeof options != 'object') options = {}; 
+  if (typeof options != 'object') options = {};
   $scope.options = options;
 
   $scope.ok = function () {
@@ -3146,7 +3204,7 @@ walletApp.controller('ModalCtrl', ['$scope', '$uibModalInstance', 'options', fun
 
 walletApp.directive('rippleValidRecipient', function () {
   return {
-    require: 'ngModel', 
+    require: 'ngModel',
     link: function (scope, element, attr, ctrl) {
       ctrl.$validators.rippleValidRecipient = function(modelValue, viewValue) {
         if (ctrl.$isEmpty(modelValue)) {
@@ -3158,9 +3216,9 @@ walletApp.directive('rippleValidRecipient', function () {
         // ripplename;
         var ripplename_regex = /^~[a-zA-Z0-9]([\-]?[a-zA-Z0-9]){0,19}$/;
         if (modelValue.length > 1 && modelValue[0] =='~') return ripplename_regex.test(modelValue);
- 
+
         // checking for email type address (e.g.xyz@domain.com)
-        var domain_split = modelValue.search(/@([\w-]+\.)+[\w-]{2,}$/);       
+        var domain_split = modelValue.search(/@([\w-]+\.)+[\w-]{2,}$/);
         if (domain_split <= 0) return false;
         return true;
       }
@@ -3170,7 +3228,7 @@ walletApp.directive('rippleValidRecipient', function () {
 
 walletApp.directive('rippleValidAddress', function () {
   return {
-    require: 'ngModel', 
+    require: 'ngModel',
     link: function (scope, element, attr, ctrl) {
       ctrl.$validators.rippleValidAddress = function(modelValue, viewValue) {
         if (ctrl.$isEmpty(modelValue)) {
@@ -3184,13 +3242,13 @@ walletApp.directive('rippleValidAddress', function () {
 
 walletApp.directive('rippleValidSecret', function () {
   return {
-    require: 'ngModel', 
+    require: 'ngModel',
     link: function (scope, element, attr, ctrl) {
       ctrl.$validators.rippleValidSecret = function(modelValue, viewValue) {
         if (ctrl.$isEmpty(modelValue)) return true;
         if (Seed.is_valid(modelValue)) return true;
         if (KeyPair.is_valid(modelValue)) return true;
-        return false; 
+        return false;
       }
     }
   }
@@ -3199,7 +3257,7 @@ walletApp.directive('rippleValidSecret', function () {
 
 walletApp.directive('rippleValidFederation', ['$http', function ($http) {
   return {
-    require: 'ngModel', 
+    require: 'ngModel',
     link: function (scope, element, attr, ctrl) {
       ctrl.$validators.rippleValidFederation = function(modelValue, viewValue) {
         if (ctrl.$isEmpty(modelValue)) return true;
@@ -3209,9 +3267,9 @@ walletApp.directive('rippleValidFederation', ['$http', function ($http) {
         var ripplename_regex = /^~[a-zA-Z0-9]([\-]?[a-zA-Z0-9]){0,19}$/;
 
         if (str.length > 1 && str[0] =='~') return ripplename_regex.test(str);
- 
+
         // checking for email type address (e.g.xyz@domain.com)
-        var domain_split = str.search(/@([\w-]+\.)+[\w-]{2,}$/);       
+        var domain_split = str.search(/@([\w-]+\.)+[\w-]{2,}$/);
         if (domain_split <= 0) return false;
         return true;
       }
@@ -3221,7 +3279,7 @@ walletApp.directive('rippleValidFederation', ['$http', function ($http) {
 
 walletApp.directive('positiveNumber', function () {
   return {
-    require: 'ngModel', 
+    require: 'ngModel',
     link: function (scope, element, attr, ctrl) {
       ctrl.$validators.positiveNumber = function(modelValue, viewValue) {
         if (ctrl.$isEmpty(modelValue)) {
@@ -3241,15 +3299,15 @@ walletApp.directive('positiveNumber', function () {
 
 walletApp.directive('uint32', function () {
   return {
-    require: 'ngModel', 
+    require: 'ngModel',
     link: function (scope, element, attr, ctrl) {
       ctrl.$validators.uint32 = function(modelValue, viewValue) {
         if (ctrl.$isEmpty(modelValue)) {
           return true;
         }
-        
-        if (/^\d+$/.test(modelValue)) { 
-          var value = Number(modelValue);  
+
+        if (/^\d+$/.test(modelValue)) {
+          var value = Number(modelValue);
           if (value >= 0 && value <= 4294967295) return true;
         }
 
@@ -3261,7 +3319,7 @@ walletApp.directive('uint32', function () {
 
 walletApp.directive('xrpDrops', function () {
   return {
-    require: 'ngModel', 
+    require: 'ngModel',
     link: function (scope, element, attr, ctrl) {
       ctrl.$validators.xrpDrops = function(modelValue, viewValue) {
         if (ctrl.$isEmpty(modelValue)) {
@@ -3270,9 +3328,9 @@ walletApp.directive('xrpDrops', function () {
         if (typeof modelValue == 'object') {
           return true;
         }
-        
-        if (/^\d+$/.test(modelValue)) { 
-          var value = Number(modelValue);  
+
+        if (/^\d+$/.test(modelValue)) {
+          var value = Number(modelValue);
           if (value > 0 && value < 1e17) return true;
         }
 
@@ -3284,10 +3342,10 @@ walletApp.directive('xrpDrops', function () {
 
 walletApp.directive('rippleValidMemo', function () {
   return {
-    require: 'ngModel', 
+    require: 'ngModel',
     link: function (scope, element, attr, ctrl) {
       ctrl.$validators.rippleValidMemo = function(modelValue, viewValue) {
-        if (ctrl.$isEmpty(modelValue)) return true;       
+        if (ctrl.$isEmpty(modelValue)) return true;
         else return /^[0-9A-Za-z\-._~:/?#[\]@!$&'()*+,;=%]+$/.test(modelValue);  // url characters '
       }
     }
@@ -3297,7 +3355,7 @@ walletApp.directive('rippleValidMemo', function () {
 walletApp.directive('uppercaseOnly', function () {
   return {
     restrict: 'A',
-    require: 'ngModel', 
+    require: 'ngModel',
     link: function (scope, element, attr, ctrl) {
         function parser(value) {
           if (ctrl.$isEmpty(value)) {

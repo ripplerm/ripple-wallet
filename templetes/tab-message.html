@@ -15,7 +15,7 @@
               [{{messageLog.status}}]: 
               {{messageLog.status_code || messageLog.result}}
               {{messageLog.tx_hash ? ', tx_hash: ' + messageLog.tx_hash : ''}}
-              <a href="https://charts.ripple.com/#/transactions/{{messageLog.tx_hash}}" target="_blank" ng-show="messageLog.tx_hash"><span class="glyphicon glyphicon-new-window"></span> </a>
+              <a href="https://livenet.xrpl.org/transactions/{{messageLog.tx_hash}}" target="_blank" ng-show="messageLog.tx_hash"><span class="glyphicon glyphicon-new-window"></span> </a>
             </div>
           </div> 
         </div>
