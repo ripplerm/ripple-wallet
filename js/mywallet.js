@@ -1584,7 +1584,7 @@ walletApp.controller('walletCtrl', ['$scope', '$http', '$uibModal', '$localStora
     transaction.accountDelete({
       to: payment.destination,
       from: $scope.activeAccount,
-      fee: 5000000,
+      fee: 2000000,
     });
 
     if (payment.destinationTag != undefined) transaction.tx_json.DestinationTag = Number(payment.destinationTag);
