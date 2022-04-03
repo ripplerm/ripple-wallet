@@ -33,18 +33,18 @@ var APPLY_INTEREST = false; // false: showing raw amount instead of demuraged fi
 
 var SERVERS_MAINNET = [
                       {
-                          host:    's1.ripple.com'
+                          host:    'xrplcluster.com'
                           , port:    443
                           , secure:  true
                           , primary: true
                       },
                       {
-                          host:    's-east.ripple.com'
+                          host:    'xrpl.link'
                           , port:    443
                           , secure:  true
                       },
                       {
-                          host:    's-west.ripple.com'
+                          host:    's2.ripple.com'
                           , port:    443
                           , secure:  true
                       }
