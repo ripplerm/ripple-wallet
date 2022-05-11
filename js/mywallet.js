@@ -14,7 +14,7 @@ var OrderBookUtils = ripple.OrderBookUtils;
 // ================= configuration & Global constant  ==================
 
 var CLIENT_VERSION = "rm-1.2.5"
-var INSERT_CLIENT_INFO = true;
+var INSERT_CLIENT_INFO = false;
 
 var DEFAULT_ACCOUNT = "rHb9CJAWyB4rj91VRWn96DkukG4bwdtyTh";
 var DEFAULT_SECRET = "snoPBrXtMeMyMHUVTgbuqAfg1SUTb";
